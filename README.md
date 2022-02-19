@@ -32,7 +32,7 @@ This will solve 100% of Wordles with a mean number of guesses of 4.2
 
 Our first guess is the word **plumb**
 
-![PLUMB](/pic/PLUMB.JPG?raw=true "Title")
+![PLUMB](/assets/PLUMB.JPG?raw=true "Title")
 
 We note that letters plum are not in the answer and letter b is in a position other than 5.
 
@@ -46,7 +46,7 @@ The app responds with...
 
 So we make a second guess of word **beast**
 
-![PLUMB_BEAST](/pic/PLUMB_BEAST.JPG?raw=true "Title")
+![PLUMB_BEAST](/assets/PLUMB_BEAST.JPG?raw=true "Title")
 
 We note that letters east are not in the answer and letter b is in a position other than 1
 
@@ -77,6 +77,6 @@ But if we add **rank=yes** the words will be sorted into a preference order base
 ```
 The best choice will be the first on the list **robin**
 
-![PLUMB_BEAST_ROBIN](/pic/PLUMB_BEAST_ROBIN.JPG?raw=true "Title")
+![PLUMB_BEAST_ROBIN](/assets/PLUMB_BEAST_ROBIN.JPG?raw=true "Title")
 
 Success!
