@@ -18,11 +18,11 @@ Java CLI to solve any WORDLE puzzle in a maximum of six tries (typically 4)
         
 ### guess1=thump
 
-This will solve 97% of Wordles with a mean number of guesses of 3.8
+This will solve 99.8% of Wordles with a mean number of guesses of 3.8
 
 ### guess1=thump guess2=blown
 
-This will solve 98.5% of Wordles with a mean number of guesses of 4.0
+This will solve 99.91% of Wordles with a mean number of guesses of 4.0
 
 ### guess1=thump guess2=blown guess3=dirge
 
@@ -62,22 +62,19 @@ If we change **words=yes** the app will list the possible words
 
 *There are 3 word(s) matching words=yes contains=b not=plumeast not1=b not5=b*
 
+```
 1       hobby
-
 2       inbox
-
 3       robin
-
+```
 But if we add **rank=yes** the words will be sorted into a preference order based on letter distribution
 
 *There are 3 word(s) matching words=yes rank=yes contains=b not=plumeast not1=b not5=b*
-
+```
 1       robin   2       0
-
 2       inbox   2       0
-
 3       hobby   2       1
-
+```
 The best choice will be the first on the list **robin**
 
 ![PLUMB_BEAST_ROBIN](/pic/PLUMB_BEAST_ROBIN.JPG?raw=true "Title")
