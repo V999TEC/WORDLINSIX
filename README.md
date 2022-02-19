@@ -38,11 +38,11 @@ We note that letters plum are not in the answer and letter b is in a position ot
 
 So we enter these parameters:
 
-java -jar wordlinsix.jar words=no  contains=b not=plum not5=b
+**java -jar wordlinsix.jar words=no  contains=b not=plum not5=b**
 
 The app responds with...
 
-There are 125 word(s) matching words=no  contains=b not=plum not5=b
+*There are 125 word(s) matching words=no  contains=b not=plum not5=b*
 
 So we make a second guess of word **beast**
 
@@ -52,27 +52,33 @@ We note that letters east are not in the answer and letter b is in a position ot
 
 So we adjust the parameters:
 
-java -jar wordlinsix.jar words=no  contains=b not=plumeast not1=b not5=b
+**java -jar wordlinsix.jar words=no contains=b not=plumeast not1=b not5=b**
 
 The app responds with...
 
-There are 3 word(s) matching words=no rank=yes contains=b not=plumeast not1=b not5=b
+*There are 3 word(s) matching words=no contains=b not=plumeast not1=b not5=b*
 
-If we change words=yes the app will list the possible words
+If we change **words=yes** the app will list the possible words
 
-There are 3 word(s) matching words=yes contains=b not=plumeast not1=b not5=b
+*There are 3 word(s) matching words=yes contains=b not=plumeast not1=b not5=b*
+
 1       hobby
+
 2       inbox
+
 3       robin
 
-If we add rank=yes the words will be sorted into a prefrence order based on letter distribution
+But if we add **rank=yes** the words will be sorted into a preference order based on letter distribution
 
-There are 3 word(s) matching words=yes rank=yes contains=b not=plumeast not1=b not5=b
+*There are 3 word(s) matching words=yes rank=yes contains=b not=plumeast not1=b not5=b*
+
 1       robin   2       0
+
 2       inbox   2       0
+
 3       hobby   2       1
 
-The best choice will be the first on the list
+The best choice will be the first on the list **robin**
 
 ![PLUMB_BEAST_ROBIN](/pic/PLUMB_BEAST_ROBIN.JPG?raw=true "Title")
 
