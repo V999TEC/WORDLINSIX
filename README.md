@@ -29,5 +29,5 @@ This will solve 98.5% of Wordles with a mean number of guesses of 4.0
 This will solve 100% of Wordles with a mean number of guesses of 4.2
 
 ## Examples
-![Alt text](relative/path/to/img.jpg?raw=true "Title")
+![PLUMB](/pic/PLUMB.JPG?raw=true "Title")
 
