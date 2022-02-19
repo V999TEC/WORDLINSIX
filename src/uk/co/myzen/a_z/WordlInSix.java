@@ -706,6 +706,9 @@ public class WordlInSix {
 				}
 			}
 		}
+
+		containsChars = contains.toCharArray();
+
 	}
 
 	private void guessToAnswer() {
@@ -732,10 +735,6 @@ public class WordlInSix {
 
 		containsChars = new char[] {};
 
-		String contains = new String(containsChars);
-
-		//
-
 		notN = new String[] { "", "", "", "", "" };
 
 		char emptyPositions[] = { ' ', ' ', ' ', ' ', ' ' };
@@ -745,6 +744,8 @@ public class WordlInSix {
 		String nextBestGuess = "";
 
 		for (int index = 0; index < guesses.size(); index++) {
+
+			String contains = new String(containsChars);
 
 			scoreAgainstKnownAnswer(guesses.get(index));
 
