@@ -17,6 +17,6 @@
 hs_err_pid*
 
 
-bin/*
-target/*
+/bin/*
+/target/*
 
