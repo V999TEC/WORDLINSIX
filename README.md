@@ -80,3 +80,27 @@ The best choice will be the first on the list **robin**
 ![PLUMB_BEAST_ROBIN](/assets/PLUMB_BEAST_ROBIN.JPG?raw=true "Title")
 
 Success!
+
+## Automatic
+
+The algorithm to solve a Wordle can be tested as follows:
+
+**java -jar wordlinsix.jar guess1=thump answer=robin**
+
+The app will look at the existing guesses and suggest the next guess.
+The process will be repated until the answer is matched.
+Obviously the app is told the answer, but the idea is the algorithm can be exercised to see how many guesses are required
+
+```
+>java -jar wordlinsix.jar guess1=thump answer=robin
+guess1=thump
+guess1=thump guess2=renal 1=r not3=n
+guess1=thump guess2=renal guess3=robin contains=rn 1=r 2=o 3=b 4=i 5=n
+Algorithm needed 3 guesses
+```
+
+There is no guarentee the algorithm will match the performance of a manual guess (see above: PLUMB/BEAST/ROBIN)
+
+
+
+
