@@ -105,7 +105,9 @@ The algorithm to solve a Wordle can be tested as follows:
 **java -jar wordlinsix.jar guess1=thump answer=robin**
 
 The app will look at the existing guesses and suggest the next guess.
+
 The process will be repated until the answer is matched.
+
 Obviously the app is told the answer, but the idea is the algorithm can be exercised to see how many guesses are required
 
 ```
@@ -122,7 +124,9 @@ There is no guarentee the algorithm will match the performance of a manual guess
 ## debug=2
 
 For the curious, the algorithm can be made to discover its optimum three start word(s)
+
 But it takes considerable time.
+
 Use of the word *optimum* in this context does not mean the choice of words cannot be beaten: it just means that the Wordle will be solved in at most six guesses.
 
 In the following debug log, the algorithm is looking for word combinations that result in 6 (0) 
@@ -139,4 +143,4 @@ then
 
 Using **thump** as the first word the algorithm then tries all the second words an so on, looking for a score of 6 (0) or better
 
-As far as this algorithm is concerned, the worst possible start word is: ```queue	11 (90)``` meaning there were 90 games that coululd not be completed in 6 guesses and some of those needed 11 guesses!
+As far as this algorithm is concerned, the worst possible start word is: ```queue	11 (90)``` meaning there were 90 games that could not be completed in 6 guesses and some of those needed 11 guesses!
