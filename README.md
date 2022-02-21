@@ -123,11 +123,10 @@ There is no guarentee the algorithm will match the performance of a manual guess
 
 For the curious, the algorithm can be made to discover its optimum three start word(s)
 But it takes considerable time.
-Use of the word "optimum" in this context does not mean the choice of words cannot be beaten: it just means that the Wordle will be solved in at most six guesses.
+Use of the word *optimum* in this context does not mean the choice of words cannot be beaten: it just means that the Wordle will be solved in at most six guesses.
 
-In the following log the algorithm is looking for word combinations that result in 6 (0) 
+In the following debug log, the algorithm is looking for word combinations that result in 6 (0) 
 meaning that at most, six guesses and zero failures (where a failure is considered taking > 6 guesses)
-
 
 [DEBUG=2](/assets/debug=2.txt?raw=true "debug=2")
 
@@ -138,5 +137,6 @@ then
 then
 ```thump	7 (4)  <----```
 
-Using thump as the first word the algorithm then tries all the second words an so on, looking for 6 (0) or better
+Using **thump** as the first word the algorithm then tries all the second words an so on, looking for a score of 6 (0) or better
 
+As far as this algorithm is concerned, the worst possible start word is: ```queue	11 (90)``` meaning there were 90 games that coululd not be completed in 6 guesses and some of those needed 11 guesses!
