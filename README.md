@@ -83,7 +83,7 @@ Success!
 
 ## Example #2
 
-Using the optimum thee starting words, the algorithm will converge on an answer suprisingly quickly.
+Using the optimum three starting words, the algorithm will converge on an answer suprisingly quickly.
 
 ![THUMP_BLOWN_DIRGE](/assets/THUMP_BLOWN_DIRGE.JPG?raw=true "Title")
 
@@ -119,5 +119,24 @@ Algorithm needed 3 guesses
 There is no guarentee the algorithm will match the performance of a manual guess (see above: PLUMB/BEAST/ROBIN)
 
 
+## debug=2
 
+For the curious, the algorithm can be made to discover its optimum three start word(s)
+But it takes considerable time.
+Use of the word "optimum" in this context does not mean the choice of words cannot be beaten: it just means that the Wordle will be solved in at most six guesses.
+
+In the following log the algorithm is looking for word combinations that result in 6 (0) 
+meaning that at most, six guesses and zero failures (where a failure is considered taking > 6 guesses)
+
+
+[DEBUG=2](/assets/debug=2.txt?raw=true "debug=2")
+
+The log shows that initially we discover
+```abase	9 (29)  <----```
+then
+```blend	8 (11)  <----```
+then
+```thump	7 (4)  <----```
+
+Using thump as the first word the algorithm then tries all the second words an so on, looking for 6 (0) or better
 
