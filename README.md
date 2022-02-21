@@ -81,6 +81,13 @@ The best choice will be the first on the list **robin**
 
 Success!
 
+## Example #2
+
+Using the optimum thee starting words, the algorithm will converge on an answer suprisingly quickly.
+
+
+
+
 ## Automatic
 
 The algorithm to solve a Wordle can be tested as follows:
