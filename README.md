@@ -85,6 +85,16 @@ Success!
 
 Using the optimum thee starting words, the algorithm will converge on an answer suprisingly quickly.
 
+![THUMP_BLOWN_DIRGE](/assets/THUMP_BLOWN_DIRGE.JPG?raw=true "Title")
+
+```
+>java -jar wordlinsix.jar rank=true words=yes contains=thore not=umpblwndig
+There are 1 word(s) matching rank=true words=yes contains=thore not=umpblwndig
+1       other   2       0
+```
+Maybe lucky, but even without specifying **not1=t not2=h not3=or not5=e** the algorithm was able to deduce there was one possibility:
+
+![OTHER](/assets/OTHER.JPG?raw=true "Title")
 
 
 
