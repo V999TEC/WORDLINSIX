@@ -126,9 +126,36 @@ There is no guarentee the algorithm will match the performance of a manual guess
 
 This is only used to establish the letter frequency for all the words in the Wordle dictionary
 ```
-private static int[] letterDistributionRanks = { 909, 267, 448, 370, 1056, 207, 300, 379, 647, 27, 202, 648, 298, 550, 673, 346, 29, 837, 618, 667, 457, 149, 194, 37, 417, 35, };
+a=909
+b=267
+c=448
+d=370
+e=1056
+f=207
+g=300
+h=379
+i=647
+j=27
+k=202
+l=648
+m=298
+n=550
+o=673
+p=346
+q=29
+r=837
+s=618
+t=667
+u=457
+v=149
+w=194
+x=37
+y=417
+z=35
 ```
-The declaration is baked into the java code because the dictionary is static
+The result should be stored in the frequencies.properties resource file.
+
+If the words.txt file changes then the corresponding property data should be regenerated using debug=1
 
 
 ## debug=2
