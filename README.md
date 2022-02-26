@@ -121,6 +121,16 @@ Algorithm needed 3 guesses
 There is no guarentee the algorithm will match the performance of a manual guess (see above: PLUMB/BEAST/ROBIN)
 
 
+
+## debug=1
+
+This is only used to establish the letter frequency for all the words in the Wordle dictionary
+```
+private static int[] letterDistributionRanks = { 909, 267, 448, 370, 1056, 207, 300, 379, 647, 27, 202, 648, 298, 550, 673, 346, 29, 837, 618, 667, 457, 149, 194, 37, 417, 35, };
+```
+The declaration is baked into the java code because the dictionary is static
+
+
 ## debug=2
 
 For the curious, the algorithm can be made to discover its optimum three start word(s)
@@ -144,3 +154,33 @@ then
 Using **thump** as the first word the algorithm then tries all the second words an so on, looking for a score of 6 (0) or better
 
 As far as this algorithm is concerned, the worst possible start word is: ```queue	11 (90)``` meaning there were 90 games that could not be completed in 6 guesses and some of those needed 11 guesses!
+
+
+
+## debug=3
+
+```
+Tries	thump +	blown +	dirge
+1	1	0	0
+2	81	1	0
+3	713	507	1
+4	1019	1238	1641
+5	405	509	603
+6	92	58	70
+7	4	2	0
+```
+What this table is showing is:
+
+### Use THUMP as the first word 
+then 81 answers will be correct on the 2nd guess
+but 92 answers will need 6 guesses and 4 answers will be unsuccessful
+
+
+### Use THUMP as the first word **and** BLOWN as the second word
+then 507 answers will be correct on the 3rd guess
+but 58 answers will need 6 guesses and 2 answers will be unsuccessful
+
+
+### Use THUMP as the first word **and** BLOWN as the second word **and** DIRGE as the third word
+then 1641 answers will be correct on the 4th guess
+but 70 answers will need 6 guesses but none will need more than 6
