@@ -16,17 +16,7 @@ Java CLI to solve any WORDLE puzzle in a maximum of six tries (typically 4)
         Use not2=ab to indicate second letter cannot be a or b
         Use not5=y to indicate fifth letter cannot be y
         
-### guess1=thump
 
-This will solve 99.8% of Wordles with a mean number of guesses of 3.8
-
-### guess1=thump guess2=blown
-
-This will solve 99.91% of Wordles with a mean number of guesses of 4.0
-
-### guess1=thump guess2=blown guess3=dirge
-
-This will solve 100% of Wordles with a mean number of guesses of 4.2
 
 ## Examples
 
@@ -120,7 +110,17 @@ Algorithm needed 3 guesses
 
 There is no guarentee the algorithm will match the performance of a manual guess (see above: PLUMB/BEAST/ROBIN)
 
+### guess1=thump
 
+This will solve 99.8% of Wordles with a mean number of guesses of 3.8
+
+### guess1=thump guess2=blown
+
+This will solve 99.91% of Wordles with a mean number of guesses of 4.0
+
+### guess1=thump guess2=blown guess3=dirge
+
+This will solve 100% of Wordles with a mean number of guesses of 4.2
 
 ## debug=1
 
