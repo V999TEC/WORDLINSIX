@@ -15,12 +15,12 @@ import java.util.TreeSet;
 
 public class WordlInSix {
 
+	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
+
 	private static enum Action {
 
-		DEFAULT, ABORT, SHOW_HELP, GUESS_TO_ANSWER, DEBUG_1, DEBUG_2
+		DEFAULT, ABORT, SHOW_HELP, GUESS_TO_ANSWER, DEBUG_1, DEBUG_2, DEBUG_3
 	};
-
-	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
 	private static Action action = Action.SHOW_HELP;
 
@@ -97,6 +97,11 @@ public class WordlInSix {
 		case DEBUG_2:
 
 			main.debug2();
+			break;
+
+		case DEBUG_3:
+
+			main.debug3();
 			break;
 
 		case GUESS_TO_ANSWER:
@@ -230,6 +235,10 @@ public class WordlInSix {
 			} else if (2 == debug) {
 
 				action = Action.DEBUG_2;
+
+			} else if (3 == debug) {
+
+				action = Action.DEBUG_3;
 
 			} else {
 
@@ -994,4 +1003,40 @@ public class WordlInSix {
 
 		System.err.println("Failures: " + failCount);
 	}
+
+	private void debug3() {
+
+		int[][] counts = new int[3][7];
+
+		String[] startWords = new String[] { "thump", "blown", "dirge" };
+
+		for (int n = 1; n < 4; n++) {
+
+			counts[n - 1] = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+
+			for (String targetAnswer : words) {
+
+				answer = targetAnswer;
+
+				guesses.clear();
+
+				for (int w = 0; w < n; w++) {
+
+					guesses.add(startWords[w]);
+				}
+
+				int tries = howManyGuesses();
+
+				counts[n - 1][tries - 1]++;
+			}
+		}
+
+		System.err.println("#Tries\t" + startWords[0] + " +\t" + startWords[1] + " +\t" + startWords[2]);
+
+		for (int c = 0; c < 7; c++) {
+
+			System.err.println((c + 1) + "\t" + counts[0][c] + "\t" + counts[1][c] + "\t" + counts[2][c]);
+		}
+	}
+
 }
