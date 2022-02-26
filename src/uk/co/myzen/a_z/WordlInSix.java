@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -17,15 +18,14 @@ public class WordlInSix {
 
 	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
+	private static int[] letterDistributionRanks;
+
 	private static enum Action {
 
 		DEFAULT, ABORT, SHOW_HELP, GUESS_TO_ANSWER, DEBUG_1, DEBUG_2, DEBUG_3
 	};
 
 	private static Action action = Action.SHOW_HELP;
-
-	private static int[] letterDistributionRanks = { 909, 267, 448, 370, 1056, 207, 300, 379, 647, 27, 202, 648, 298,
-			550, 673, 346, 29, 837, 618, 667, 457, 149, 194, 37, 414, 35 };
 
 	private static WordlInSix instance = null;
 
@@ -56,12 +56,52 @@ public class WordlInSix {
 			instance = new WordlInSix();
 		}
 
+		letterDistributionRanks = instance.loadLetterDistributionRanks();
+
 		return instance;
 	}
 
 	private WordlInSix() {
 
 		words = loadWords();
+	}
+
+	private int[] loadLetterDistributionRanks() {
+
+		int[] frequencies = new int[26];
+
+		Properties properties = new Properties();
+
+		ClassLoader cl = Thread.currentThread().getContextClassLoader();
+
+		InputStream is = cl.getResourceAsStream("frequencies.properties");
+
+		try {
+
+			if (null == is) {
+
+				debug1(properties);
+
+			} else {
+
+				properties.load(is);
+			}
+
+			for (int index = 0; index < 26; index++) {
+
+				String key = alphabet.substring(index, 1 + index);
+
+				String value = properties.getProperty(key, "0").trim();
+
+				frequencies[index] = Integer.parseInt(value);
+			}
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+		return frequencies;
 	}
 
 	public static void main(String[] args) {
@@ -91,7 +131,7 @@ public class WordlInSix {
 
 		case DEBUG_1:
 
-			main.debug1();
+			main.debug1(null); // display letter frequency
 			break;
 
 		case DEBUG_2:
@@ -859,11 +899,7 @@ public class WordlInSix {
 		return rankings.get(0);
 	}
 
-	private void debug1() {
-
-		StringBuffer staticAnalysis1 = new StringBuffer();
-
-		staticAnalysis1.append("private static int[] letterDistributionRanks = { ");
+	private void debug1(Properties optional) {
 
 		for (char ch : alphabet.toCharArray()) {
 
@@ -871,14 +907,17 @@ public class WordlInSix {
 
 			Set<String> candidates = findCandidates();
 
-			staticAnalysis1.append(candidates.size());
+			int size = candidates.size();
 
-			staticAnalysis1.append(", ");
+			if (null == optional) {
+
+				System.err.println(ch + "=" + size);
+
+			} else {
+
+				optional.setProperty(String.valueOf(ch), String.valueOf(size));
+			}
 		}
-
-		staticAnalysis1.append("};");
-
-		System.err.println(staticAnalysis1.toString());
 	}
 
 	private void debug2() {
