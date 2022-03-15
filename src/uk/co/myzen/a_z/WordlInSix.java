@@ -602,16 +602,30 @@ public class WordlInSix {
 
 			int rank = calculateLetterDistributionRank(candidate);
 
+			String pad5 = "0000" + String.valueOf(rank);
+
+			String rank5 = pad5.substring(pad5.length() - 5);
+
 			Integer key = null;
 
-			for (int dup = 0; dup < 10; dup++) {
+			for (int dup = 0; dup < 100; dup++) {
 
-				key = Integer.valueOf(String.valueOf(rank) + String.valueOf(dup));
+				String pad2 = "0" + String.valueOf(dup);
+
+				String dup2 = pad2.substring(pad2.length() - 2);
+
+				key = Integer.valueOf(rank5 + dup2);
 
 				if (!rankings.containsKey(key)) {
 
 					break;
 				}
+			}
+
+			if (null == key) {
+
+				System.err.println("FAIL: contact author key:null rank5:" + rank5);
+				System.exit(candidates.size());
 			}
 			// static analysis shows that key cannot be null because wordlist is constant
 			// and data has been verified
@@ -956,8 +970,9 @@ public class WordlInSix {
 
 			if ("".equals(bestWordSoFar[index])) {
 
-				lowestSoFar = 9999;
-				highestFailCount = 99;
+				// needs to be at least as big as the dictionary size
+				lowestSoFar = 99999;
+				highestFailCount = 99999;
 
 				for (String word : words) {
 
@@ -1009,7 +1024,7 @@ public class WordlInSix {
 						if (higestTries < lowestSoFar) {
 
 							lowestSoFar = higestTries;
-							highestFailCount = 99;
+							highestFailCount = 99999;
 						}
 
 						if (failCount < highestFailCount) {
