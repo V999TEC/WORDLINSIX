@@ -49,11 +49,18 @@ public class WordlInSix {
 
 	private String answer = "";
 
-	private static WordlInSix getInstance() {
+	private static WordlInSix getInstance(String nonDefaultName) {
 
 		if (null == instance) {
 
-			instance = new WordlInSix();
+			if (null == nonDefaultName || 0 == nonDefaultName.trim().length()) {
+
+				instance = new WordlInSix();
+
+			} else {
+
+				instance = new WordlInSix(nonDefaultName + ".txt");
+			}
 		}
 
 		letterDistributionRanks = instance.loadLetterDistributionRanks();
@@ -63,7 +70,12 @@ public class WordlInSix {
 
 	private WordlInSix() {
 
-		words = loadWords();
+		words = loadWords("words.txt");
+	}
+
+	private WordlInSix(String name) {
+
+		words = loadWords(name);
 	}
 
 	private int[] loadLetterDistributionRanks() {
@@ -106,13 +118,20 @@ public class WordlInSix {
 
 	public static void main(String[] args) {
 
-		WordlInSix main = WordlInSix.getInstance();
+		WordlInSix main;
 
 		if (0 == args.length) {
+
+			main = getInstance(null);
 
 			action = Action.SHOW_HELP;
 
 		} else {
+
+			// if first parameter is "words" (also default) then load "words.txt"
+			// an alternative is "scholardle"
+
+			main = getInstance(-1 == args[0].indexOf('=') ? args[0] : null);
 
 			action = Action.DEFAULT;
 
@@ -398,13 +417,13 @@ public class WordlInSix {
 		return true;
 	}
 
-	private static List<String> loadWords() {
+	private static List<String> loadWords(String name) {
 
 		List<String> result = new ArrayList<String>(2315);
 
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 
-		InputStream is = cl.getResourceAsStream("words.txt");
+		InputStream is = cl.getResourceAsStream(name);
 
 		InputStreamReader isr = new InputStreamReader(is);
 
