@@ -16,6 +16,8 @@ import java.util.TreeSet;
 
 public class WordlInSix {
 
+	private static String DEFAULT_TXT = "wordle.txt";
+
 	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
 	private static int[] letterDistributionRanks;
@@ -70,7 +72,7 @@ public class WordlInSix {
 
 	private WordlInSix() {
 
-		words = loadWords("words.txt");
+		words = loadWords(DEFAULT_TXT);
 	}
 
 	private WordlInSix(String name) {
@@ -128,7 +130,7 @@ public class WordlInSix {
 
 		} else {
 
-			// if first parameter is "words" (also default) then load "words.txt"
+			// if first parameter is "wordle" (also the default) then load "wordle.txt"
 			// an alternative is "scholardle"
 
 			main = getInstance(-1 == args[0].indexOf('=') ? args[0] : null);
