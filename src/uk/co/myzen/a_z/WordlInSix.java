@@ -140,16 +140,23 @@ public class WordlInSix {
 
 			main = getInstance(-1 == args[0].indexOf('=') ? args[0] : null);
 
-			action = Action.DEFAULT;
-
-			for (String arg : args) {
-
-				main.parameter(arg);
-			}
-
-			if (!main.validatedParameters()) {
+			if (words == null || 0 == words.size()) {
 
 				action = Action.ABORT;
+
+			} else {
+
+				action = Action.DEFAULT;
+
+				for (String arg : args) {
+
+					main.parameter(arg);
+				}
+
+				if (!main.validatedParameters()) {
+
+					action = Action.ABORT;
+				}
 			}
 		}
 
@@ -472,35 +479,51 @@ public class WordlInSix {
 
 		InputStream is = cl.getResourceAsStream(name);
 
-		InputStreamReader isr = new InputStreamReader(is);
+		if (null == is) {
 
-		BufferedReader br = new BufferedReader(isr);
+			System.err.println("Cannot locate resource '" + name
+					+ "' Did you perhaps mean to use wordle or scholardle for the first parameter?");
 
-		String ln;
+		} else {
 
-		try {
+			InputStreamReader isr = null;
 
-			while (null != (ln = br.readLine())) {
-
-				result.add(ln);
-			}
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
-		} finally {
+			BufferedReader br = null;
 
 			try {
-				br.close();
 
-				isr.close();
+				isr = new InputStreamReader(is);
+
+				br = new BufferedReader(isr);
+
+				String ln;
+
+				while (null != (ln = br.readLine())) {
+
+					result.add(ln);
+				}
 
 			} catch (IOException e) {
 
-				e.printStackTrace();
-			}
+			} finally {
 
+				try {
+					if (null != br) {
+
+						br.close();
+					}
+
+					if (null != isr) {
+
+						isr.close();
+					}
+
+				} catch (IOException e) {
+
+					e.printStackTrace();
+				}
+
+			}
 		}
 
 		return result;
@@ -1032,11 +1055,24 @@ public class WordlInSix {
 
 					failCount = 0;
 
-					if (existingResult.containsKey(word)) {
+					StringBuffer sbExisting = new StringBuffer();
 
-						// avoid time consuming test of ever target answer
+					for (int n = 0; n < index; n++) {
 
-						String alreadyDone = existingResult.get(word);
+						sbExisting.append(bestWordSoFar[n]);
+
+						sbExisting.append('\t');
+					}
+
+					sbExisting.append(word);
+
+					String existingKey = sbExisting.toString();
+
+					if (existingResult.containsKey(existingKey)) {
+
+						// avoid time consuming test of every target answer
+
+						String alreadyDone = existingResult.get(existingKey);
 
 						int posOpenBracket = alreadyDone.indexOf('(');
 						int posCloseBracket = alreadyDone.indexOf(')', posOpenBracket);
@@ -1074,17 +1110,6 @@ public class WordlInSix {
 						}
 					}
 
-					StringBuffer sb = new StringBuffer();
-
-					for (int n = 0; n < index; n++) {
-
-						sb.append(bestWordSoFar[n]);
-						sb.append("\t");
-					}
-
-					sb.append(word);
-					sb.append("\t");
-
 					boolean highLight = false;
 
 					if (higestTries <= lowestSoFar) {
@@ -1104,7 +1129,7 @@ public class WordlInSix {
 					}
 
 					System.err.println(
-							sb.toString() + higestTries + " (" + failCount + ") " + (highLight ? " <----" : ""));
+							existingKey + "\t" + higestTries + " (" + failCount + ") " + (highLight ? " <----" : ""));
 				}
 			}
 		}
