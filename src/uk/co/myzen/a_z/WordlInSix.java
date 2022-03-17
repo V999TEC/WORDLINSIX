@@ -1,6 +1,9 @@
 package uk.co.myzen.a_z;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -34,6 +37,8 @@ public class WordlInSix {
 	private static List<String> words = null;
 
 	private int debug = 0;
+
+	private Map<String, String> existingResult = new HashMap<String, String>();
 
 	private boolean showWords = false;
 
@@ -285,7 +290,47 @@ public class WordlInSix {
 
 		if (arg.startsWith("debug=")) {
 
-			debug = Integer.parseInt(value);
+			String[] extras = value.split("-");
+
+			debug = Integer.parseInt(extras[0]);
+
+			if (extras.length > 1) {
+
+				File debugExtraA = new File(extras[1]);
+
+				try {
+
+					FileReader fr = new FileReader(debugExtraA);
+
+					BufferedReader br = new BufferedReader(fr);
+					String line;
+
+					while (null != (line = br.readLine())) {
+
+						int lastTab = line.lastIndexOf('\t');
+
+						if (lastTab < 0) {
+
+							continue;
+						}
+
+						String key = line.substring(0, lastTab);
+
+						String val = line.substring(1 + lastTab);
+
+						existingResult.put(key, val);
+					}
+
+					br.close();
+
+					fr.close();
+
+				} catch (FileNotFoundException e) {
+
+				} catch (IOException e) {
+
+				}
+			}
 
 			if (1 == debug) {
 
@@ -957,6 +1002,11 @@ public class WordlInSix {
 
 	private void debug2() {
 
+		// if null != debugExtraA then an input file is extant
+		// this should be consumed rather than starting analysis from beginning
+		// The file represents a checkpoint to recover a failed analysis run.
+
+		// Statically discovered best starting words, in order:
 		// "thump";
 		// "blown";
 		// "dirge";
@@ -982,29 +1032,45 @@ public class WordlInSix {
 
 					failCount = 0;
 
-					for (String targetAnswer : words) {
+					if (existingResult.containsKey(word)) {
 
-						answer = targetAnswer;
+						// avoid time consuming test of ever target answer
 
-						guesses.clear();
+						String alreadyDone = existingResult.get(word);
 
-						for (int n = 0; n < index; n++) {
+						int posOpenBracket = alreadyDone.indexOf('(');
+						int posCloseBracket = alreadyDone.indexOf(')', posOpenBracket);
 
-							guesses.add(bestWordSoFar[n]);
-						}
+						higestTries = Integer.parseInt(alreadyDone.substring(0, posOpenBracket - 1));
 
-						guesses.add(word);
+						failCount = Integer.parseInt(alreadyDone.substring(posOpenBracket + 1, posCloseBracket));
 
-						int tries = howManyGuesses();
+					} else {
 
-						if (tries > 6) {
+						for (String targetAnswer : words) {
 
-							failCount++;
-						}
+							answer = targetAnswer;
 
-						if (tries > higestTries) {
+							guesses.clear();
 
-							higestTries = tries;
+							for (int n = 0; n < index; n++) {
+
+								guesses.add(bestWordSoFar[n]);
+							}
+
+							guesses.add(word);
+
+							int tries = howManyGuesses();
+
+							if (tries > 6) {
+
+								failCount++;
+							}
+
+							if (tries > higestTries) {
+
+								higestTries = tries;
+							}
 						}
 					}
 
