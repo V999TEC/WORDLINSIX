@@ -25,7 +25,7 @@ public class WordlInSix {
 
 	private static final String[] WORDLE_START_WORDS = { "thump", "blown", "dirge" };
 
-	private static final String[] SCHOLARDLE_START_WORDS = { "frump", "aitch" };
+	private static final String[] SCHOLARDLE_START_WORDS = { "frump", "block" };
 
 	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
