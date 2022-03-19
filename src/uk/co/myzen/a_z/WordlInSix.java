@@ -21,6 +21,12 @@ public class WordlInSix {
 
 	private static String DEFAULT_TXT = "wordle.txt";
 
+	private static String DEFAULT_PROPERTIES = "wordle.properties";
+
+	private static final String[] WORDLE_START_WORDS = { "thump", "blown", "dirge" };
+
+	private static final String[] SCHOLARDLE_START_WORDS = { "frump", "aitch" };
+
 	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
 	private static int[] letterDistributionRanks;
@@ -35,6 +41,8 @@ public class WordlInSix {
 	private static WordlInSix instance = null;
 
 	private static List<String> words = null;
+
+	private final String resourceName;
 
 	private int debug = 0;
 
@@ -56,36 +64,43 @@ public class WordlInSix {
 
 	private String answer = "";
 
-	private static WordlInSix getInstance(String nonDefaultName) {
+	private static WordlInSix getInstance(String nonDefaultGame) {
 
 		if (null == instance) {
 
-			if (null == nonDefaultName || 0 == nonDefaultName.trim().length()) {
+			if (null == nonDefaultGame || 0 == nonDefaultGame.trim().length()) {
 
 				instance = new WordlInSix();
 
 			} else {
 
-				instance = new WordlInSix(nonDefaultName + ".txt");
+				instance = new WordlInSix(nonDefaultGame + ".txt");
 			}
 		}
 
-		letterDistributionRanks = instance.loadLetterDistributionRanks();
+		String propertyResourceName = null == nonDefaultGame || 0 == nonDefaultGame.trim().length() ? DEFAULT_PROPERTIES
+				: nonDefaultGame + ".properties";
+
+		letterDistributionRanks = instance.loadLetterDistributionRanks(propertyResourceName);
 
 		return instance;
 	}
 
 	private WordlInSix() {
 
+		resourceName = DEFAULT_TXT;
+
 		words = loadWords(DEFAULT_TXT);
 	}
 
 	private WordlInSix(String name) {
 
+		resourceName = name;
+
 		words = loadWords(name);
 	}
 
-	private int[] loadLetterDistributionRanks() {
+	private int[] loadLetterDistributionRanks(String name) {
 
 		int[] frequencies = new int[26];
 
@@ -93,7 +108,7 @@ public class WordlInSix {
 
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 
-		InputStream is = cl.getResourceAsStream("frequencies.properties");
+		InputStream is = cl.getResourceAsStream(name);
 
 		try {
 
@@ -129,16 +144,19 @@ public class WordlInSix {
 
 		if (0 == args.length) {
 
-			main = getInstance(null);
+			main = getInstance(null); // will use DEFAULT_TXT & DEFAULT_PROPERTIES
 
 			action = Action.SHOW_HELP;
 
 		} else {
 
-			// if first parameter is "wordle" (also the default) then load "wordle.txt"
+			// if first parameter is "wordle" (also the default) then load "wordle.txt" &
+			// "wordle.properties"
 			// an alternative is "scholardle"
 
-			main = getInstance(-1 == args[0].indexOf('=') ? args[0] : null);
+			String game = -1 == args[0].indexOf('=') ? args[0] : null;
+
+			main = getInstance(game);
 
 			if (words == null || 0 == words.size()) {
 
@@ -297,7 +315,7 @@ public class WordlInSix {
 
 		if (arg.startsWith("debug=")) {
 
-			String[] extras = value.split("-");
+			String[] extras = value.split("<");
 
 			debug = Integer.parseInt(extras[0]);
 
@@ -1029,12 +1047,7 @@ public class WordlInSix {
 		// this should be consumed rather than starting analysis from beginning
 		// The file represents a checkpoint to recover a failed analysis run.
 
-		// Statically discovered best starting words, in order:
-		// "thump";
-		// "blown";
-		// "dirge";
-
-		String bestWordSoFar[] = { "", "", "" };
+		String bestWordSoFar[] = new String[3];
 
 		int lowestSoFar = 0;
 		int higestTries = 0;
@@ -1043,7 +1056,7 @@ public class WordlInSix {
 
 		for (int index = 0; index < bestWordSoFar.length; index++) {
 
-			if ("".equals(bestWordSoFar[index])) {
+			if (null == bestWordSoFar[index]) {
 
 				// needs to be at least as big as the dictionary size
 				lowestSoFar = 99999;
@@ -1172,13 +1185,24 @@ public class WordlInSix {
 
 	private void debug3() {
 
-		int[][] counts = new int[3][7];
+		String[] startWords = WORDLE_START_WORDS;
 
-		String[] startWords = new String[] { "thump", "blown", "dirge" };
+		int x = WORDLE_START_WORDS.length;
+		int y = 7; // demonstrate only 6 guesses needed for wordle
 
-		for (int n = 1; n < 4; n++) {
+		if ("scholardle.txt".equals(resourceName)) {
 
-			counts[n - 1] = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+			startWords = SCHOLARDLE_START_WORDS;
+
+			x = SCHOLARDLE_START_WORDS.length;
+			y = 13; // demonstrate only 12 guesses needed for scholardle
+		}
+
+		int[][] counts = new int[x][y];
+
+		for (int n = 1; n < 1 + x; n++) {
+
+			counts[n - 1] = new int[y];
 
 			for (String targetAnswer : words) {
 
@@ -1197,11 +1221,25 @@ public class WordlInSix {
 			}
 		}
 
-		System.err.println("#Tries\t" + startWords[0] + " +\t" + startWords[1] + " +\t" + startWords[2]);
+		System.err.print("#Tries");
 
-		for (int c = 0; c < 7; c++) {
+		for (int z = 0; z < x; z++) {
 
-			System.err.println((c + 1) + "\t" + counts[0][c] + "\t" + counts[1][c] + "\t" + counts[2][c]);
+			System.err.print("\t" + startWords[z]);
+		}
+
+		System.err.print("\n");
+
+		for (int c = 0; c < y; c++) {
+
+			System.err.print((c + 1));
+
+			for (int z = 0; z < x; z++) {
+
+				System.err.print("\t" + counts[z][c]);
+			}
+
+			System.err.print("\n");
 		}
 	}
 
