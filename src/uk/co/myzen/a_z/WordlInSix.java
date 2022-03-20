@@ -19,13 +19,13 @@ import java.util.TreeSet;
 
 public class WordlInSix {
 
-	private static String DEFAULT_TXT = "wordle.txt";
+	private static final String DEFAULT_TXT = "wordle.txt";
 
-	private static String DEFAULT_PROPERTIES = "wordle.properties";
+	private static final String DEFAULT_PROPERTIES = "wordle.properties";
 
 	private static final String[] WORDLE_START_WORDS = { "thump", "blown", "dirge" };
 
-	private static final String[] SCHOLARDLE_START_WORDS = { "frump", "block" };
+	private static final String[] SCHOLARDLE_START_WORDS = { "frump", "lynch" };
 
 	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
@@ -758,29 +758,30 @@ public class WordlInSix {
 
 			if (guesses.size() > 0) {
 
-				if ("thump".equals(guesses.get(0))) {
+				if (DEFAULT_TXT.equals(resourceName)) { // improve chances by prioritising certain words
 
-					if (guesses.size() > 1) {
+					if ("thump".equals(guesses.get(0))) {
 
-						if (!"blown".equals(guesses.get(1))) {
+						if (guesses.size() > 1) {
 
-							// improve chances by prioritising these words
+							if (!"blown".equals(guesses.get(1))) {
 
-							if ("state".equals(candidate)) {
+								if ("state".equals(candidate)) {
 
-								categories.get(0).add(candidate);
+									categories.get(0).add(candidate);
 
-							} else if ("masse".equals(candidate)) {
+								} else if ("masse".equals(candidate)) {
 
-								categories.get(0).add(candidate);
+									categories.get(0).add(candidate);
 
-							} else if ("verge".equals(candidate)) {
+								} else if ("verge".equals(candidate)) {
 
-								categories.get(0).add(candidate);
+									categories.get(0).add(candidate);
 
-							} else if ("grill".equals(candidate)) {
+								} else if ("grill".equals(candidate)) {
 
-								categories.get(0).add(candidate);
+									categories.get(0).add(candidate);
+								}
 							}
 						}
 					}
