@@ -1048,7 +1048,7 @@ public class WordlInSix {
 		// this should be consumed rather than starting analysis from beginning
 		// The file represents a checkpoint to recover a failed analysis run.
 
-		String bestWordSoFar[] = new String[3];
+		String bestWordSoFar[] = new String[5];
 
 		int lowestSoFar = 0;
 		int higestTries = 0;
@@ -1145,10 +1145,20 @@ public class WordlInSix {
 					System.err.println(
 							existingKey + "\t" + higestTries + " (" + failCount + ") " + (highLight ? " <----" : ""));
 				}
+
+				if (0 == highestFailCount) {
+
+					break;
+				}
 			}
 		}
 
 		for (int g = 0; g < bestWordSoFar.length; g++) {
+
+			if (null == bestWordSoFar[g]) {
+
+				break;
+			}
 
 			System.err.println("guess" + (1 + g) + "=" + bestWordSoFar[g]);
 		}
@@ -1166,6 +1176,11 @@ public class WordlInSix {
 			guesses.clear();
 
 			for (int g = 0; g < bestWordSoFar.length; g++) {
+
+				if (null == bestWordSoFar[g]) {
+
+					break;
+				}
 
 				guesses.add(bestWordSoFar[g]);
 			}
