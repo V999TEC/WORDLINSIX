@@ -25,7 +25,7 @@ public class WordlInSix {
 
 	private static final String[] WORDLE_START_WORDS = { "thump", "blown", "dirge" };
 
-	private static final String[] SCHOLARDLE_START_WORDS = { "frump", "lynch" };
+	private static final String[] SCHOLARDLE_START_WORDS = { "frump", "thegn", "sloyd", "wacke" };
 
 	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
@@ -315,7 +315,7 @@ public class WordlInSix {
 
 		if (arg.startsWith("debug=")) {
 
-			String[] extras = value.split("<");
+			String[] extras = value.split("-");
 
 			debug = Integer.parseInt(extras[0]);
 
@@ -1211,7 +1211,7 @@ public class WordlInSix {
 			startWords = SCHOLARDLE_START_WORDS;
 
 			x = SCHOLARDLE_START_WORDS.length;
-			y = 13; // demonstrate only 12 guesses needed for scholardle
+			y = 13; // demonstrate only 9 guesses needed for scholardle
 		}
 
 		int[][] counts = new int[x][y];
