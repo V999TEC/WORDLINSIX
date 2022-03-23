@@ -1048,7 +1048,7 @@ public class WordlInSix {
 		// this should be consumed rather than starting analysis from beginning
 		// The file represents a checkpoint to recover a failed analysis run.
 
-		String bestWordSoFar[] = new String[5];
+		String bestWordSoFar[] = new String[4];
 
 		int lowestSoFar = 0;
 		int higestTries = 0;
