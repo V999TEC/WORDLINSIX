@@ -224,7 +224,7 @@ but 70 answers will need 6 guesses but none will need more than 6
 The list of words in the scholardle dictionary is more than five times larger than wordle's!
 
 This means the game cannot always be solved in six tries, but theoretically it can be solved in 9.
-Obviously this means that there will be games tat will be lost, but by choosing the optimum starting word(s) the chances of a solution are drastically improved.
+Obviously this means that there will be games that will be lost, but by choosing the optimum starting word(s) the chances of a solution are drastically improved.
 
 Using scholardle rank=yes words=yes debug=3
 
@@ -249,9 +249,25 @@ Using scholardle rank=yes words=yes debug=3
 
 The preferred words may seem obscure, but can be used, in the specified order, to improve the chance of finding a solution.
 
-The optimum words have been deduced using parameter **debug=2** with _**scholardle**_ as the first parameter.
+These optimum words have been deduced using parameter **debug=2** with _**scholardle**_ as the first parameter.
+
 On a very fast computer, debug=2 takes a long time to complete using _wordle_ as first parameter.
-However using _scholardle_ as first parameter on the same computer with **debug=2** will take (possibly) days of computation time.
+
+However using _scholardle_ as first parameter on the same computer with **debug=2** will take much (possibly days of) computation time.
 
 The output that is produced is this: [DEBUG=2](/assets/scholardle-debug=2.txt?raw=true "debug=2")
 
+### Technical note
+
+If one wishes to deduce again optimum words following changes to the wordle.txt and/or scholardle.txt dictionaries
+
+```java -jar wordle wordlinsix.jar words=yes rank=true debug=2 1>logA.txt 2>>&1``` or
+
+```java -jar scholardle wordlinsix.jar words=yes rank=true debug=2 1>logA.txt 2>>&1```
+
+In the event that the the command fails to complete for any reason, due to the length computation time, 
+logA.txt will contain partial data only, but the program can be resumed using the previous output file as input:
+
+```java -jar wordlinsix.jar words=yes rank=true debug=2-logA.txt 1>logB.txt 2>>&1```
+
+Ensure that the stdout & stderr are piped to a different file to the one use as input!
