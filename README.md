@@ -187,7 +187,7 @@ As far as this algorithm is concerned, the worst possible start word is: ```queu
 ## debug=3
 
 ```
-Tries	thump +	blown +	dirge
+#Tries	thump	blown	dirge
 1	1	0	0
 2	81	1	0
 3	713	507	1
@@ -195,6 +195,8 @@ Tries	thump +	blown +	dirge
 5	405	509	603
 6	92	58	70
 7	4	2	0
+==    ======= ======= ======= 
+%      99.998  99.999  100.000
 ```
 What this table is showing is:
 
