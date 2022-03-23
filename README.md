@@ -1,10 +1,14 @@
 # WORDLINSIX
 Java CLI to solve any WORDLE puzzle in a maximum of six tries (typically 4)
 
+It is also possible to play the variation of wordle called scholardle
+
+Just use **scholardle** as the first parameter
 
 ### >java -jar wordlinsix.jar (parameters)
 
 ## Parameter Help:
+        Make the first word wordle or scholardle to play different variations of the game
         Use words=yes or words=true to show possible words
         Use rank=yes or rank=true to rank each word based on letter probability
         Use 1=b to indicate first letter is definitely b
@@ -162,7 +166,7 @@ If the words.txt file changes then the corresponding property data should be reg
 
 For the curious, the algorithm can be made to discover its optimum three start word(s)
 
-But it takes considerable time.
+But it takes _**considerable**_ time.
 
 Use of the word *optimum* in this context does not mean the choice of words cannot be beaten: it just means that the Wordle will be solved in at most six guesses.
 
@@ -187,7 +191,7 @@ As far as this algorithm is concerned, the worst possible start word is: ```queu
 ## debug=3
 
 ```
-Tries	thump +	blown +	dirge
+#Tries	thump	blown	dirge
 1	1	0	0
 2	81	1	0
 3	713	507	1
@@ -195,6 +199,8 @@ Tries	thump +	blown +	dirge
 5	405	509	603
 6	92	58	70
 7	4	2	0
+==    ======= ======= ======= 
+%      99.998  99.999  100.000
 ```
 What this table is showing is:
 
