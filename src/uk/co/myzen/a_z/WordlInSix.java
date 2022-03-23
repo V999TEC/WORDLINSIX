@@ -1203,16 +1203,18 @@ public class WordlInSix {
 
 		String[] startWords = WORDLE_START_WORDS;
 
-		int x = WORDLE_START_WORDS.length;
 		int y = 7; // demonstrate only 6 guesses needed for wordle
 
 		if ("scholardle.txt".equals(resourceName)) {
 
 			startWords = SCHOLARDLE_START_WORDS;
 
-			x = SCHOLARDLE_START_WORDS.length;
 			y = 13; // demonstrate only 9 guesses needed for scholardle
 		}
+
+		int x = startWords.length;
+
+		int[] failCounts = new int[x];
 
 		int[][] counts = new int[x][y];
 
@@ -1234,6 +1236,11 @@ public class WordlInSix {
 				int tries = howManyGuesses();
 
 				counts[n - 1][tries - 1]++;
+			}
+
+			for (int f = 6; f < y; f++) {
+
+				failCounts[n - 1] += counts[n - 1][f];
 			}
 		}
 
@@ -1257,6 +1264,26 @@ public class WordlInSix {
 
 			System.err.print("\n");
 		}
+
+		System.err.print("==    ");
+
+		for (int z = 0; z < x; z++) {
+
+			System.err.print("======= ");
+		}
+		System.err.print("\n");
+
+		System.err.print("%    ");
+
+		final float s = words.size();
+
+		for (int z = 0; z < x; z++) {
+
+			float f = 100 - ((float) failCounts[z] / s);
+
+			System.err.print(String.format("  %3.3f", f));
+		}
+		System.err.print("\n");
 	}
 
 }
