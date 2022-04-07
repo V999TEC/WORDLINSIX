@@ -231,17 +231,21 @@ public class WordlInSix {
 
 	private void help() {
 
-		System.out.println("Tips:");
-		System.out.println("\tUse words=yes or words=true to show possible words");
-		System.out.println("\tUse rank=yes or rank=true to rank each word based on letter probability");
-		System.out.println("\tUse 1=b to indicate first letter is definitely b");
+		System.out.println("Help with parameters:");
+
+		System.out.println("\tMake the first parameter wordle or scholardle to play different variations of the game");
+		System.out.println("\tUse words=no if you don't want to see possible words");
+		System.out.println("\tUse rank=no if you don't want a clue to the likelihood of word possibilities");
+		System.out.println(
+				"\tThe columns are implicitly numbered left to right 1 through 5: thus 1 is first and 5 is last");
+		System.out.println("\tUse 1=b to indicate first letter is definitely 'b'");
 		System.out.println("\tEliminate letters by using not=abcdefg etc.");
-		System.out.println("\tUse 5=z to indicate last letter is definitely z");
-		System.out.println("\tUse 2=j 3=k  to indicate letters 'jk' are found between positions 2 and 3");
-		System.out.println("\tUse 3=j 4=k  to indicate letters 'jk' are found between positions 3 and 4");
-		System.out.println("\tUse contains=iou to indicate letters i and o and u *must* appear in the word");
-		System.out.println("\tUse not2=ab to indicate second letter cannot be a or b");
-		System.out.println("\tUse not5=y to indicate fifth letter cannot be y");
+		System.out.println("\tUse 1=a to indicate first letter is definitely 'a'");
+		System.out.println("\tUse 5=z to indicate last letter is definitely 'z'");
+		System.out.println("\tUse 2=j 3=k 4=l to indicate letter 'j' is in column 2 and 'k' in column 3 and 'l' in 4");
+		System.out.println("\tUse contains=iou to indicate letters 'i' and 'o' and 'u' *must* appear in the word");
+		System.out.println("\tUse not2=ab to indicate second letter cannot be 'a' or 'b'");
+		System.out.println("\tUse not5=y to indicate last letter cannot be 'y'");
 	}
 
 	private void report(Set<String> candidates) {
