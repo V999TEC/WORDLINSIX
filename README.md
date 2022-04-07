@@ -8,7 +8,7 @@ Just use **scholardle** as the first parameter
 ### >java -jar wordlinsix.jar (parameters)
 
 ## Parameter Help:
-        Make the first word wordle or scholardle to play different variations of the game
+        Make the first parameter wordle or scholardle to play different variations of the game
         Use words=no if you don't want to see possible words
         Use rank=no if you don't want a clue to the likelihood of word possibilities
         The columns are implicitly numbered left to right 1 through 5: thus 1 is first and 5 is last
