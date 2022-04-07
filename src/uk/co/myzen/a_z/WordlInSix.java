@@ -48,9 +48,9 @@ public class WordlInSix {
 
 	private Map<String, String> existingResult = new HashMap<String, String>();
 
-	private boolean showWords = false;
+	private boolean showWords = true;
 
-	private boolean showRank = false;
+	private boolean showRank = true;
 
 	private List<String> guesses = new ArrayList<String>(6);
 
