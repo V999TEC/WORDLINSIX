@@ -173,7 +173,7 @@ Use of the word *optimum* in this context does not mean the choice of words cann
 In the following debug log, the algorithm is looking for word combinations that result in 6 (0) 
 meaning that at most, six guesses and zero failures (where a failure is considered taking > 6 guesses)
 
-[DEBUG=2](/assets/debug=2.txt?raw=true "debug=2")
+The output that is produced is this: [java -jar wordlinsix.jar wordle debug=2](/assets/debug=2.txt?raw=true "debug=2")
 
 The log shows that initially we discover
 ```abase	9 (29)  <----```
@@ -255,7 +255,7 @@ On a very fast computer, debug=2 takes a long time to complete using _wordle_ as
 
 However using _scholardle_ as first parameter on the same computer with **debug=2** will take much (possibly days of) computation time.
 
-The output that is produced is this: [DEBUG=2](/assets/scholardle-debug=2.txt?raw=true "debug=2")
+The output that is produced is this: [java -jar wordlinsix.jar scholardle debug=2](/assets/scholardle-debug=2.txt?raw=true "debug=2")
 
 ### Technical note
 
