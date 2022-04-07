@@ -9,17 +9,17 @@ Just use **scholardle** as the first parameter
 
 ## Parameter Help:
         Make the first word wordle or scholardle to play different variations of the game
-        Use words=yes or words=true to show possible words
-        Use rank=yes or rank=true to rank each word based on letter probability
-        Use 1=b to indicate first letter is definitely b
+        Use words=no if you don't want to see possible words
+        Use rank=no if you don't want a clue to the likelihood of word possibilities
+        The columns are implicitly numbered left to right 1 through 5: thus 1 is first and 5 is last
+        Use 1=b to indicate first letter is definitely 'b'
         Eliminate letters by using not=abcdefg etc.
-        Use 5=z to indicate last letter is definitely z
-        Use 2=j 3=k  to indicate letters 'jk' are found between positions 2 and 3
-        Use 3=j 4=k  to indicate letters 'jk' are found between positions 3 and 4
-        Use contains=iou to indicate letters i and o and u *must* appear in the word
-        Use not2=ab to indicate second letter cannot be a or b
-        Use not5=y to indicate fifth letter cannot be y
-        
+        Use 1=a to indicate first letter is definitely 'a'
+        Use 5=z to indicate last letter is definitely 'z'
+        Use 2=j 3=k 4=l to indicate letter 'j' is in column 2 and 'k' in column 3 and 'l' in 4
+        Use contains=iou to indicate letters 'i' and 'o' and 'u' *must* appear in the word
+        Use not2=ab to indicate second letter cannot be 'a' or 'b'
+        Use not5=y to indicate last letter cannot be 'y'
 
 
 ## Examples
@@ -52,7 +52,7 @@ The app responds with...
 
 *There are 3 word(s) matching words=no contains=b not=plumeast not1=b not5=b*
 
-If we change **words=yes** the app will list the possible words
+If we remove **words=no** or put **words=yes** the app will list the possible words
 
 *There are 3 word(s) matching words=yes contains=b not=plumeast not1=b not5=b*
 
@@ -61,7 +61,7 @@ If we change **words=yes** the app will list the possible words
 2       inbox
 3       robin
 ```
-But if we add **rank=yes** the words will be sorted into a preference order based on letter distribution
+By default **rank=yes** meaning the words will be sorted into a preference order based on letter distribution
 
 *There are 3 word(s) matching words=yes rank=yes contains=b not=plumeast not1=b not5=b*
 ```
