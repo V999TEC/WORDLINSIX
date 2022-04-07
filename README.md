@@ -261,13 +261,13 @@ The output that is produced is this: [java -jar wordlinsix.jar scholardle debug=
 
 If one wishes to deduce again optimum words following changes to the wordle.txt and/or scholardle.txt dictionaries
 
-```java -jar wordle wordlinsix.jar words=yes rank=true debug=2 1>logA.txt 2>>&1``` or
+```java -jar wordle wordlinsix.jar debug=2 1>logA.txt 2>>&1``` or
 
-```java -jar scholardle wordlinsix.jar words=yes rank=true debug=2 1>logA.txt 2>>&1```
+```java -jar scholardle wordlinsix.jar debug=2 1>logA.txt 2>>&1```
 
 In the event that the the command fails to complete for any reason, due to the length computation time, 
 logA.txt will contain partial data only, but the program can be resumed using the previous output file as input:
 
-```java -jar wordlinsix.jar words=yes rank=true debug=2-logA.txt 1>logB.txt 2>>&1```
+```java -jar wordlinsix.jar debug=2-logA.txt 1>logB.txt 2>>&1```
 
 Ensure that the stdout & stderr are piped to a different file to the one use as input!
