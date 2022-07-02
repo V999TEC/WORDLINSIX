@@ -28,7 +28,7 @@ public class WordlInSix {
 
 	private static final String[] SCHOLARDLE_START_WORDS = { "frump", "thegn", "sloyd", "wacke" };
 
-	private static final String[] THREE_START_WORDS = { "lib", "gan", "hyp", "ems" };
+	private static final String[] THREE_START_WORDS = { "lib", "gan", "hyp", "ems", "wot" };
 
 	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
@@ -1403,7 +1403,7 @@ public class WordlInSix {
 
 			if (size < 1) {
 
-				throw new Exception("Must specify at least guess1=word when using debug=2");
+				throw new Exception("Must specify at least guess1=word when using debug=3");
 			}
 
 			startWords = new String[size];
