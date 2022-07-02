@@ -28,9 +28,9 @@ public class WordlInSix {
 
 	private static final String[] SCHOLARDLE_START_WORDS = { "frump", "thegn", "sloyd", "wacke" };
 
-	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
+	private static final String[] THREE_START_WORDS = { "lib", "gan", "hyp", "ems" };
 
-	private static final int DEFAULT_WORD_LENGTH = 5;
+	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
 	private static int wordLength = 0;
 
@@ -378,11 +378,32 @@ public class WordlInSix {
 
 					int col = 1 + bs.nextSetBit(fromIndex);
 
-					suggestion = suggestion + "Column " + col + " must be '" + ch + "'\n";
+					// danger of misleading if ch is a duplicate letter in a different column
+					// already solved
 
-					inferred[col - 1] = ch;
+					int possibleDuplicate = -1;
 
-					inferenceMade = true;
+					for (int d = 0; d < positions.length; d++) {
+
+						if (ch == positions[d]) {
+
+							possibleDuplicate = d;
+							break;
+						}
+					}
+
+					if (possibleDuplicate > -1) {
+
+						suggestion = suggestion + "Column " + col + " might be '" + ch
+								+ "' but only if it is the same letter as in column " + (1 + possibleDuplicate) + "\n";
+					} else {
+
+						suggestion = suggestion + "Column " + col + " must be '" + ch + "'\n";
+
+						inferred[col - 1] = ch;
+
+						inferenceMade = true;
+					}
 
 				} else if (cardinality > 1) {
 
@@ -1201,7 +1222,7 @@ public class WordlInSix {
 		// this should be consumed rather than starting analysis from beginning
 		// The file represents a checkpoint to recover a failed analysis run.
 
-		String bestWordSoFar[] = new String[4];
+		String bestWordSoFar[] = new String[5];
 
 		int lowestSoFar = 0;
 		int higestTries = 0;
@@ -1352,7 +1373,7 @@ public class WordlInSix {
 		System.err.println("Failures: " + failCount);
 	}
 
-	private void debug3() {
+	private void debug3() throws Exception {
 
 		String[] startWords = new String[0];
 
@@ -1370,13 +1391,24 @@ public class WordlInSix {
 
 			y = 13; // demonstrate only 9 guesses needed for scholardle
 
+		} else if ("three.txt".equals(resourceName)) {
+
+			startWords = THREE_START_WORDS;
+
 		} else {
+
+			final int size = guesses.size();
 
 			// assume parameters passed are guess1=X guess2=Y guess3=Z ... guessN = etc
 
-			startWords = new String[guesses.size()];
+			if (size < 1) {
 
-			for (int w = 0; w < guesses.size(); w++) {
+				throw new Exception("Must specify at least guess1=word when using debug=2");
+			}
+
+			startWords = new String[size];
+
+			for (int w = 0; w < size; w++) {
 
 				startWords[w] = guesses.get(w);
 			}
