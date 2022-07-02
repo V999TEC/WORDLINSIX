@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -29,6 +30,10 @@ public class WordlInSix {
 
 	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
+	private static final int DEFAULT_WORD_LENGTH = 5;
+
+	private static int wordLength = 0;
+
 	private static int[] letterDistributionRanks;
 
 	private static enum Action {
@@ -48,6 +53,8 @@ public class WordlInSix {
 
 	private Map<String, String> existingResult = new HashMap<String, String>();
 
+	private boolean ai = false;
+
 	private boolean showWords = true;
 
 	private boolean showRank = true;
@@ -58,13 +65,37 @@ public class WordlInSix {
 
 	private char[] notChars = {};
 
-	private String[] notN = { "", "", "", "", "" };
+	private String[] notN;
 
-	private char positions[] = { ' ', ' ', ' ', ' ', ' ' };
+	private char positions[];
 
 	private String answer = "";
 
-	private static WordlInSix getInstance(String nonDefaultGame) {
+	private String[] resetStringArray() {
+
+		String result[] = new String[wordLength];
+
+		for (int w = 0; w < wordLength; w++) {
+
+			result[w] = "";
+		}
+
+		return result;
+	}
+
+	private char[] resetCharArray() {
+
+		char result[] = new char[wordLength];
+
+		for (int w = 0; w < wordLength; w++) {
+
+			result[w] = ' ';
+		}
+
+		return result;
+	}
+
+	private static WordlInSix getInstance(String nonDefaultGame) throws Exception {
 
 		if (null == instance) {
 
@@ -86,18 +117,26 @@ public class WordlInSix {
 		return instance;
 	}
 
-	private WordlInSix() {
+	private WordlInSix() throws Exception {
 
 		resourceName = DEFAULT_TXT;
 
 		words = loadWords(DEFAULT_TXT);
+
+		notN = resetStringArray();
+
+		positions = resetCharArray();
 	}
 
-	private WordlInSix(String name) {
+	private WordlInSix(String name) throws Exception {
 
 		resourceName = name;
 
 		words = loadWords(name);
+
+		notN = resetStringArray();
+
+		positions = resetCharArray();
 	}
 
 	private int[] loadLetterDistributionRanks(String name) {
@@ -142,90 +181,96 @@ public class WordlInSix {
 
 		WordlInSix main;
 
-		if (0 == args.length) {
+		try {
+			if (0 == args.length) {
 
-			main = getInstance(null); // will use DEFAULT_TXT & DEFAULT_PROPERTIES
+				main = getInstance(null); // will use DEFAULT_TXT & DEFAULT_PROPERTIES
 
-			action = Action.SHOW_HELP;
-
-		} else {
-
-			// if first parameter is "wordle" (also the default) then load "wordle.txt" &
-			// "wordle.properties"
-			// an alternative is "scholardle"
-
-			String game = -1 == args[0].indexOf('=') ? args[0] : null;
-
-			main = getInstance(game);
-
-			if (words == null || 0 == words.size()) {
-
-				action = Action.ABORT;
+				action = Action.SHOW_HELP;
 
 			} else {
 
-				action = Action.DEFAULT;
+				// if first parameter is "wordle" (also the default) then load "wordle.txt" &
+				// "wordle.properties"
+				// an alternative is "scholardle"
+
+				String game = -1 == args[0].indexOf('=') ? args[0] : null;
+
+				main = getInstance(game);
+
+				if (words == null || 0 == words.size()) {
+
+					action = Action.ABORT;
+
+				} else {
+
+					action = Action.DEFAULT;
+
+					for (String arg : args) {
+
+						main.parameter(arg);
+					}
+
+					if (!main.validatedParameters()) {
+
+						action = Action.ABORT;
+					}
+				}
+			}
+
+			switch (action) {
+
+			case DEBUG_1:
+
+				main.debug1(null); // display letter frequency
+				break;
+
+			case DEBUG_2:
+
+				main.debug2();
+				break;
+
+			case DEBUG_3:
+
+				main.debug3();
+				break;
+
+			case GUESS_TO_ANSWER:
+
+				main.guessToAnswer();
+				break;
+
+			case ABORT:
+			case SHOW_HELP:
+
+				main.help();
+				break;
+
+			case DEFAULT:
+			default:
+
+				Set<String> candidates = main.findCandidates();
+
+				// display the candidate words (if words=true | words=yes )
+
+				StringBuffer sb = new StringBuffer();
 
 				for (String arg : args) {
 
-					main.parameter(arg);
+					sb.append(arg);
+					sb.append(' ');
 				}
 
-				if (!main.validatedParameters()) {
+				System.err.println("There are " + candidates.size() + " word(s) matching " + sb.toString());
 
-					action = Action.ABORT;
-				}
-			}
-		}
+				main.report(candidates);
 
-		switch (action) {
-
-		case DEBUG_1:
-
-			main.debug1(null); // display letter frequency
-			break;
-
-		case DEBUG_2:
-
-			main.debug2();
-			break;
-
-		case DEBUG_3:
-
-			main.debug3();
-			break;
-
-		case GUESS_TO_ANSWER:
-
-			main.guessToAnswer();
-			break;
-
-		case ABORT:
-		case SHOW_HELP:
-
-			main.help();
-			break;
-
-		case DEFAULT:
-		default:
-
-			Set<String> candidates = main.findCandidates();
-
-			// display the candidate words (if words=true | words=yes )
-
-			StringBuffer sb = new StringBuffer();
-
-			for (String arg : args) {
-
-				sb.append(arg);
-				sb.append(' ');
+				break;
 			}
 
-			System.err.println("There are " + candidates.size() + " word(s) matching " + sb.toString());
+		} catch (Exception e) {
 
-			main.report(candidates);
-
-			break;
+			System.err.println("Exception: " + e.getMessage());
 		}
 	}
 
@@ -258,6 +303,11 @@ public class WordlInSix {
 
 				List<String> rankings = rankCandidatesByLetterDistribution(candidates);
 
+				if (ai && rankings.size() > 1) {
+
+					System.err.println(intelligentSuggestion());
+				}
+
 				for (String candidate : rankings) {
 
 					int uniqueLetters = countDuplicateLetters(candidate);
@@ -277,6 +327,80 @@ public class WordlInSix {
 				}
 			}
 		}
+
+	}
+
+	private String intelligentSuggestion() {
+
+		String suggestion = "";
+
+		// go through the contains and work out which columns each letter *could* be in
+
+		char[] inferred = { ' ', ' ', ' ', ' ', ' ' };
+
+		BitSet bs = new BitSet(5);
+
+		boolean inferenceMade;
+
+		do {
+
+			inferenceMade = false;
+
+			for (char ch : containsChars) {
+
+				bs.set(0, 5, false);
+
+				for (int columnIndex = 0; columnIndex < 5; columnIndex++) {
+
+					if (' ' != inferred[columnIndex]) {
+
+						continue;
+					}
+
+					if (' ' != positions[columnIndex]) {
+
+						continue; // we already know for certain what letter is in this column
+					}
+
+					if (-1 != notN[columnIndex].indexOf(ch)) {
+
+						continue; // we know for certain ch cannot be in this column
+					}
+
+					bs.set(columnIndex, true); // could be in this column
+				}
+
+				int cardinality = bs.cardinality();
+
+				int fromIndex = 0;
+
+				if (1 == cardinality) {
+
+					int col = 1 + bs.nextSetBit(fromIndex);
+
+					suggestion = suggestion + "Column " + col + " must be '" + ch + "'\n";
+
+					inferred[col - 1] = ch;
+
+					inferenceMade = true;
+
+				} else if (cardinality > 1) {
+
+					suggestion = suggestion + "'" + ch + "' could be in these columns ";
+
+					while (-1 != (fromIndex = bs.nextSetBit(fromIndex))) {
+
+						fromIndex++;
+						suggestion = suggestion + (fromIndex) + " ";
+					}
+
+					suggestion = suggestion + "\n";
+				}
+			}
+
+		} while (inferenceMade);
+
+		return suggestion;
 
 	}
 
@@ -317,7 +441,11 @@ public class WordlInSix {
 
 		String value = arg.substring(1 + indexOfEqualsChar);
 
-		if (arg.startsWith("debug=")) {
+		if (arg.startsWith("ai=")) {
+
+			ai = (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("yes"));
+
+		} else if (arg.startsWith("debug=")) {
 
 			String[] extras = value.split("-");
 
@@ -493,7 +621,7 @@ public class WordlInSix {
 		return true;
 	}
 
-	private static List<String> loadWords(String name) {
+	private static List<String> loadWords(String name) throws Exception {
 
 		List<String> result = new ArrayList<String>(2315);
 
@@ -522,7 +650,28 @@ public class WordlInSix {
 
 				while (null != (ln = br.readLine())) {
 
-					result.add(ln);
+					if (ln.startsWith("#")) {
+
+						continue; // ignore comments in property file
+					}
+
+					String words[] = ln.split("\\s+");
+
+					for (String word : words) {
+
+						if (word.length() != wordLength) {
+
+							if (0 == wordLength) {
+
+								wordLength = word.length();
+							} else {
+
+								throw new Exception("Inconsistent resource file of words");
+							}
+						}
+
+						result.add(word.toLowerCase());
+					}
 				}
 
 			} catch (IOException e) {
@@ -609,7 +758,7 @@ public class WordlInSix {
 
 			match = false;
 
-			for (int index = 0; index < 5; index++) {
+			for (int index = 0; index < wordLength; index++) {
 
 				if (0 == notN[index].length()) {
 
@@ -642,7 +791,7 @@ public class WordlInSix {
 
 			match = true;
 
-			for (int index = 0; index < 5; index++) {
+			for (int index = 0; index < wordLength; index++) {
 
 				char c = positions[index];
 
@@ -910,9 +1059,9 @@ public class WordlInSix {
 
 		containsChars = new char[] {};
 
-		notN = new String[] { "", "", "", "", "" };
+		notN = resetStringArray();
 
-		char emptyPositions[] = { ' ', ' ', ' ', ' ', ' ' };
+		char emptyPositions[] = resetCharArray();
 
 		positions = emptyPositions;
 
@@ -952,7 +1101,7 @@ public class WordlInSix {
 				suggestive.append(' ');
 			}
 
-			for (int n = 0; n < 5; n++) {
+			for (int n = 0; n < wordLength; n++) {
 
 				if (' ' != positions[n]) {
 
@@ -963,7 +1112,7 @@ public class WordlInSix {
 				}
 			}
 
-			for (int n = 0; n < 5; n++) {
+			for (int n = 0; n < wordLength; n++) {
 
 				if (!"".equals(notN[n])) {
 
