@@ -1,11 +1,11 @@
 # WORDLINSIX
 Java CLI to solve any WORDLE puzzle in a maximum of six tries (typically 4)
 
-It is also possible to play the variation of wordle called scholardle
+It is also possible to play the variation of wordle called _scholardle_
 
 Just use **scholardle** as the first parameter (to use the original 5-letter version of scholardle)
 
-Alternatively use **six** as the first parameter (to play a  game with 6-letters, such as the recent version of scholardle from 2022/07/02) 
+Alternatively use **six** as the first parameter (to play a generic game with 6-letters, such as the version of scholardle from 2nd July 2022) 
 
 ### >java -jar wordlinsix.jar (parameters)
 
