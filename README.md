@@ -1,9 +1,11 @@
 # WORDLINSIX
 Java CLI to solve any WORDLE puzzle in a maximum of six tries (typically 4)
 
-It is also possible to play the variation of wordle called scholardle
+It is also possible to play the variation of wordle called _scholardle_
 
-Just use **scholardle** as the first parameter
+Just use **scholardle** as the first parameter (to use the original 5-letter version of scholardle)
+
+Alternatively use **six** as the first parameter (to play a generic game with 6-letters, such as the version of scholardle from 2nd July 2022) 
 
 ### >java -jar wordlinsix.jar (parameters)
 
@@ -11,7 +13,7 @@ Just use **scholardle** as the first parameter
         Make the first parameter wordle or scholardle to play different variations of the game
         Use words=no if you don't want to see possible words
         Use rank=no if you don't want a clue to the likelihood of word possibilities
-        The columns are implicitly numbered left to right 1 through 5: thus 1 is first and 5 is last
+        The columns are implicitly numbered left to right 1 through N: thus 1 is first and N is last
         Use 1=b to indicate first letter is definitely 'b'
         Eliminate letters by using not=abcdefg etc.
         Use 1=a to indicate first letter is definitely 'a'
@@ -219,7 +221,7 @@ then 1641 answers will be correct on the 4th guess
 but 70 answers will need 6 guesses but none will need more than 6
 
 
-# Scholardle
+# Scholardle with 5-letters
 
 The list of words in the scholardle dictionary is more than five times larger than wordle's!
 
