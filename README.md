@@ -228,7 +228,7 @@ The list of words in the scholardle dictionary is more than five times larger th
 This means the game cannot always be solved in six tries, but theoretically it can be solved in 9.
 Obviously this means that there will be games that will be lost, but by choosing the optimum starting word(s) the chances of a solution are drastically improved.
 
-Using scholardle rank=yes words=yes debug=3
+Using scholardle debug=3
 
 ```
 #Tries	frump	thegn	sloyd	wacke
