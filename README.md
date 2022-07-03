@@ -258,7 +258,7 @@ These optimum words have been deduced using parameter **debug=2** with _**schola
 
 On a very fast computer, debug=2 takes a long time to complete using _wordle_ as first parameter.
 
-However using _scholardle_ as first parameter on the same computer with **debug=2** will take much (possibly days of) computation time.
+However using _scholardle_ as first parameter on a slow computer with **debug=2** will take much (_possibly **days** of_) computation time!
 
 The output that is produced is this: [java -jar wordlinsix.jar scholardle debug=2](/assets/scholardle-debug=2.txt?raw=true "debug=2")
 
