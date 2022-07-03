@@ -8,7 +8,9 @@ Just use **scholardle** as the first parameter (to use the original 5-letter ver
 Alternatively use **six** as the first parameter (to play a generic game with 6-letters, such as the version of scholardle from 2nd July 2022<sup>*1</sup>) 
 
 <sup>*1</sup>n.b. 
-The supplied 6-letter word list resource has words more words than are in the subset used by the 6-letter scholardle game
+The supplied 6-letter word list resource is a subset of possible words contains six letters.
+
+resources/six.txt in the jar can be edited as required if it does not prove reliable. See **debug=1** below
 
 ### >java -jar wordlinsix.jar (parameters)
 
@@ -133,7 +135,7 @@ This will solve 100% of Wordles with a mean number of guesses of 4.2
 
 ## debug=1
 
-This is only used to establish the letter frequency for all the words in the Wordle dictionary
+This is only used to establish the letter frequency for all the words in the xxxx.txt dictionary stored in the jar
 ```
 a=909
 b=267
@@ -162,9 +164,11 @@ x=37
 y=417
 z=35
 ```
-The result should be stored in the wordle.properties resource file.
+The result should be stored in the xxxx.properties resource file.
 
-If the words.txt file changes then the corresponding property data should be regenerated using debug=1
+If there is ever a need to edit the xxxx.txt file, then the corresponding property data should be regenerated using debug=1
+
+This will maintain the correct letter frequency distribution used by the code
 
 
 ## debug=2
