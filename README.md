@@ -5,7 +5,9 @@ It is also possible to play the variation of wordle called _scholardle_
 
 Just use **scholardle** as the first parameter (to use the original 5-letter version of scholardle)
 
-Alternatively use **six** as the first parameter (to play a generic game with 6-letters, such as the version of scholardle from 2nd July 2022) 
+Alternatively use **six** as the first parameter (to play a generic game with 6-letters, such as the version of scholardle from 2nd July 2022*) 
+
+n.b. The 6-letter word list has words more words than are in the subset used by the 6-letter scholardle game
 
 ### >java -jar wordlinsix.jar (parameters)
 
