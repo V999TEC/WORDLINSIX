@@ -5,7 +5,10 @@ It is also possible to play the variation of wordle called _scholardle_
 
 Just use **scholardle** as the first parameter (to use the original 5-letter version of scholardle)
 
-Alternatively use **six** as the first parameter (to play a generic game with 6-letters, such as the version of scholardle from 2nd July 2022) 
+Alternatively use **six** as the first parameter (to play a generic game with 6-letters, such as the version of scholardle from 2nd July 2022<sup>*1</sup>) 
+
+<sup>*1</sup>n.b. 
+The supplied 6-letter word list resource has words more words than are in the subset used by the 6-letter scholardle game
 
 ### >java -jar wordlinsix.jar (parameters)
 
@@ -255,7 +258,7 @@ These optimum words have been deduced using parameter **debug=2** with _**schola
 
 On a very fast computer, debug=2 takes a long time to complete using _wordle_ as first parameter.
 
-However using _scholardle_ as first parameter on the same computer with **debug=2** will take much (possibly days of) computation time.
+However using _scholardle_ as first parameter on a slow computer with **debug=2** will take much (_possibly **days** of_) computation time!
 
 The output that is produced is this: [java -jar wordlinsix.jar scholardle debug=2](/assets/scholardle-debug=2.txt?raw=true "debug=2")
 
@@ -272,4 +275,4 @@ logA.txt will contain partial data only, but the program can be resumed using th
 
 ```java -jar  wordlinsix.jar wordle|scholardle debug=2-logA.txt 1>logB.txt 2>>&1```
 
-Ensure that the stdout & stderr are piped to a different file to the one use as input!
+Ensure that the stdout & stderr are piped to a different file to the one used as input!
