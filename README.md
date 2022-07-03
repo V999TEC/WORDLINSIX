@@ -275,4 +275,4 @@ logA.txt will contain partial data only, but the program can be resumed using th
 
 ```java -jar  wordlinsix.jar wordle|scholardle debug=2-logA.txt 1>logB.txt 2>>&1```
 
-Ensure that the stdout & stderr are piped to a different file to the one use as input!
+Ensure that the stdout & stderr are piped to a different file to the one used as input!
