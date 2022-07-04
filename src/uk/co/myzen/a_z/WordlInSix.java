@@ -1224,12 +1224,21 @@ public class WordlInSix {
 
 		String bestWordSoFar[] = new String[5];
 
+		int beginIndex = 0;
+
+		while (guesses.size() > beginIndex && null != guesses.get(beginIndex)) {
+
+			bestWordSoFar[beginIndex] = guesses.get(beginIndex);
+
+			beginIndex++;
+		}
+
 		int lowestSoFar = 0;
 		int higestTries = 0;
 		int failCount = 0;
 		int highestFailCount = 0;
 
-		for (int index = 0; index < bestWordSoFar.length; index++) {
+		for (int index = beginIndex; index < bestWordSoFar.length; index++) {
 
 			if (null == bestWordSoFar[index]) {
 
