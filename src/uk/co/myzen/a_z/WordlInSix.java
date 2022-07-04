@@ -1497,7 +1497,7 @@ public class WordlInSix {
 			System.err.print("\n");
 		}
 
-		System.err.print("==    ");
+		System.err.print("===== ");
 
 		for (int z = 0; z < x; z++) {
 
@@ -1505,7 +1505,7 @@ public class WordlInSix {
 		}
 		System.err.print("\n");
 
-		System.err.print("%    ");
+		System.err.print("%PASS");
 
 		final float s = words.size();
 
@@ -1514,6 +1514,14 @@ public class WordlInSix {
 			float f = 100 - ((float) failCounts[z] / s);
 
 			System.err.print(String.format("  %3.3f", f));
+		}
+		System.err.print("\n");
+
+		System.err.print("FAIL");
+
+		for (int z = 0; z < x; z++) {
+
+			System.err.print(String.format("%8s", "(" + failCounts[z] + ")"));
 		}
 		System.err.print("\n");
 	}
