@@ -184,7 +184,7 @@ This will maintain the correct letter frequency distribution used by the code
 
 For the curious, the algorithm can be made to discover its optimum three start word(s)
 
-But it takes _**considerable**_ time.
+But it takes _**considerable**_ time. See *Technical Note* below
 
 Use of the word *optimum* in this context does not mean the choice of words cannot be beaten: it just means that the Wordle will be solved in at most six guesses.
 
@@ -209,6 +209,8 @@ As far as this algorithm is concerned, the worst possible start word is: ```queu
 ## debug=3
 
 Best start words for **wordle**
+
+```wordle debug=3 guess1=thump guess2=blown guess3=dirge```
 
 ```
 #Tries	thump	blown	dirge
@@ -273,7 +275,7 @@ The list of words in the scholardle dictionary is more than five times larger th
 This means the game cannot always be solved in six tries, but theoretically it can be solved in 9.
 Obviously this means that there will be games that will be lost, but by choosing the optimum starting word(s) the chances of a solution are drastically improved.
 
-Using scholardle debug=3
+```scholardle debug=3 guess1=frump guess2=thegn guess3=sloyd guess4=wacke```
 
 ```
 #Tries	frump	thegn	sloyd	wacke
@@ -305,7 +307,7 @@ However using _scholardle_ as first parameter on a slow computer with **debug=2*
 
 The output that is produced is this: [java -jar wordlinsix.jar scholardle debug=2](/assets/scholardle-debug=2.txt?raw=true "debug=2")
 
-## Technical note
+## Technical Note
 
 If one wishes to deduce again optimum words following changes to any of the wordle.txt|six.txt|xxx.txt dictionaries
 
