@@ -8,16 +8,17 @@ Just use **scholardle** as the first parameter (to use the original 5-letter ver
 Alternatively use **six** as the first parameter (to play a generic game with 6-letters, such as the version of scholardle from 2nd July 2022<sup>*1</sup>) 
 
 <sup>*1</sup>n.b. 
-The supplied 6-letter word list resource is a subset of possible words contains six letters.
+The supplied 6-letter word list resource is a subset of _possible_<sup>*2</sup> words contains six letters.
+
+<sup>*2</sup>n.b.
+'Possible' in the sense that they will be accepted by the post-2nd July 2022 version of scholardle, but evidently many of the words are nonesense, misspelt and/or plainly not English in any reasonable dictionary.
 
 resources/six.txt in the jar can be edited as required if it does not prove reliable. See **debug=1** below
 
 ### >java -jar wordlinsix.jar (parameters)
 
 ## Parameter Help:
-        Make the first parameter wordle or scholardle to play different variations of the game
-        Use words=no if you don't want to see possible words
-        Use rank=no if you don't want a clue to the likelihood of word possibilities
+        Make the first parameter wordle or scholardle or six to play different variations of the game
         The columns are implicitly numbered left to right 1 through N: thus 1 is first and N is last
         Use 1=b to indicate first letter is definitely 'b'
         Eliminate letters by using not=abcdefg etc.
@@ -27,6 +28,14 @@ resources/six.txt in the jar can be edited as required if it does not prove reli
         Use contains=iou to indicate letters 'i' and 'o' and 'u' *must* appear in the word
         Use not2=ab to indicate second letter cannot be 'a' or 'b'
         Use not5=y to indicate last letter cannot be 'y'
+        Use words=no if you don't want to see possible words
+        Use rank=no if you don't want a clue to the likelihood of word possibilities
+
+eg:
+
+```java -jar wordlinsix.jar six contains=oest not=mdlarnbikup not2=eo not3=s not4=e not5=s 6=t```
+
+```java -jar wordlinsix.jar wordle contains=el not=thumpbownrga not2=le not5=l```
 
 
 ## Examples
@@ -199,6 +208,8 @@ As far as this algorithm is concerned, the worst possible start word is: ```queu
 
 ## debug=3
 
+Best start words for **wordle**
+
 ```
 #Tries	thump	blown	dirge
 1	1	0	0
@@ -208,8 +219,9 @@ As far as this algorithm is concerned, the worst possible start word is: ```queu
 5	405	509	603
 6	92	58	70
 7	4	2	0
-==    ======= ======= ======= 
-%      99.998  99.999  100.000
+===== ======= ======= ======= 
+%PASS  99.998  99.999  100.000
+FAIL     (4)     (2)     (0)
 ```
 What this table is showing is:
 
@@ -228,7 +240,33 @@ then 1641 answers will be correct on the 4th guess
 but 70 answers will need 6 guesses but none will need more than 6
 
 
-# Scholardle with 5-letters
+## New Scholardle with 6-letters
+Using the six dictionary, all games can theoretically be solved in 8 or fewer tries
+
+The list of words in the six dictionary are _not_ common 6-letter words. 
+Some are nonsense words, misspellings, abbreviations and proper nouns.
+
+```six debug=3 guess1=biskup guess2=lenght```
+
+```
+#Tries	biskup	lenght
+1	1	0
+2	222	1
+3	3750	3277
+4	6419	7120
+5	2064	2173
+6	304	218
+7	43	19
+8	8	3
+===== ======= ======= 
+%PASS  99.996  99.998
+FAIL    (51)    (22)
+```
+
+Using the selected start words with dictionary six shows that 22 games will fail to be completed in 6 or fewer tries
+
+
+## Old Scholardle with 5-letters
 
 The list of words in the scholardle dictionary is more than five times larger than wordle's!
 
@@ -243,8 +281,8 @@ Using scholardle debug=3
 2	97	1	0	0
 3	1506	1064	1	0
 4	4493	4856	5191	1
-5	3926	4553	5607	9729
-6	1734	1690	1667	2841
+5	3927	4553	5608	9729
+6	1734	1691	1667	2842
 7	685	521	348	342
 8	309	185	109	48
 9	135	66	43	11
@@ -252,8 +290,9 @@ Using scholardle debug=3
 11	23	10	0	0
 12	9	0	0	0
 13	0	0	0	0
-==    ======= ======= ======= ======= 
-%      99.906  99.938  99.961  99.969
+===== ======= ======= ======= ======= 
+%PASS  99.906  99.938  99.961  99.969
+FAIL  (1215)   (808)   (506)   (401)
 ```
 
 The preferred words may seem obscure, but can be used, in the specified order, to improve the chance of finding a solution.
@@ -266,7 +305,7 @@ However using _scholardle_ as first parameter on a slow computer with **debug=2*
 
 The output that is produced is this: [java -jar wordlinsix.jar scholardle debug=2](/assets/scholardle-debug=2.txt?raw=true "debug=2")
 
-### Technical note
+## Technical note
 
 If one wishes to deduce again optimum words following changes to the wordle.txt and/or scholardle.txt dictionaries
 
