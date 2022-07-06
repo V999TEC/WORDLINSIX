@@ -3,22 +3,22 @@ Java CLI to solve any WORDLE puzzle in a maximum of six tries (typically 4)
 
 It is also possible to play the variation of wordle called _scholardle_
 
-Just use **scholardle** as the first parameter (to use the original 5-letter version of scholardle)
+Just use **scholardle** as the first parameter (to use the new 6-letter version of scholardle)
 
-Alternatively use **six** as the first parameter (to play a generic game with 6-letters, such as the version of scholardle from 2nd July 2022<sup>*1</sup>) 
+Alternatively use **five** as the first parameter (to play a generic game with 5-letters, such as the version of scholardle before 2nd July 2022<sup>*1</sup>) 
 
 <sup>*1</sup>n.b. 
-The supplied 6-letter word list resource is a subset of _possible_<sup>*2</sup> words contains six letters.
+The supplied 6-letter scholardle list resource is a somewhat bizarre subset of _possible_<sup>*2</sup> words contains six letters.
 
 <sup>*2</sup>n.b.
-'Possible' in the sense that they will be accepted by the post-2nd July 2022 version of scholardle, but evidently many of the words are nonesense, misspelt and/or plainly not English in any reasonable dictionary.
+'Possible' in the sense that they will be accepted by the new version of scholardle, but evidently many of the words are nonesense, misspelt and/or plainly not English in any reasonable dictionary.
 
-resources/six.txt in the jar can be edited as required if it does not prove reliable. See **debug=1** below
+resources/scholardle.txt in the jar can be edited as required if it does not prove reliable. See **debug=1** below
 
 ### >java -jar wordlinsix.jar (parameters)
 
 ## Parameter Help:
-        Make the first parameter wordle or scholardle or six to play different variations of the game
+        Make the first parameter wordle or scholardle or five to play different variations of the game
         The columns are implicitly numbered left to right 1 through N: thus 1 is first and N is last
         Use 1=b to indicate first letter is definitely 'b'
         Eliminate letters by using not=abcdefg etc.
@@ -33,7 +33,7 @@ resources/six.txt in the jar can be edited as required if it does not prove reli
 
 eg:
 
-```java -jar wordlinsix.jar six contains=oest not=mdlarnbikup not2=eo not3=s not4=e not5=s 6=t```
+```java -jar wordlinsix.jar scholardle contains=oest not=mdlarnbikup not2=eo not3=s not4=e not5=s 6=t```
 
 ```java -jar wordlinsix.jar wordle contains=el not=thumpbownrga not2=le not5=l```
 
@@ -205,6 +205,10 @@ Using **thump** as the first word the algorithm then tries all the second words 
 As far as this algorithm is concerned, the worst possible start word is: ```queue	11 (90)``` meaning there were 90 games that could not be completed in 6 guesses and some of those needed 11 guesses!
 
 
+Corresponding data generated for the new scholardle wordlist
+
+The output that is produced is this: [java -jar wordlinsix.jar scholardle debug=2](/assets/scholardle-debug=2.txt?raw=true "debug=2")
+
 
 ## debug=3
 
@@ -243,12 +247,12 @@ but 70 answers will need 6 guesses but none will need more than 6
 
 
 ## New Scholardle with 6-letters
-Using the six dictionary, all games can theoretically be solved in 8 or fewer tries
+Using the new scholardle dictionary, all games can theoretically be solved in 7 or fewer tries
 
-The list of words in the six dictionary are _not_ common 6-letter words. 
+The list of words in the scholardle dictionary are _not_ common 6-letter words. 
 Some are nonsense words, misspellings, abbreviations and proper nouns.
 
-```six debug=3 guess1=biskup guess2=lenght```
+```scholardle debug=3 guess1=biskup guess2=lenght```
 
 ```
 #Tries	biskup	lenght
@@ -265,7 +269,7 @@ Some are nonsense words, misspellings, abbreviations and proper nouns.
 FAIL    (51)    (22)
 ```
 
-Using the selected start words with dictionary six shows that 22 games will fail to be completed in 6 or fewer tries
+Using the selected start words with dictionary scholardle shows that **22** games will fail to be completed in the required 6 or fewer tries
 
 
 ## Old Scholardle with 5-letters
@@ -275,7 +279,7 @@ The list of words in the scholardle dictionary is more than five times larger th
 This means the game cannot always be solved in six tries, but theoretically it can be solved in 9.
 Obviously this means that there will be games that will be lost, but by choosing the optimum starting word(s) the chances of a solution are drastically improved.
 
-```scholardle debug=3 guess1=frump guess2=thegn guess3=sloyd guess4=wacke```
+```five debug=3 guess1=frump guess2=thegn guess3=sloyd guess4=wacke```
 
 ```
 #Tries	frump	thegn	sloyd	wacke
@@ -297,27 +301,29 @@ Obviously this means that there will be games that will be lost, but by choosing
 FAIL  (1215)   (808)   (506)   (401)
 ```
 
+Using the selected start words with dictionary five shows that **401** games will fail to be completed in the required 6 or fewer tries
+
 The preferred words may seem obscure, but can be used, in the specified order, to improve the chance of finding a solution.
 
-These optimum words have been deduced using parameter **debug=2** with _**scholardle**_ as the first parameter.
+These optimum words have been deduced using parameter **debug=2** with _**five**_ as the first parameter.
+
+The output that is produced is this: [java -jar wordlinsix.jar five debug=2](/assets/five-debug=2.txt?raw=true "debug=2")
+
+## Technical Note
 
 On a very fast computer, debug=2 takes a long time to complete using _wordle_ as first parameter.
 
 However using _scholardle_ as first parameter on a slow computer with **debug=2** will take much (_possibly **days** of_) computation time!
 
-The output that is produced is this: [java -jar wordlinsix.jar scholardle debug=2](/assets/scholardle-debug=2.txt?raw=true "debug=2")
-
-## Technical Note
-
-If one wishes to deduce again optimum words following changes to any of the wordle.txt|six.txt|xxx.txt dictionaries
+If one wishes to deduce again optimum words following changes to any of the wordle.txt|scholardle.txt|xxxxx.txt dictionaries
 
 ```java -jar wordlinsix.jar wordle debug=2 1>logA.txt 2>>&1``` or
 
-```java -jar wordlinsix.jar six debug=2 1>logA.txt 2>>&1```
+```java -jar wordlinsix.jar scholardle debug=2 1>logA.txt 2>>&1```
 
 In the event that the the command fails to complete for any reason, due to the length computation time, 
 logA.txt will contain partial data only, but the program can be resumed using the previous output file as input:
 
-```java -jar  wordlinsix.jar wordle|six|xxx debug=2-logA.txt 1>logB.txt 2>>&1```
+```java -jar  wordlinsix.jar wordle|scholardle|xxxxx debug=2-logA.txt 1>logB.txt 2>>&1```
 
 Ensure that the stdout & stderr are piped to a different file to the one used as input!
