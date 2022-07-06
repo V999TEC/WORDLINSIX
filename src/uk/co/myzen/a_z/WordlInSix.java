@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
@@ -22,19 +23,15 @@ public class WordlInSix {
 
 	private static final String DEFAULT_TXT = "wordle.txt";
 
-	private static final String DEFAULT_PROPERTIES = "wordle.properties";
-
 	private static final String[] WORDLE_START_WORDS = { "thump", "blown", "dirge" };
 
-	private static final String[] SCHOLARDLE_START_WORDS = { "frump", "thegn", "sloyd", "wacke" };
+	private static final String[] FIVE_START_WORDS = { "frump", "thegn", "sloyd", "wacke" };
 
-	private static final String[] THREE_START_WORDS = { "lib", "gan", "hyp", "ems", "wot" };
+	private static final String[] SCHOLARDLE_START_WORDS = { "biskup", "lenght", "remove" };
 
 	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
 	private static int wordLength = 0;
-
-	private static int[] letterDistributionRanks;
 
 	private static enum Action {
 
@@ -43,13 +40,17 @@ public class WordlInSix {
 
 	private static Action action = Action.SHOW_HELP;
 
-	private static WordlInSix instance = null;
+	private static Map<String, List<String>> wordsMap = new HashMap<String, List<String>>();
 
-	private static List<String> words = null;
+	private final List<String> words;
 
 	private final String resourceName;
 
+	private final int[] letterDistributionRanks;
+
 	private int debug = 0;
+
+	private PrintStream output = System.err;
 
 	private Map<String, String> existingResult = new HashMap<String, String>();
 
@@ -95,37 +96,9 @@ public class WordlInSix {
 		return result;
 	}
 
-	private static WordlInSix getInstance(String nonDefaultGame) throws Exception {
-
-		if (null == instance) {
-
-			if (null == nonDefaultGame || 0 == nonDefaultGame.trim().length()) {
-
-				instance = new WordlInSix();
-
-			} else {
-
-				instance = new WordlInSix(nonDefaultGame + ".txt");
-			}
-		}
-
-		String propertyResourceName = null == nonDefaultGame || 0 == nonDefaultGame.trim().length() ? DEFAULT_PROPERTIES
-				: nonDefaultGame + ".properties";
-
-		letterDistributionRanks = instance.loadLetterDistributionRanks(propertyResourceName);
-
-		return instance;
-	}
-
 	private WordlInSix() throws Exception {
 
-		resourceName = DEFAULT_TXT;
-
-		words = loadWords(DEFAULT_TXT);
-
-		notN = resetStringArray();
-
-		positions = resetCharArray();
+		this(DEFAULT_TXT);
 	}
 
 	private WordlInSix(String name) throws Exception {
@@ -137,6 +110,12 @@ public class WordlInSix {
 		notN = resetStringArray();
 
 		positions = resetCharArray();
+
+		int lp = name.lastIndexOf('.');
+
+		String propertyResourceName = name.substring(0, lp) + ".properties";
+
+		letterDistributionRanks = loadLetterDistributionRanks(propertyResourceName);
 	}
 
 	private int[] loadLetterDistributionRanks(String name) {
@@ -184,7 +163,7 @@ public class WordlInSix {
 		try {
 			if (0 == args.length) {
 
-				main = getInstance(null); // will use DEFAULT_TXT & DEFAULT_PROPERTIES
+				main = new WordlInSix(null); // will use DEFAULT_TXT & DEFAULT_PROPERTIES
 
 				action = Action.SHOW_HELP;
 
@@ -196,9 +175,9 @@ public class WordlInSix {
 
 				String game = -1 == args[0].indexOf('=') ? args[0] : null;
 
-				main = getInstance(game);
+				main = new WordlInSix(game + ".txt");
 
-				if (words == null || 0 == words.size()) {
+				if (main.words == null || 0 == main.words.size()) {
 
 					action = Action.ABORT;
 
@@ -277,10 +256,7 @@ public class WordlInSix {
 	private void help() {
 
 		System.out.println("Help with parameters:");
-
 		System.out.println("\tMake the first parameter wordle or scholardle to play different variations of the game");
-		System.out.println("\tUse words=no if you don't want to see possible words");
-		System.out.println("\tUse rank=no if you don't want a clue to the likelihood of word possibilities");
 		System.out.println(
 				"\tThe columns are implicitly numbered left to right 1 through 5: thus 1 is first and 5 is last");
 		System.out.println("\tUse 1=b to indicate first letter is definitely 'b'");
@@ -291,6 +267,8 @@ public class WordlInSix {
 		System.out.println("\tUse contains=iou to indicate letters 'i' and 'o' and 'u' *must* appear in the word");
 		System.out.println("\tUse not2=ab to indicate second letter cannot be 'a' or 'b'");
 		System.out.println("\tUse not5=y to indicate last letter cannot be 'y'");
+		System.out.println("\tUse words=no if you don't want to see possible words");
+		System.out.println("\tUse rank=no if you don't want a clue to the likelihood of word possibilities");
 	}
 
 	private void report(Set<String> candidates) {
@@ -456,13 +434,42 @@ public class WordlInSix {
 		return count;
 	}
 
+	private void setOutput(File filePrintStream) {
+
+		if (null == filePrintStream) {
+
+			output = System.err;
+
+		} else {
+
+			try {
+
+				output = new PrintStream(filePrintStream);
+
+			} catch (FileNotFoundException e) {
+
+				e.printStackTrace();
+
+				output = System.err;
+			}
+		}
+	}
+
 	private void parameter(String arg) {
 
 		int indexOfEqualsChar = arg.indexOf('=');
 
 		String value = arg.substring(1 + indexOfEqualsChar);
 
-		if (arg.startsWith("ai=")) {
+		setOutput(null); // default initially
+
+		if (arg.startsWith("output=")) {
+
+			File filePrintStream = new File(value.trim());
+
+			setOutput(filePrintStream);
+
+		} else if (arg.startsWith("ai=")) {
 
 			ai = (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("yes"));
 
@@ -644,77 +651,89 @@ public class WordlInSix {
 
 	private static List<String> loadWords(String name) throws Exception {
 
-		List<String> result = new ArrayList<String>(2315);
+		List<String> result;
 
-		ClassLoader cl = Thread.currentThread().getContextClassLoader();
+		if (wordsMap.containsKey(name)) {
 
-		InputStream is = cl.getResourceAsStream(name);
-
-		if (null == is) {
-
-			System.err.println("Cannot locate resource '" + name
-					+ "' Did you perhaps mean to use wordle or scholardle for the first parameter?");
+			result = wordsMap.get(name);
 
 		} else {
 
-			InputStreamReader isr = null;
+			result = new ArrayList<String>(2315);
 
-			BufferedReader br = null;
+			ClassLoader cl = Thread.currentThread().getContextClassLoader();
 
-			try {
+			InputStream is = cl.getResourceAsStream(name);
 
-				isr = new InputStreamReader(is);
+			if (null == is) {
 
-				br = new BufferedReader(isr);
+				System.err.println("Cannot locate resource '" + name
+						+ "' Did you perhaps mean to use wordle or scholardle for the first parameter?");
 
-				String ln;
+			} else {
 
-				while (null != (ln = br.readLine())) {
+				InputStreamReader isr = null;
 
-					if (ln.startsWith("#")) {
-
-						continue; // ignore comments in property file
-					}
-
-					String words[] = ln.split("\\s+");
-
-					for (String word : words) {
-
-						if (word.length() != wordLength) {
-
-							if (0 == wordLength) {
-
-								wordLength = word.length();
-							} else {
-
-								throw new Exception("Inconsistent resource file of words");
-							}
-						}
-
-						result.add(word.toLowerCase());
-					}
-				}
-
-			} catch (IOException e) {
-
-			} finally {
+				BufferedReader br = null;
 
 				try {
-					if (null != br) {
 
-						br.close();
+					isr = new InputStreamReader(is);
+
+					br = new BufferedReader(isr);
+
+					String ln;
+
+					while (null != (ln = br.readLine())) {
+
+						if (ln.startsWith("#")) {
+
+							continue; // ignore comments in property file
+						}
+
+						String words[] = ln.split("\\s+");
+
+						for (String word : words) {
+
+							if (word.length() != wordLength) {
+
+								if (0 == wordLength) {
+
+									wordLength = word.length();
+								} else {
+
+									throw new Exception("Inconsistent resource file of words");
+								}
+							}
+
+							result.add(word.toLowerCase());
+						}
 					}
 
-					if (null != isr) {
+					// all good
 
-						isr.close();
-					}
+					wordsMap.put(name, result);
 
 				} catch (IOException e) {
 
-					e.printStackTrace();
-				}
+				} finally {
 
+					try {
+						if (null != br) {
+
+							br.close();
+						}
+
+						if (null != isr) {
+
+							isr.close();
+						}
+
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 
@@ -1207,7 +1226,7 @@ public class WordlInSix {
 
 			if (null == optional) {
 
-				System.err.println(ch + "=" + size);
+				output.println(ch + "=" + size);
 
 			} else {
 
@@ -1247,6 +1266,13 @@ public class WordlInSix {
 				highestFailCount = 99999;
 
 				for (String word : words) {
+
+					if (guesses.contains(word)) {
+
+						// we've already used this word: ignore
+
+						continue;
+					}
 
 					higestTries = 0;
 
@@ -1325,8 +1351,13 @@ public class WordlInSix {
 						}
 					}
 
-					System.err.println(
+					output.println(
 							existingKey + "\t" + higestTries + " (" + failCount + ") " + (highLight ? " <----" : ""));
+
+					// this may be the best answer so speculatively try next level simultaneously in
+					// another thread
+					// abandon the spawned task if it is bettered at the current level
+
 				}
 
 				if (0 == highestFailCount) {
@@ -1343,7 +1374,7 @@ public class WordlInSix {
 				break;
 			}
 
-			System.err.println("guess" + (1 + g) + "=" + bestWordSoFar[g]);
+			output.println("guess" + (1 + g) + "=" + bestWordSoFar[g]);
 		}
 
 		// verify solution
@@ -1375,11 +1406,11 @@ public class WordlInSix {
 			if (tries > 6) {
 
 				failCount++;
-				System.err.println(n + "\t" + answer + "\t" + tries);
+				output.println(n + "\t" + answer + "\t" + tries);
 			}
 		}
 
-		System.err.println("Failures: " + failCount);
+		output.println("Failures: " + failCount);
 	}
 
 	private void debug3() throws Exception {
@@ -1398,11 +1429,13 @@ public class WordlInSix {
 
 			startWords = SCHOLARDLE_START_WORDS;
 
-			y = 13; // demonstrate only 9 guesses needed for scholardle
+			y = 8; // demonstrate only 7 guesses needed for "new" scholardle
 
-		} else if ("three.txt".equals(resourceName)) {
+		} else if ("five.txt".equals(resourceName)) {
 
-			startWords = THREE_START_WORDS;
+			startWords = FIVE_START_WORDS;
+
+			y = 10; // demonstrate only 9 guesses needed for "old" scholardle
 
 		} else {
 
@@ -1476,36 +1509,36 @@ public class WordlInSix {
 			}
 		}
 
-		System.err.print("#Tries");
+		output.print("#Tries");
 
 		for (int z = 0; z < x; z++) {
 
-			System.err.print("\t" + startWords[z]);
+			output.print("\t" + startWords[z]);
 		}
 
-		System.err.print("\n");
+		output.print("\n");
 
 		for (int c = 0; c < y; c++) {
 
-			System.err.print((c + 1));
+			output.print((c + 1));
 
 			for (int z = 0; z < x; z++) {
 
-				System.err.print("\t" + counts[z][c]);
+				output.print("\t" + counts[z][c]);
 			}
 
-			System.err.print("\n");
+			output.print("\n");
 		}
 
-		System.err.print("===== ");
+		output.print("===== ");
 
 		for (int z = 0; z < x; z++) {
 
-			System.err.print("======= ");
+			output.print("======= ");
 		}
-		System.err.print("\n");
+		output.print("\n");
 
-		System.err.print("%PASS");
+		output.print("%PASS");
 
 		final float s = words.size();
 
@@ -1513,17 +1546,17 @@ public class WordlInSix {
 
 			float f = 100 - ((float) failCounts[z] / s);
 
-			System.err.print(String.format("  %3.3f", f));
+			output.print(String.format("  %3.3f", f));
 		}
-		System.err.print("\n");
+		output.print("\n");
 
-		System.err.print("FAIL");
+		output.print("FAIL");
 
 		for (int z = 0; z < x; z++) {
 
-			System.err.print(String.format("%8s", "(" + failCounts[z] + ")"));
+			output.print(String.format("%8s", "(" + failCounts[z] + ")"));
 		}
-		System.err.print("\n");
+		output.print("\n");
 	}
 
 }
