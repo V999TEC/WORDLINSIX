@@ -144,7 +144,7 @@ This will solve 100% of Wordles with a mean number of guesses of 4.2
 
 ## debug=1
 
-This is only used to establish the letter frequency for all the words in the xxxx.txt dictionary stored in the jar
+This is only used to establish the letter frequency for all the words in the xxxxx.txt dictionary stored in the jar
 ```
 a=909
 b=267
@@ -173,9 +173,9 @@ x=37
 y=417
 z=35
 ```
-The result should be stored in the xxxx.properties resource file.
+The result should be stored in the xxxxx.properties resource file.
 
-If there is ever a need to edit the xxxx.txt file, then the corresponding property data should be regenerated using debug=1
+If there is ever a need to edit the xxxxx.txt file, then the corresponding property data should be regenerated using debug=1
 
 This will maintain the correct letter frequency distribution used by the code
 
@@ -191,7 +191,7 @@ Use of the word *optimum* in this context does not mean the choice of words cann
 In the following debug log, the algorithm is looking for word combinations that result in 6 (0) 
 meaning that at most, six guesses and zero failures (where a failure is considered taking > 6 guesses)
 
-The output that is produced is this: [java -jar wordlinsix.jar wordle debug=2](/assets/debug=2.txt?raw=true "debug=2")
+The output that is produced is this: [java -jar wordlinsix.jar wordle debug=2](/assets/wordle-debug=2.txt?raw=true "debug=2")
 
 The log shows that initially we discover
 ```abase	9 (29)  <----```
@@ -252,24 +252,24 @@ Using the new scholardle dictionary, all games can theoretically be solved in 7 
 The list of words in the scholardle dictionary are _not_ common 6-letter words. 
 Some are nonsense words, misspellings, abbreviations and proper nouns.
 
-```scholardle debug=3 guess1=biskup guess2=lenght```
+```scholardle debug=3 guess1=biskup guess2=lenght guss3=warmed```
 
 ```
-#Tries	biskup	lenght
-1	1	0
-2	222	1
-3	3750	3277
-4	6419	7120
-5	2064	2173
-6	304	218
-7	43	19
-8	8	3
-===== ======= ======= 
-%PASS  99.996  99.998
-FAIL    (51)    (22)
+#Tries  biskup  lenght  warmed
+1       1       0       0
+2       222     1       0
+3       3750    3277    1
+4       6419    7120    9814
+5       2064    2173    2759
+6       304     218     223
+7       43      19      14
+8       8       3       0
+==    ======= ======= =======
+%      99.996  99.998  99.999
 ```
 
-Using the selected start words with dictionary scholardle shows that **22** games will fail to be completed in the required 6 or fewer tries
+Using the first two start words with dictionary scholardle shows that **22** games will fail to be completed in the required 6 or fewer tries
+Using the three start words all the games will be completed in 7 or fewer tries and **17** games will fail
 
 
 ## Old Scholardle with 5-letters
