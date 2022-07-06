@@ -475,13 +475,13 @@ public class WordlInSix {
 
 		} else if (arg.startsWith("debug=")) {
 
-			String[] extras = value.split("-");
+			int delimiter = value.indexOf('-');
 
-			debug = Integer.parseInt(extras[0]);
+			debug = Integer.parseInt(-1 == delimiter ? value : value.substring(0, delimiter));
 
-			if (extras.length > 1) {
+			if (delimiter > -1) {
 
-				File debugExtraA = new File(extras[1]);
+				File debugExtraA = new File(value.substring(1 + delimiter));
 
 				try {
 
