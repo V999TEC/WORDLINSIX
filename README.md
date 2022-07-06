@@ -252,24 +252,24 @@ Using the new scholardle dictionary, all games can theoretically be solved in 7 
 The list of words in the scholardle dictionary are _not_ common 6-letter words. 
 Some are nonsense words, misspellings, abbreviations and proper nouns.
 
-```scholardle debug=3 guess1=biskup guess2=lenght```
+```scholardle debug=3 guess1=biskup guess2=lenght guss3=remove```
 
 ```
-#Tries	biskup	lenght
-1	1	0
-2	222	1
-3	3750	3277
-4	6419	7120
-5	2064	2173
-6	304	218
-7	43	19
-8	8	3
-===== ======= ======= 
-%PASS  99.996  99.998
-FAIL    (51)    (22)
+#Tries  biskup  lenght  remove
+1       1       0       0
+2       222     1       0
+3       3750    3277    1
+4       6419    7120    8098
+5       2064    2173    4192
+6       304     218     479
+7       43      19      41
+8       8       3       0
+==    ======= ======= =======
+%      99.996  99.998  99.997
 ```
 
-Using the selected start words with dictionary scholardle shows that **22** games will fail to be completed in the required 6 or fewer tries
+Using the first two start words with dictionary scholardle shows that **22** games will fail to be completed in the required 6 or fewer tries
+Using the three start words all the games will be completed in 7 or fewer tries but **41** games will fail
 
 
 ## Old Scholardle with 5-letters
