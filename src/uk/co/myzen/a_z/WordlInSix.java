@@ -42,25 +42,25 @@ public class WordlInSix {
 
 	private static Map<String, List<String>> wordsMap = new HashMap<String, List<String>>();
 
+	private static Map<String, String> existingResults = new HashMap<String, String>();
+
 	private final List<String> words;
 
 	private final String resourceName;
 
 	private final int[] letterDistributionRanks;
 
-	private int debug = 0;
+	int debug = 0;
+
+	List<String> guesses = new ArrayList<String>(6);
 
 	private PrintStream output = System.err;
-
-	private Map<String, String> existingResult = new HashMap<String, String>();
 
 	private boolean ai = false;
 
 	private boolean showWords = true;
 
 	private boolean showRank = true;
-
-	private List<String> guesses = new ArrayList<String>(6);
 
 	private char[] containsChars = {};
 
@@ -101,7 +101,7 @@ public class WordlInSix {
 		this(DEFAULT_TXT);
 	}
 
-	private WordlInSix(String name) throws Exception {
+	WordlInSix(String name) throws Exception {
 
 		resourceName = name;
 
@@ -503,7 +503,7 @@ public class WordlInSix {
 
 						String val = line.substring(1 + lastTab);
 
-						existingResult.put(key, val);
+						existingResults.put(key, val);
 					}
 
 					br.close();
@@ -1235,11 +1235,7 @@ public class WordlInSix {
 		}
 	}
 
-	private void debug2() {
-
-		// if null != debugExtraA then an input file is extant
-		// this should be consumed rather than starting analysis from beginning
-		// The file represents a checkpoint to recover a failed analysis run.
+	void debug2() {
 
 		String bestWordSoFar[] = new String[5];
 
@@ -1291,11 +1287,11 @@ public class WordlInSix {
 
 					String existingKey = sbExisting.toString();
 
-					if (existingResult.containsKey(existingKey)) {
+					if (existingResults.containsKey(existingKey)) {
 
 						// avoid time consuming test of every target answer
 
-						String alreadyDone = existingResult.get(existingKey);
+						String alreadyDone = existingResults.get(existingKey);
 
 						int posOpenBracket = alreadyDone.indexOf('(');
 						int posCloseBracket = alreadyDone.indexOf(')', posOpenBracket);
@@ -1353,10 +1349,6 @@ public class WordlInSix {
 
 					output.println(
 							existingKey + "\t" + higestTries + " (" + failCount + ") " + (highLight ? " <----" : ""));
-
-					// this may be the best answer so speculatively try next level simultaneously in
-					// another thread
-					// abandon the spawned task if it is bettered at the current level
 
 				}
 
