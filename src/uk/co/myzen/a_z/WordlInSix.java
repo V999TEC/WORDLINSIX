@@ -175,7 +175,7 @@ public class WordlInSix {
 
 				String game = -1 == args[0].indexOf('=') ? args[0] : null;
 
-				main = new WordlInSix(game + ".txt");
+				main = null == game ? new WordlInSix() : new WordlInSix(game + ".txt");
 
 				if (main.words == null || 0 == main.words.size()) {
 
@@ -1349,7 +1349,6 @@ public class WordlInSix {
 
 					output.println(
 							existingKey + "\t" + higestTries + " (" + failCount + ") " + (highLight ? " <----" : ""));
-
 				}
 
 				if (0 == highestFailCount) {
