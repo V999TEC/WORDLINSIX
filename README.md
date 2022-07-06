@@ -252,7 +252,7 @@ Using the new scholardle dictionary, all games can theoretically be solved in 7 
 The list of words in the scholardle dictionary are _not_ common 6-letter words. 
 Some are nonsense words, misspellings, abbreviations and proper nouns.
 
-```scholardle debug=3 guess1=biskup guess2=lenght guss3=warmed```
+```scholardle debug=3 guess1=biskup guess2=lenght guess3=warmed```
 
 ```
 #Tries  biskup  lenght  warmed
