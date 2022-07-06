@@ -144,7 +144,7 @@ This will solve 100% of Wordles with a mean number of guesses of 4.2
 
 ## debug=1
 
-This is only used to establish the letter frequency for all the words in the xxxx.txt dictionary stored in the jar
+This is only used to establish the letter frequency for all the words in the xxxxx.txt dictionary stored in the jar
 ```
 a=909
 b=267
@@ -173,9 +173,9 @@ x=37
 y=417
 z=35
 ```
-The result should be stored in the xxxx.properties resource file.
+The result should be stored in the xxxxx.properties resource file.
 
-If there is ever a need to edit the xxxx.txt file, then the corresponding property data should be regenerated using debug=1
+If there is ever a need to edit the xxxxx.txt file, then the corresponding property data should be regenerated using debug=1
 
 This will maintain the correct letter frequency distribution used by the code
 
@@ -191,7 +191,7 @@ Use of the word *optimum* in this context does not mean the choice of words cann
 In the following debug log, the algorithm is looking for word combinations that result in 6 (0) 
 meaning that at most, six guesses and zero failures (where a failure is considered taking > 6 guesses)
 
-The output that is produced is this: [java -jar wordlinsix.jar wordle debug=2](/assets/debug=2.txt?raw=true "debug=2")
+The output that is produced is this: [java -jar wordlinsix.jar wordle debug=2](/assets/wordle-debug=2.txt?raw=true "debug=2")
 
 The log shows that initially we discover
 ```abase	9 (29)  <----```
