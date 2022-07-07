@@ -1,7 +1,7 @@
 # WORDLINSIX
-Java CLI to solve any WORDLE puzzle in a maximum of six tries (typically 4)
+Java CLI to solve any WORDLE puzzle in a maximum of six tries (typically 4) when the optimum start word(s) are used
 
-It is also possible to play the variation of wordle called _scholardle_
+It is also possible to play the variation of wordle called _scholardle_ (currently with a 99.999% success rate).
 
 Just use **scholardle** as the first parameter (to use the new 6-letter version of scholardle)
 
@@ -15,6 +15,26 @@ The supplied 6-letter scholardle list resource is a somewhat bizarre subset of _
 
 resources/scholardle.txt in the jar can be edited as required if it does not prove reliable. See **debug=1** below
 
+# Debug Features
+The code can be used to determine the letter distribution of the specified dictionary (use parameter debug=1)
+
+The code can be used to "play itself" to determine the best starting word(s) according to its solving algorithm (use parameter debug=2)
+
+The code can be used to check the performance of different starting words (use parameter debug=3)
+
+# Start Word(s)
+As determined by using the debug features, each variation of the game wordle / scholardle / xxxxx will have different chances of success dependent on the first word chosen. 
+
+The suggested approach for success is to always use the right start word. For wordle use _thump_, for scholardle use _biskup_
+
+If the first word yields no matching letters (i.e., all grey on the UI) choose the second recommended word.
+
+If the second word yields no matching letters (i.e., all grey on the UI) choose the third recommended word.
+
+In the unlucky event all three starting words give no clue, do not dispair: you have eliminated half the alphabet!
+
+
+# Usage
 ### >java -jar wordlinsix.jar (parameters)
 
 ## Parameter Help:
