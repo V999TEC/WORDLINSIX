@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -55,8 +54,6 @@ public class WordlInSix {
 	List<String> guesses = new ArrayList<String>(6);
 
 	private PrintStream output = System.err;
-
-	private boolean ai = false;
 
 	private boolean showWords = true;
 
@@ -281,11 +278,6 @@ public class WordlInSix {
 
 				List<String> rankings = rankCandidatesByLetterDistribution(candidates);
 
-				if (ai && rankings.size() > 1) {
-
-					System.err.println(intelligentSuggestion());
-				}
-
 				for (String candidate : rankings) {
 
 					int uniqueLetters = countDuplicateLetters(candidate);
@@ -305,101 +297,6 @@ public class WordlInSix {
 				}
 			}
 		}
-
-	}
-
-	private String intelligentSuggestion() {
-
-		String suggestion = "";
-
-		// go through the contains and work out which columns each letter *could* be in
-
-		char[] inferred = { ' ', ' ', ' ', ' ', ' ' };
-
-		BitSet bs = new BitSet(5);
-
-		boolean inferenceMade;
-
-		do {
-
-			inferenceMade = false;
-
-			for (char ch : containsChars) {
-
-				bs.set(0, 5, false);
-
-				for (int columnIndex = 0; columnIndex < 5; columnIndex++) {
-
-					if (' ' != inferred[columnIndex]) {
-
-						continue;
-					}
-
-					if (' ' != positions[columnIndex]) {
-
-						continue; // we already know for certain what letter is in this column
-					}
-
-					if (-1 != notN[columnIndex].indexOf(ch)) {
-
-						continue; // we know for certain ch cannot be in this column
-					}
-
-					bs.set(columnIndex, true); // could be in this column
-				}
-
-				int cardinality = bs.cardinality();
-
-				int fromIndex = 0;
-
-				if (1 == cardinality) {
-
-					int col = 1 + bs.nextSetBit(fromIndex);
-
-					// danger of misleading if ch is a duplicate letter in a different column
-					// already solved
-
-					int possibleDuplicate = -1;
-
-					for (int d = 0; d < positions.length; d++) {
-
-						if (ch == positions[d]) {
-
-							possibleDuplicate = d;
-							break;
-						}
-					}
-
-					if (possibleDuplicate > -1) {
-
-						suggestion = suggestion + "Column " + col + " might be '" + ch
-								+ "' but only if it is the same letter as in column " + (1 + possibleDuplicate) + "\n";
-					} else {
-
-						suggestion = suggestion + "Column " + col + " must be '" + ch + "'\n";
-
-						inferred[col - 1] = ch;
-
-						inferenceMade = true;
-					}
-
-				} else if (cardinality > 1) {
-
-					suggestion = suggestion + "'" + ch + "' could be in these columns ";
-
-					while (-1 != (fromIndex = bs.nextSetBit(fromIndex))) {
-
-						fromIndex++;
-						suggestion = suggestion + (fromIndex) + " ";
-					}
-
-					suggestion = suggestion + "\n";
-				}
-			}
-
-		} while (inferenceMade);
-
-		return suggestion;
 
 	}
 
@@ -468,10 +365,6 @@ public class WordlInSix {
 			File filePrintStream = new File(value.trim());
 
 			setOutput(filePrintStream);
-
-		} else if (arg.startsWith("ai=")) {
-
-			ai = (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("yes"));
 
 		} else if (arg.startsWith("debug=")) {
 
@@ -1209,9 +1102,9 @@ public class WordlInSix {
 
 		List<String> rankings = rankCandidatesByLetterDistribution(candidates);
 
-		// just select the one at the front of the list
+		int r = 0; // By default just select the one at the front of the list
 
-		return rankings.get(0);
+		return rankings.get(r);
 	}
 
 	private void debug1(Properties optional) {
