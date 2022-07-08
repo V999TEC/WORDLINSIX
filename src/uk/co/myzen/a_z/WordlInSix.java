@@ -1303,34 +1303,33 @@ public class WordlInSix {
 
 		int y = 0;
 
-		if ("wordle.txt".equals(resourceName)) {
+		final int size = guesses.size();
 
-			startWords = WORDLE_START_WORDS;
+		if (0 == size) {
 
-			y = 7; // demonstrate only 6 guesses needed for wordle
+			if ("wordle.txt".equals(resourceName)) {
 
-		} else if ("scholardle.txt".equals(resourceName)) {
+				startWords = WORDLE_START_WORDS;
 
-			startWords = SCHOLARDLE_START_WORDS;
+				y = 7; // demonstrate only 6 guesses needed for wordle
 
-			y = 8; // demonstrate only 7 guesses needed for "new" scholardle
+			} else if ("scholardle.txt".equals(resourceName)) {
 
-		} else if ("five.txt".equals(resourceName)) {
+				startWords = SCHOLARDLE_START_WORDS;
 
-			startWords = FIVE_START_WORDS;
+				y = 8; // demonstrate only 7 guesses needed for "new" scholardle
 
-			y = 10; // demonstrate only 9 guesses needed for "old" scholardle
+			} else if ("five.txt".equals(resourceName)) {
 
-		} else {
+				startWords = FIVE_START_WORDS;
 
-			final int size = guesses.size();
+				y = 10; // demonstrate only 9 guesses needed for "old" scholardle
+			}
+		}
+
+		if (0 == y) {
 
 			// assume parameters passed are guess1=X guess2=Y guess3=Z ... guessN = etc
-
-			if (size < 1) {
-
-				throw new Exception("Must specify at least guess1=word when using debug=3");
-			}
 
 			startWords = new String[size];
 
@@ -1339,7 +1338,7 @@ public class WordlInSix {
 				startWords[w] = guesses.get(w);
 			}
 
-			y = 0;
+			y = 10; // limit the number of tries
 		}
 
 		int x = startWords.length;
