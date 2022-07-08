@@ -234,6 +234,8 @@ The output that is produced is this: [java -jar wordlinsix.jar scholardle debug=
 
 Best start words for **wordle**
 
+```wordle debug=3```
+or
 ```wordle debug=3 guess1=thump guess2=blown guess3=dirge```
 
 ```
@@ -272,6 +274,8 @@ Using the new scholardle dictionary, all games can theoretically be solved in 7 
 The list of words in the scholardle dictionary are _not_ common 6-letter words. 
 Some are nonsense words, misspellings, abbreviations and proper nouns.
 
+```scholardle debug=3```
+or
 ```scholardle debug=3 guess1=biskup guess2=lenght guess3=warmed```
 
 ```
@@ -289,7 +293,30 @@ Some are nonsense words, misspellings, abbreviations and proper nouns.
 ```
 
 Using the first two start words with dictionary scholardle shows that **22** games will fail to be completed in the required 6 or fewer tries
-Using the three start words all the games will be completed in 7 or fewer tries and **17** games will fail
+
+However, using the three start words all the games will be completed in 7 or fewer tries and just **14** games will fail (<0.001%)
+
+Just FYI
+```scholardle debug=3 guess1=biskup guess2=lenght guess3=warmed guess4=convoy guess5=sforza```
+
+There is no advantage to having a 4th or 5th start word as the %PASS degrades after the 3rd 
+
+```
+#Tries	biskup	lenght	warmed	convoy	sforza
+1	1	0	0	0	0
+2	222	1	0	0	0
+3	3750	3277	1	0	0
+4	6419	7120	9814	1	0
+5	2064	2173	2759	11949	1
+6	304	218	223	838	12450
+7	43	19	14	23	357
+8	8	3	0	0	3
+9	0	0	0	0	0
+10	0	0	0	0	0
+===== ======= ======= ======= ======= ======= 
+%PASS  99.996  99.998  99.999  99.998  99.972
+FAIL    (51)    (22)    (14)    (23)   (360)
+```
 
 
 ## Old Scholardle with 5-letters
@@ -297,8 +324,10 @@ Using the three start words all the games will be completed in 7 or fewer tries 
 The list of words in the scholardle dictionary is more than five times larger than wordle's!
 
 This means the game cannot always be solved in six tries, but theoretically it can be solved in 9.
-Obviously this means that there will be games that will be lost, but by choosing the optimum starting word(s) the chances of a solution are drastically improved.
 
+Obviously this means that there will be games that will be lost, but by choosing the optimum starting word(s) the chances of a solution are drastically improved.
+```five debug=3```
+or
 ```five debug=3 guess1=frump guess2=thegn guess3=sloyd guess4=wacke```
 
 ```
