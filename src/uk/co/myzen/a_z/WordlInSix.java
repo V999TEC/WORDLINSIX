@@ -461,7 +461,7 @@ public class WordlInSix {
 
 		} else {
 
-			for (int n = 0; n < 5; n++) {
+			for (int n = 0; n < wordLength; n++) {
 
 				String numEquals = String.valueOf(1 + n) + "=";
 
@@ -637,9 +637,9 @@ public class WordlInSix {
 
 		Set<String> candidates = new HashSet<String>();
 
-		String contains = containsChars.toString();
+		String contains = new String(containsChars);
 
-		String not = notChars.toString();
+		String not = new String(notChars);
 
 		for (String word : words) {
 
