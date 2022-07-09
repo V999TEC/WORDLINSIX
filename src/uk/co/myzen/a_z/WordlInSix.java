@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -69,7 +70,7 @@ public class WordlInSix {
 
 	private String answer = "";
 
-	private String[] resetStringArray() {
+	private static String[] resetStringArray() {
 
 		String result[] = new String[wordLength];
 
@@ -81,7 +82,7 @@ public class WordlInSix {
 		return result;
 	}
 
-	private char[] resetCharArray() {
+	private static char[] resetCharArray() {
 
 		char result[] = new char[wordLength];
 
@@ -225,6 +226,19 @@ public class WordlInSix {
 			case DEFAULT:
 			default:
 
+				char[] inferred = main.inferenceCheck();
+
+				int col = 1;
+
+				for (char ch : inferred) {
+
+					if (' ' != ch) {
+
+						System.err.println("Column " + col + " must be '" + ch + "' by deduction");
+					}
+					col++;
+				}
+
 				Set<String> candidates = main.findCandidates();
 
 				// display the candidate words (if words=true | words=yes )
@@ -247,7 +261,49 @@ public class WordlInSix {
 		} catch (Exception e) {
 
 			System.err.println("Exception: " + e.getMessage());
+
+			e.printStackTrace();
 		}
+	}
+
+	private char[] inferenceCheck() {
+
+		char[] result = resetCharArray();
+
+		// go through the contains and see which columns each ch can be in
+		// ignore column if already explicitly n=ch
+
+		BitSet flags = new BitSet(wordLength);
+
+		boolean inference = false;
+
+		for (char ch : containsChars) {
+
+			flags.clear(); // all false
+
+			for (int colIndex = 0; colIndex < wordLength; colIndex++) {
+
+				if (' ' == positions[colIndex] && -1 == notN[colIndex].indexOf(ch)) {
+
+					flags.set(colIndex); // implies ch *could* be in this column
+				}
+			}
+
+			// how many columns could ch be in? If one only then it is a definite :-)
+
+			int count = flags.cardinality();
+
+			if (1 == count) {
+
+				int colIndex = flags.nextSetBit(0);
+
+				result[colIndex] = ch;
+
+				inference = true;
+			}
+		}
+
+		return inference ? result : null;
 	}
 
 	private void help() {
@@ -641,6 +697,8 @@ public class WordlInSix {
 
 		String not = new String(notChars);
 
+		char[] inferred = inferenceCheck();
+
 		for (String word : words) {
 
 			boolean match;
@@ -740,7 +798,34 @@ public class WordlInSix {
 
 			if (match) {
 
-				candidates.add(word);
+				if (null != inferred) {
+
+					// before adding as a candidate check for inferences that would eliminate the
+					// candidate
+
+					int colIndex = 0;
+
+					for (char ch : inferred) {
+
+						if (' ' != ch) {
+
+							if (word.charAt(colIndex) != ch) {
+
+								match = false;
+
+//								System.err.println(word + " eliminated due to inference(s)");
+								break;
+							}
+						}
+
+						colIndex++;
+					}
+				}
+
+				if (match) {
+
+					candidates.add(word);
+				}
 			}
 		}
 
@@ -842,37 +927,37 @@ public class WordlInSix {
 
 			int vowelCount = countVowels(candidate);
 
-			if (guesses.size() > 0) {
-
-				if (DEFAULT_TXT.equals(resourceName)) { // improve chances by prioritising certain words
-
-					if ("thump".equals(guesses.get(0))) {
-
-						if (guesses.size() > 1) {
-
-							if (!"blown".equals(guesses.get(1))) {
-
-								if ("state".equals(candidate)) {
-
-									categories.get(0).add(candidate);
-
-								} else if ("masse".equals(candidate)) {
-
-									categories.get(0).add(candidate);
-
-								} else if ("verge".equals(candidate)) {
-
-									categories.get(0).add(candidate);
-
-								} else if ("grill".equals(candidate)) {
-
-									categories.get(0).add(candidate);
-								}
-							}
-						}
-					}
-				}
-			}
+//			if (guesses.size() > 0) {
+//
+//				if (DEFAULT_TXT.equals(resourceName)) { // improve chances by prioritising certain words
+//
+//					if ("thump".equals(guesses.get(0))) {
+//
+//						if (guesses.size() > 1) {
+//
+//							if (!"blown".equals(guesses.get(1))) {
+//
+//								if ("state".equals(candidate)) {
+//
+//									categories.get(0).add(candidate);
+//
+//								} else if ("masse".equals(candidate)) {
+//
+//									categories.get(0).add(candidate);
+//
+//								} else if ("verge".equals(candidate)) {
+//
+//									categories.get(0).add(candidate);
+//
+//								} else if ("grill".equals(candidate)) {
+//
+//									categories.get(0).add(candidate);
+//								}
+//							}
+//						}
+//					}
+//				}
+//			}
 
 			if (0 == dups) {
 
