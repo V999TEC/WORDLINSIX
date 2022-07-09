@@ -1,7 +1,7 @@
 # WORDLINSIX
 Java CLI to solve any WORDLE-style puzzles in a maximum of six tries (typically 4) when the optimum start word(s) are used
 
-It is also possible to play the variation of wordle called _scholardle_ (currently with a 99.999% success rate).
+It is also possible to play the variation of wordle called _scholardle_ (currently with a 100% success rate).
 
 Just use **scholardle** as the first parameter (to use the new 6-letter version of scholardle)
 
@@ -25,11 +25,11 @@ The code can be used to check the performance of different starting words (use p
 # Start Word(s)
 As determined by using the debug features, each variation of the game wordle / scholardle / xxxxx will have different chances of success dependent on the first word chosen. 
 
-The suggested approach for success is to always use the right start word. For wordle use _thump_, for scholardle use _biskup_
+The suggested approach for success is to always use the right start word. For wordle use _admin_, for scholardle use _biskup_
 
-If the first word yields no matching letters (i.e., all grey on the UI) choose the second recommended word.
+If the first word yields no matching letters (i.e., all grey on the UI) choose a second recommendation (if any)
 
-If the second word yields no matching letters (i.e., all grey on the UI) choose the third recommended word.
+If the second word yields no matching letters (i.e., all grey on the UI) choose a third recommendation (if any)
 
 In the unlucky event all three starting words give no clue, do not dispair: you have eliminated half the alphabet!
 
@@ -248,20 +248,10 @@ Some are nonsense words, misspellings, abbreviations and proper nouns.
 
 ```scholardle debug=3```
 or
-```scholardle debug=3 guess1=biskup guess2=lenght guess3=warmed```
+```scholardle debug=3 guess1=acetyl```
 
 ```
-#Tries  biskup  lenght  warmed
-1       1       0       0
-2       222     1       0
-3       3750    3277    1
-4       6419    7120    9814
-5       2064    2173    2759
-6       304     218     223
-7       43      19      14
-8       8       3       0
-==    ======= ======= =======
-%      99.996  99.998  99.999
+**TODO**
 ```
 
 Using the first two start words with dictionary scholardle shows that **22** games will fail to be completed in the required 6 or fewer tries
