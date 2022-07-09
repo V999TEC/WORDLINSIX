@@ -1,9 +1,9 @@
 # WORDLINSIX
 Java CLI to solve any WORDLE-style puzzles in a maximum of six tries (typically 4) when the optimum start word(s) are used
 
-It is also possible to play the variation of wordle called _scholardle_ (currently with a 100% success rate).
+It is also possible to play the variation of wordle called _scholardle_ (currently with a 100% success rate, however the dictionary can change from time to time, last change was around July 2nd, 2022).
 
-Just use **scholardle** as the first parameter (to use the new 6-letter version of scholardle)
+Just use **scholardle** as the first parameter (to use the recent 6-letter version of scholardle)
 
 Alternatively use **five** as the first parameter (to play a generic game with 5-letters, such as the version of scholardle before 2nd July 2022<sup>*1</sup>) 
 
