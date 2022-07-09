@@ -25,7 +25,10 @@ The code can be used to check the performance of different starting words (use p
 # Start Word(s)
 As determined by using the debug features, each variation of the game wordle / scholardle / xxxxx will have different chances of success dependent on the first word chosen. 
 
-The suggested approach for success is to always use the right start word. For wordle use _admin_, for scholardle use _biskup_
+The suggested approach for success is to always use the right start word. For wordle use **_admin_**, for scholardle use **_acetyl_**
+
+Other generic games with different dictionaries (which, by the way, can always be added to the WORDLINSIX jar file without the need to re-compile, just use 7-zip or similar) may benefit by a second or third start word.  
+The static anlysis using debug=2 will be required to find the best start word(s).
 
 If the first word yields no matching letters (i.e., all grey on the UI) choose a second recommendation (if any)
 
