@@ -1,5 +1,5 @@
 # WORDLINSIX
-Java CLI to solve any WORDLE puzzle in a maximum of six tries (typically 4) when the optimum start word(s) are used
+Java CLI to solve any WORDLE-style puzzles in a maximum of six tries (typically 4) when the optimum start word(s) are used
 
 It is also possible to play the variation of wordle called _scholardle_ (currently with a 99.999% success rate).
 
@@ -113,7 +113,7 @@ Success!
 
 ## Example #2
 
-Using the optimum three starting words, the algorithm will converge on an answer suprisingly quickly.
+Using the optimum starting word(s), the algorithm will converge on an answer suprisingly quickly.
 
 ![THUMP_BLOWN_DIRGE](/assets/THUMP_BLOWN_DIRGE.JPG?raw=true "Title")
 
@@ -150,17 +150,6 @@ Algorithm needed 3 guesses
 
 There is no guarentee the algorithm will match the performance of a manual guess (see above: PLUMB/BEAST/ROBIN)
 
-### guess1=thump
-
-This will solve 99.8% of Wordles with a mean number of guesses of 3.8
-
-### guess1=thump guess2=blown
-
-This will solve 99.91% of Wordles with a mean number of guesses of 4.0
-
-### guess1=thump guess2=blown guess3=dirge
-
-This will solve 100% of Wordles with a mean number of guesses of 4.2
 
 ## debug=1
 
@@ -202,7 +191,7 @@ This will maintain the correct letter frequency distribution used by the code
 
 ## debug=2
 
-For the curious, the algorithm can be made to discover its optimum three start word(s)
+For the curious, the algorithm can be made to discover its optimum start word(s)
 
 But it takes _**considerable**_ time. See *Technical Note* below
 
@@ -214,15 +203,11 @@ meaning that at most, six guesses and zero failures (where a failure is consider
 The output that is produced is this: [java -jar wordlinsix.jar wordle debug=2](/assets/wordle-debug=2.txt?raw=true "debug=2")
 
 The log shows that initially we discover
-```abase	9 (29)  <----```
+```aback	8 (6)  <----```
 then
-```blend	8 (11)  <----```
+```abhor	7 (3)  <----```
 then
-```thump	7 (4)  <----```
-
-Using **thump** as the first word the algorithm then tries all the second words an so on, looking for a score of 6 (0) or better
-
-As far as this algorithm is concerned, the worst possible start word is: ```queue	11 (90)``` meaning there were 90 games that could not be completed in 6 guesses and some of those needed 11 guesses!
+```admin	6 (0)  <----```
 
 
 Corresponding data generated for the new scholardle wordlist
@@ -236,37 +221,24 @@ Best start words for **wordle**
 
 ```wordle debug=3```
 or
-```wordle debug=3 guess1=thump guess2=blown guess3=dirge```
+```wordle debug=3 guess1=admin```
 
 ```
-#Tries	thump	blown	dirge
-1	1	0	0
-2	81	1	0
-3	713	507	1
-4	1019	1238	1641
-5	405	509	603
-6	92	58	70
-7	4	2	0
-===== ======= ======= ======= 
-%PASS  99.998  99.999  100.000
-FAIL     (4)     (2)     (0)
+#Tries  admin
+1       2
+2       222
+3       1174
+4       796
+5       108
+6       13
+7       0
+8       0
+9       0
+10      0
+===== =======
+%PASS  100.000
+FAIL     (0)
 ```
-What this table is showing is:
-
-### Use THUMP as the first word 
-then 81 answers will be correct on the 2nd guess
-but 92 answers will need 6 guesses and 4 answers will be unsuccessful
-
-
-### Use THUMP as the first word **and** BLOWN as the second word
-then 507 answers will be correct on the 3rd guess
-but 58 answers will need 6 guesses and 2 answers will be unsuccessful
-
-
-### Use THUMP as the first word **and** BLOWN as the second word **and** DIRGE as the third word
-then 1641 answers will be correct on the 4th guess
-but 70 answers will need 6 guesses but none will need more than 6
-
 
 ## New Scholardle with 6-letters
 Using the new scholardle dictionary, all games can theoretically be solved in 7 or fewer tries
