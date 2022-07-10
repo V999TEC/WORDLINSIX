@@ -10,30 +10,29 @@ Alternatively use **five** as the first parameter (to play a generic game with 5
 # Test my start word
 Ever wondered how good your favourite start words are for wordle or scholardle?  
 This code can indicate how likely you are to solve the game  
-For example, _eileen_ is **NOT** the best start word for scholardle, evidently 216 games are destined to fail (using the algorithm in this code, which is pretty good in itself)
+For example, _vallee_ is **NOT** the best start word for scholardle, evidently 248 games are destined to fail (using the algorithm in this code, which is pretty good in itself)
 
-```scholardle debug=3 guess1=eileen```
+```scholardle debug=3 guess1=vallee```
 
 ```
-#Tries	eileen
+#Tries	vallee
 1	1
-2	155
-3	3286
-4	6150
-5	2443
-6	560
-7	150
-8	50
-9	13
-10	2
-11	1
-12	0
-13	0
+2	149
+3	2882
+4	6138
+5	2758
+6	635
+7	164
+8	57
+9	16
+10	7
+11	2
+12	1
+13	1
 14	0
-15	0
 ===== ======= 
-%PASS  99.983
-FAIL   (216)
+%PASS 99.9806
+FAIL   (248)
 ```
 
 ## N.B.
