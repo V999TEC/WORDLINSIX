@@ -23,11 +23,11 @@ public class WordlInSix {
 
 	private static final String DEFAULT_TXT = "wordle.txt";
 
-	private static final String[] WORDLE_START_WORDS = { "thump", "blown", "dirge" }; // worst start word: quiet 10 (16)
+	private static final String[] WORDLE_START_WORDS = { "thump", "blown", "dirge" };
 
 	private static final String[] FIVE_START_WORDS = { "frump", "thegn", "sloyd", "wacke" };
 
-	private static final String[] SCHOLARDLE_START_WORDS = { "biskup", "lenght", "warmed" }; // worst start word eileen
+	private static final String[] SCHOLARDLE_START_WORDS = { "biskup", "lenght", "warmed" };
 
 	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
@@ -281,36 +281,55 @@ public class WordlInSix {
 
 			result = resetCharArray();
 
-			// go through the contains and see which columns each ch can be in
-			// ignore column if already explicitly n=ch
-
 			BitSet flags = new BitSet(wordLength);
 
-			for (char ch : containsChars) {
+			flags.set(0, wordLength); // all true initially
 
-				flags.clear(); // all false
+			for (int colIndex = 0; colIndex < wordLength; colIndex++) {
 
-				for (int colIndex = 0; colIndex < wordLength; colIndex++) {
+				if (' ' != positions[colIndex]) {
 
-					if (' ' == positions[colIndex] && -1 == notN[colIndex].indexOf(ch)) {
-
-						flags.set(colIndex); // implies ch *could* be in this column
-					}
-				}
-
-				// how many columns could ch be in? If one only then it is a definite :-)
-
-				int count = flags.cardinality();
-
-				if (1 == count) {
-
-					int colIndex = flags.nextSetBit(0);
-
-					result[colIndex] = ch;
-
-					inference = true;
+					flags.clear(colIndex);
 				}
 			}
+
+			if (1 == flags.cardinality()) {
+
+				// only 1 column is unknown (the one at flags.nextSetBit(0))
+
+				int emptyIndex = flags.nextSetBit(0);
+
+				// see if there are any columns according to notN[0..wordLength] that only a
+				// certain letter is possible
+				// out of the subset we know in containsChars
+
+				// go through the contains and see which columns each ch can be in
+				// ignore column if already explicitly n=ch
+
+				for (char ch : containsChars) {
+
+					flags.set(0, wordLength); // all set again
+
+					for (int colIndex = 0; colIndex < wordLength; colIndex++) {
+
+						if (-1 != notN[colIndex].indexOf(ch)
+								|| (positions[colIndex] != ch && ' ' != positions[colIndex])) { // implies ch cannot be
+																								// in this column
+							flags.clear(colIndex);
+						}
+					}
+
+					if (1 == flags.cardinality() && emptyIndex == flags.nextSetBit(0)) {
+
+						result[emptyIndex] = ch;
+
+						inference = true;
+
+						break;
+					}
+				}
+			}
+
 		}
 		return inference ? result : null;
 	}
@@ -709,8 +728,8 @@ public class WordlInSix {
 		String contains = new String(containsChars);
 
 		String not = new String(notChars);
-
-		char[] inferred = inferenceCheck();
+//
+//		char[] inferred = inferenceCheck();
 
 		for (String word : words) {
 
@@ -811,32 +830,7 @@ public class WordlInSix {
 
 			if (match) {
 
-				if (null != inferred) {
-
-					// before adding as a candidate check for inferences that would eliminate the
-					// candidate
-
-					int colIndex = 0;
-
-					for (char ch : inferred) {
-
-						if (' ' != ch) {
-
-							if (word.charAt(colIndex) != ch) {
-
-								match = false;
-								break;
-							}
-						}
-
-						colIndex++;
-					}
-				}
-
-				if (match) {
-
-					candidates.add(word);
-				}
+				candidates.add(word);
 			}
 		}
 
@@ -1168,7 +1162,48 @@ public class WordlInSix {
 
 		List<String> rankings = rankCandidatesByLetterDistribution(candidates);
 
+		char[] inferred = inferenceCheck();
+
 		int r = 0; // By default just select the one at the front of the list
+
+		if (null != inferred) {
+
+			do {
+
+				// before adding as a candidate check for inferences
+				// that would eliminate the prime candidate
+
+				String primeCandidate = rankings.get(r);
+
+				boolean disregard = false;
+
+				int colIndex = 0;
+
+				for (char ch : inferred) {
+
+					if (' ' != ch) {
+
+						if (primeCandidate.charAt(colIndex) != ch) {
+
+							System.out.println("Disregarding candidate " + primeCandidate + " due to inference");
+
+							disregard = true;
+							break;
+						}
+					}
+
+					colIndex++;
+				}
+
+				if (!disregard) {
+
+					break;
+				}
+
+				r++;
+
+			} while (r < rankings.size() - 1);
+		}
 
 		return rankings.get(r);
 	}
@@ -1430,6 +1465,11 @@ public class WordlInSix {
 
 				int tries = howManyGuesses();
 
+				if (1 == tries && !answer.equals(startWords[0])) {
+
+					System.err.println("Investigate guess1: " + answer + " (cannot be 1st try)");
+				}
+
 				if (tries > y) {
 
 					int temp[] = counts[n - 1];
@@ -1477,6 +1517,11 @@ public class WordlInSix {
 			}
 
 			output.print("\n");
+
+			if (0 == counts[0][c]) {
+
+				break;
+			}
 		}
 
 		output.print("===== ");
@@ -1495,7 +1540,7 @@ public class WordlInSix {
 
 			float f = 100 - ((float) failCounts[z] / s);
 
-			output.print(String.format("  %3.3f", f));
+			output.print(String.format(" %3.4f", f));
 		}
 		output.print("\n");
 
@@ -1503,7 +1548,7 @@ public class WordlInSix {
 
 		for (int z = 0; z < x; z++) {
 
-			output.print(String.format("%8s", "(" + failCounts[z] + ")"));
+			output.print(String.format("%8s", "(" + failCounts[z] + ")  "));
 		}
 		output.print("\n");
 	}
