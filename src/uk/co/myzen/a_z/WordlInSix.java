@@ -1548,7 +1548,7 @@ public class WordlInSix {
 
 		for (int z = 0; z < x; z++) {
 
-			output.print(String.format("%8s", "(" + failCounts[z] + ")  "));
+			output.print(String.format("%8s", "(" + failCounts[z] + ")"));
 		}
 		output.print("\n");
 	}
