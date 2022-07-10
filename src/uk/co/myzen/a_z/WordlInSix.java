@@ -23,7 +23,7 @@ public class WordlInSix {
 
 	private static final String DEFAULT_TXT = "wordle.txt";
 
-	private static final String[] WORDLE_START_WORDS = { "thump", "blown", "dirge" };
+	private static final String[] WORDLE_START_WORDS = { "admin" }; // worst start word: quiet 10 (16)
 
 	private static final String[] FIVE_START_WORDS = { "frump", "thegn", "sloyd", "wacke" };
 
@@ -228,15 +228,18 @@ public class WordlInSix {
 
 				char[] inferred = main.inferenceCheck();
 
-				int col = 1;
+				if (null != inferred) {
 
-				for (char ch : inferred) {
+					int col = 1;
 
-					if (' ' != ch) {
+					for (char ch : inferred) {
 
-						System.err.println("Column " + col + " must be '" + ch + "' by deduction");
+						if (' ' != ch) {
+
+							System.err.println("Column " + col + " must be '" + ch + "' by deduction");
+						}
+						col++;
 					}
-					col++;
 				}
 
 				Set<String> candidates = main.findCandidates();
@@ -812,8 +815,6 @@ public class WordlInSix {
 							if (word.charAt(colIndex) != ch) {
 
 								match = false;
-
-//								System.err.println(word + " eliminated due to inference(s)");
 								break;
 							}
 						}
@@ -883,9 +884,11 @@ public class WordlInSix {
 
 			if (null == key) {
 
-				System.err.println("FAIL: contact author key:null rank5:" + rank5);
+				new Exception("FATAL: contact author key:null rank5:" + rank5 + " exit:" + candidates.size())
+						.printStackTrace();
 				System.exit(candidates.size());
 			}
+
 			// static analysis shows that key cannot be null because wordlist is constant
 			// and data has been verified
 
@@ -926,38 +929,6 @@ public class WordlInSix {
 			int dups = countDuplicateLetters(candidate);
 
 			int vowelCount = countVowels(candidate);
-
-//			if (guesses.size() > 0) {
-//
-//				if (DEFAULT_TXT.equals(resourceName)) { // improve chances by prioritising certain words
-//
-//					if ("thump".equals(guesses.get(0))) {
-//
-//						if (guesses.size() > 1) {
-//
-//							if (!"blown".equals(guesses.get(1))) {
-//
-//								if ("state".equals(candidate)) {
-//
-//									categories.get(0).add(candidate);
-//
-//								} else if ("masse".equals(candidate)) {
-//
-//									categories.get(0).add(candidate);
-//
-//								} else if ("verge".equals(candidate)) {
-//
-//									categories.get(0).add(candidate);
-//
-//								} else if ("grill".equals(candidate)) {
-//
-//									categories.get(0).add(candidate);
-//								}
-//							}
-//						}
-//					}
-//				}
-//			}
 
 			if (0 == dups) {
 
@@ -1215,7 +1186,7 @@ public class WordlInSix {
 
 	void debug2() {
 
-		String bestWordSoFar[] = new String[5];
+		String bestWordSoFar[] = new String[5]; // no point in having beyond 5 start words, usually 1 is enough
 
 		int beginIndex = 0;
 
