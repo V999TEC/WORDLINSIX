@@ -23,11 +23,11 @@ public class WordlInSix {
 
 	private static final String DEFAULT_TXT = "wordle.txt";
 
-	private static final String[] WORDLE_START_WORDS = { "admin" }; // worst start word: quiet 10 (16)
+	private static final String[] WORDLE_START_WORDS = { "thump", "blown", "dirge" }; // worst start word: quiet 10 (16)
 
 	private static final String[] FIVE_START_WORDS = { "frump", "thegn", "sloyd", "wacke" };
 
-	private static final String[] SCHOLARDLE_START_WORDS = { "biskup", "lenght", "remove" };
+	private static final String[] SCHOLARDLE_START_WORDS = { "biskup", "lenght", "warmed" }; // worst start word eileen
 
 	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
@@ -51,6 +51,8 @@ public class WordlInSix {
 	private final int[] letterDistributionRanks;
 
 	int debug = 0;
+
+	boolean ai = false;
 
 	List<String> guesses = new ArrayList<String>(6);
 
@@ -271,41 +273,45 @@ public class WordlInSix {
 
 	private char[] inferenceCheck() {
 
-		char[] result = resetCharArray();
-
-		// go through the contains and see which columns each ch can be in
-		// ignore column if already explicitly n=ch
-
-		BitSet flags = new BitSet(wordLength);
-
 		boolean inference = false;
 
-		for (char ch : containsChars) {
+		char[] result = null;
 
-			flags.clear(); // all false
+		if (ai) {
 
-			for (int colIndex = 0; colIndex < wordLength; colIndex++) {
+			result = resetCharArray();
 
-				if (' ' == positions[colIndex] && -1 == notN[colIndex].indexOf(ch)) {
+			// go through the contains and see which columns each ch can be in
+			// ignore column if already explicitly n=ch
 
-					flags.set(colIndex); // implies ch *could* be in this column
+			BitSet flags = new BitSet(wordLength);
+
+			for (char ch : containsChars) {
+
+				flags.clear(); // all false
+
+				for (int colIndex = 0; colIndex < wordLength; colIndex++) {
+
+					if (' ' == positions[colIndex] && -1 == notN[colIndex].indexOf(ch)) {
+
+						flags.set(colIndex); // implies ch *could* be in this column
+					}
+				}
+
+				// how many columns could ch be in? If one only then it is a definite :-)
+
+				int count = flags.cardinality();
+
+				if (1 == count) {
+
+					int colIndex = flags.nextSetBit(0);
+
+					result[colIndex] = ch;
+
+					inference = true;
 				}
 			}
-
-			// how many columns could ch be in? If one only then it is a definite :-)
-
-			int count = flags.cardinality();
-
-			if (1 == count) {
-
-				int colIndex = flags.nextSetBit(0);
-
-				result[colIndex] = ch;
-
-				inference = true;
-			}
 		}
-
 		return inference ? result : null;
 	}
 
@@ -424,6 +430,10 @@ public class WordlInSix {
 			File filePrintStream = new File(value.trim());
 
 			setOutput(filePrintStream);
+
+		} else if (arg.startsWith("ai=")) {
+
+			ai = "true".equalsIgnoreCase(value);
 
 		} else if (arg.startsWith("debug=")) {
 
@@ -1394,7 +1404,7 @@ public class WordlInSix {
 				startWords[w] = guesses.get(w);
 			}
 
-			y = 10; // limit the number of tries
+			y = 15; // limit the number of tries
 		}
 
 		int x = startWords.length;
