@@ -1,7 +1,7 @@
 # WORDLINSIX
 Java CLI to solve any WORDLE-style puzzles in a maximum of six tries (typically 4) when the optimum start word(s) are used
 
-It is also possible to play the variation of wordle called _scholardle_ (currently with a 100% success rate, however the dictionary can change from time to time, last change was around July 2nd, 2022).
+It is also possible to play the variation of wordle called _scholardle_ (currently with a 99.999% success rate, however the dictionary can change from time to time, last change was around July 2nd, 2022).
 
 Just use **scholardle** as the first parameter (to use the recent 6-letter version of scholardle)
 
@@ -10,26 +10,30 @@ Alternatively use **five** as the first parameter (to play a generic game with 5
 # Test my start word
 Ever wondered how good your favourite start words are for wordle or scholardle?  
 This code can indicate how likely you are to solve the game  
-For example, _eileen_ is **NOT** the best start word for scholardle, evidently 26 games are destined to fail (using the algorithm in this code, which is pretty good in itself)
+For example, _eileen_ is **NOT** the best start word for scholardle, evidently 216 games are destined to fail (using the algorithm in this code, which is pretty good in itself)
 
 ```scholardle debug=3 guess1=eileen```
 
 ```
 #Tries	eileen
-1	74
-2	976
-3	5253
-4	5423
-5	960
-6	99
-7	21
-8	2
-9	1
-10	1
+1	1
+2	155
+3	3286
+4	6150
+5	2443
+6	560
+7	150
+8	50
+9	13
+10	2
 11	1
+12	0
+13	0
+14	0
+15	0
 ===== ======= 
-%PASS  99.998
-FAIL    (26)
+%PASS  99.983
+FAIL   (216)
 ```
 
 ## N.B.
@@ -41,6 +45,8 @@ The supplied 6-letter scholardle list resource is a somewhat bizarre subset of _
 
 resources/scholardle.txt in the jar can be edited as required if it does not prove reliable. See **debug=1** below
 
+An experimental parameter **ai=true** is under development and is showing some remarkable improvements, but should not be trusted (yet!)
+
 # Debug Features
 The code can be used to determine the letter distribution of the specified dictionary (use parameter debug=1)
 
@@ -51,7 +57,7 @@ The code can be used to check the performance of different starting words (use p
 # Start Word(s)
 As determined by using the debug features, each variation of the game wordle / scholardle / xxxxx will have different chances of success dependent on the first word chosen. 
 
-The suggested approach for success is to always use the right start word. For wordle use **_admin_**, for scholardle use **_acetyl_**
+The suggested approach for success is to always use the right start word. For wordle use **_thump_**, for scholardle use **_biskup_**
 
 Other generic games with different dictionaries (which, by the way, can always be added to the WORDLINSIX jar file without the need to re-compile, just use 7-zip or similar) may benefit by a second or third start word.  
 The static anlysis using debug=2 will be required to find the best start word(s).
@@ -231,13 +237,6 @@ meaning that at most, six guesses and zero failures (where a failure is consider
 
 The output that is produced is this: [java -jar wordlinsix.jar wordle debug=2](/assets/wordle-debug=2.txt?raw=true "debug=2")
 
-The log shows that initially we discover
-```aback	8 (6)  <----```
-then
-```abhor	7 (3)  <----```
-then
-```admin	6 (0)  <----```
-
 
 Corresponding data generated for the new scholardle wordlist
 
@@ -250,23 +249,20 @@ Best start words for **wordle**
 
 ```wordle debug=3```
 or
-```wordle debug=3 guess1=admin```
+```wordle debug=3 guess1=admin guess2=blown guess3=dirge```
 
 ```
-#Tries  admin
-1       2
-2       222
-3       1174
-4       796
-5       108
-6       13
-7       0
-8       0
-9       0
-10      0
-===== =======
-%PASS  100.000
-FAIL     (0)
+#Tries	thump	blown	dirge
+1	1	0	0
+2	81	1	0
+3	713	507	1
+4	1014	1238	1641
+5	407	509	603
+6	91	58	70
+7	8	2	0
+===== ======= ======= ======= 
+%PASS  99.997  99.999  100.000
+FAIL     (8)     (2)     (0)
 ```
 
 ## New Scholardle with 6-letters
@@ -277,10 +273,21 @@ Some are nonsense words, misspellings, abbreviations and proper nouns.
 
 ```scholardle debug=3```
 or
-```scholardle debug=3 guess1=acetyl```
+```scholardle debug=3 guess1=biskup guess2=lenght guess3=warmed```
 
 ```
-**TODO**
+#Tries	biskup	lenght	warmed
+1	1	0	0
+2	222	1	0
+3	3750	3277	1
+4	6419	7120	9814
+5	2064	2173	2759
+6	304	218	223
+7	43	19	14
+8	8	3	0
+===== ======= ======= ======= 
+%PASS  99.996  99.998  99.999
+FAIL    (51)    (22)    (14)
 ```
 
 Using the first two start words with dictionary scholardle shows that **22** games will fail to be completed in the required 6 or fewer tries
