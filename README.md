@@ -7,6 +7,32 @@ Just use **scholardle** as the first parameter (to use the recent 6-letter versi
 
 Alternatively use **five** as the first parameter (to play a generic game with 5-letters, such as the version of scholardle before 2nd July 2022<sup>*1</sup>) 
 
+# Test my start word
+Ever wondered how good your favourite start words are for wordle or scholardle?  
+This code can indicate how likely you are to solve the game  
+For example, _eileen_ is **NOT** the best start word for scholardle, evidently 26 games are destined to fail (using the algorithm in this code, which is pretty good in itself)
+
+```scholardle debug=3 guess1=eileen```
+
+```
+#Tries	eileen
+1	74
+2	976
+3	5253
+4	5423
+5	960
+6	99
+7	21
+8	2
+9	1
+10	1
+11	1
+===== ======= 
+%PASS  99.998
+FAIL    (26)
+```
+
+## N.B.
 <sup>*1</sup>n.b. 
 The supplied 6-letter scholardle list resource is a somewhat bizarre subset of _possible_<sup>*2</sup> words contains six letters.
 
