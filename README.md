@@ -45,7 +45,7 @@ The supplied 6-letter scholardle list resource is a somewhat bizarre subset of _
 
 resources/scholardle.txt in the jar can be edited as required if it does not prove reliable. See **debug=1** below
 
-An experimental parameter **ai=true** is under development and is showing some remarkable improvements, but should not be trusted (yet!)
+An experimental parameter **ai=true** is under development and is showing some improvements, but should not be trusted (yet!)
 
 # Debug Features
 The code can be used to determine the letter distribution of the specified dictionary (use parameter debug=1)
@@ -286,8 +286,8 @@ or
 7	43	19	14
 8	8	3	0
 ===== ======= ======= ======= 
-%PASS  99.996  99.998  99.999
-FAIL    (51)    (22)    (14)
+%PASS 99.9960 99.9983 99.9989
+FAIL  (51)    (22)    (14)
 ```
 
 Using the first two start words with dictionary scholardle shows that **22** games will fail to be completed in the required 6 or fewer tries
@@ -310,10 +310,9 @@ There is no advantage to having a 4th or 5th start word as the %PASS degrades af
 7	43	19	14	23	357
 8	8	3	0	0	3
 9	0	0	0	0	0
-10	0	0	0	0	0
 ===== ======= ======= ======= ======= ======= 
-%PASS  99.996  99.998  99.999  99.998  99.972
-FAIL    (51)    (22)    (14)    (23)   (360)
+%PASS 99.9960 99.9983 99.9989 99.9982 99.9719
+FAIL  (51)    (22)    (14)    (23)   (360) 
 ```
 
 
