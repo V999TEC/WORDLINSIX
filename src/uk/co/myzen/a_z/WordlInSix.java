@@ -1162,48 +1162,48 @@ public class WordlInSix {
 
 		List<String> rankings = rankCandidatesByLetterDistribution(candidates);
 
-		char[] inferred = inferenceCheck();
-
 		int r = 0; // By default just select the one at the front of the list
 
-		if (null != inferred) {
-
-			do {
-
-				// before adding as a candidate check for inferences
-				// that would eliminate the prime candidate
-
-				String primeCandidate = rankings.get(r);
-
-				boolean disregard = false;
-
-				int colIndex = 0;
-
-				for (char ch : inferred) {
-
-					if (' ' != ch) {
-
-						if (primeCandidate.charAt(colIndex) != ch) {
-
-							System.out.println("Disregarding candidate " + primeCandidate + " due to inference");
-
-							disregard = true;
-							break;
-						}
-					}
-
-					colIndex++;
-				}
-
-				if (!disregard) {
-
-					break;
-				}
-
-				r++;
-
-			} while (r < rankings.size() - 1);
-		}
+//		char[] inferred = inferenceCheck();
+//		
+//		if (null != inferred) {
+//
+//			do {
+//
+//				// before adding as a candidate check for inferences
+//				// that would eliminate the prime candidate
+//
+//				String primeCandidate = rankings.get(r);
+//
+//				boolean disregard = false;
+//
+//				int colIndex = 0;
+//
+//				for (char ch : inferred) {
+//
+//					if (' ' != ch) {
+//
+//						if (primeCandidate.charAt(colIndex) != ch) {
+//
+//							System.out.println("Disregarding candidate " + primeCandidate + " due to inference");
+//
+//							disregard = true;
+//							break;
+//						}
+//					}
+//
+//					colIndex++;
+//				}
+//
+//				if (!disregard) {
+//
+//					break;
+//				}
+//
+//				r++;
+//
+//			} while (r < rankings.size() - 1);
+//		}
 
 		return rankings.get(r);
 	}
