@@ -228,22 +228,6 @@ public class WordlInSix {
 			case DEFAULT:
 			default:
 
-				char[] inferred = main.inferenceCheck();
-
-				if (null != inferred) {
-
-					int col = 1;
-
-					for (char ch : inferred) {
-
-						if (' ' != ch) {
-
-							System.err.println("Column " + col + " must be '" + ch + "' by deduction");
-						}
-						col++;
-					}
-				}
-
 				Set<String> candidates = main.findCandidates();
 
 				// display the candidate words (if words=true | words=yes )
@@ -275,62 +259,57 @@ public class WordlInSix {
 
 		boolean inference = false;
 
-		char[] result = null;
+		char[] result = resetCharArray();
 
-		if (ai) {
+		BitSet flags = new BitSet(wordLength);
 
-			result = resetCharArray();
+		flags.set(0, wordLength); // all true initially
 
-			BitSet flags = new BitSet(wordLength);
+		for (int colIndex = 0; colIndex < wordLength; colIndex++) {
 
-			flags.set(0, wordLength); // all true initially
+			if (' ' != positions[colIndex]) {
 
-			for (int colIndex = 0; colIndex < wordLength; colIndex++) {
-
-				if (' ' != positions[colIndex]) {
-
-					flags.clear(colIndex);
-				}
+				flags.clear(colIndex);
 			}
-
-			if (1 == flags.cardinality()) {
-
-				// only 1 column is unknown (the one at flags.nextSetBit(0))
-
-				int emptyIndex = flags.nextSetBit(0);
-
-				// see if there are any columns according to notN[0..wordLength] that only a
-				// certain letter is possible
-				// out of the subset we know in containsChars
-
-				// go through the contains and see which columns each ch can be in
-				// ignore column if already explicitly n=ch
-
-				for (char ch : containsChars) {
-
-					flags.set(0, wordLength); // all set again
-
-					for (int colIndex = 0; colIndex < wordLength; colIndex++) {
-
-						if (-1 != notN[colIndex].indexOf(ch)
-								|| (positions[colIndex] != ch && ' ' != positions[colIndex])) { // implies ch cannot be
-																								// in this column
-							flags.clear(colIndex);
-						}
-					}
-
-					if (1 == flags.cardinality() && emptyIndex == flags.nextSetBit(0)) {
-
-						result[emptyIndex] = ch;
-
-						inference = true;
-
-						break;
-					}
-				}
-			}
-
 		}
+
+		if (1 == flags.cardinality()) {
+
+			// only 1 column is unknown (the one at flags.nextSetBit(0))
+
+			int emptyIndex = flags.nextSetBit(0);
+
+			// see if there are any columns according to notN[0..wordLength] that only a
+			// certain letter is possible
+			// out of the subset we know in containsChars
+
+			// go through the contains and see which columns each ch can be in
+			// ignore column if already explicitly n=ch
+
+			for (char ch : containsChars) {
+
+				flags.set(0, wordLength); // all set again
+
+				for (int colIndex = 0; colIndex < wordLength; colIndex++) {
+
+					if (-1 != notN[colIndex].indexOf(ch) || (positions[colIndex] != ch && ' ' != positions[colIndex])) {
+						// implies ch cannot be in this column
+
+						flags.clear(colIndex);
+					}
+				}
+
+				if (1 == flags.cardinality() && emptyIndex == flags.nextSetBit(0)) {
+
+					result[emptyIndex] = ch;
+
+					inference = true;
+
+					break;
+				}
+			}
+		}
+
 		return inference ? result : null;
 	}
 
@@ -356,6 +335,27 @@ public class WordlInSix {
 
 		if (showWords) {
 
+			char[] inferred = null;
+
+			if (ai) {
+
+				inferred = inferenceCheck();
+
+				if (null != inferred) {
+
+					int col = 1;
+
+					for (char ch : inferred) {
+
+						if (' ' != ch) {
+
+							System.err.println("Column " + col + " must be '" + ch + "' by deduction");
+						}
+						col++;
+					}
+				}
+			}
+
 			int count = 0;
 
 			if (showRank) {
@@ -368,7 +368,10 @@ public class WordlInSix {
 
 					int vowels = countVowels(candidate);
 
-					System.err.println((++count) + "\t" + candidate + "\t" + vowels + "\t" + uniqueLetters);
+					boolean flag = rejectDueToInference(candidate, inferred);
+
+					System.err.println(
+							(++count) + "\t" + candidate + "\t" + vowels + "\t" + uniqueLetters + (flag ? "\tX" : ""));
 				}
 
 			} else {
@@ -382,6 +385,34 @@ public class WordlInSix {
 			}
 		}
 
+	}
+
+	private boolean rejectDueToInference(String candidate, char[] inferred) {
+
+		boolean disregard = false;
+
+		if (null != inferred) {
+
+			int colIndex = 0;
+
+			for (char ch : inferred) {
+
+				if (' ' != ch) {
+
+					if (candidate.charAt(colIndex) != ch) {
+
+						System.out.println("Disregarding candidate " + candidate + " due to inference");
+
+						disregard = true;
+						break;
+					}
+				}
+
+				colIndex++;
+			}
+		}
+
+		return disregard;
 	}
 
 	private int countDuplicateLetters(String word) {
@@ -728,8 +759,6 @@ public class WordlInSix {
 		String contains = new String(containsChars);
 
 		String not = new String(notChars);
-//
-//		char[] inferred = inferenceCheck();
 
 		for (String word : words) {
 
@@ -1064,18 +1093,22 @@ public class WordlInSix {
 
 			String contains = new String(containsChars);
 
-			scoreAgainstKnownAnswer(guesses.get(index));
+			String candidate = guesses.get(index);
+
+			scoreAgainstKnownAnswer(candidate);
 
 			StringBuffer suggestive = new StringBuffer();
 
 			for (int n = 0; n < guesses.size(); n++) {
 
-				if (!"".equals(guesses.get(n))) {
+				String guess = guesses.get(n);
+
+				if (!"".equals(guess)) {
 
 					suggestive.append("guess");
 					suggestive.append(1 + n);
 					suggestive.append("=");
-					suggestive.append(guesses.get(n));
+					suggestive.append(guess);
 					suggestive.append(' ');
 				}
 			}
@@ -1122,10 +1155,33 @@ public class WordlInSix {
 				}
 			}
 
+			////
+			char[] inferred = null;
+
+			if (ai) {
+
+				inferred = inferenceCheck();
+			}
+
 			if (0 == debug) {
+
+				if (null != inferred) {
+
+					int col = 1;
+
+					for (char ch : inferred) {
+
+						if (' ' != ch) {
+
+							suggestive.append("(" + col + "=" + ch + " by deduction)");
+						}
+						col++;
+					}
+				}
 
 				System.err.println(suggestive.toString());
 			}
+
 			howMany = guesses.size();
 
 			// check if the latest guess happens to be the answer
@@ -1137,7 +1193,7 @@ public class WordlInSix {
 
 			if (index + 1 == howMany) {
 
-				nextBestGuess = selectCandidate();
+				nextBestGuess = selectCandidate(inferred);
 
 				if (null == nextBestGuess) {
 
@@ -1151,7 +1207,7 @@ public class WordlInSix {
 		return howMany;
 	}
 
-	private String selectCandidate() {
+	private String selectCandidate(char[] inferred) {
 
 		Set<String> candidates = findCandidates();
 
@@ -1164,46 +1220,44 @@ public class WordlInSix {
 
 		int r = 0; // By default just select the one at the front of the list
 
-//		char[] inferred = inferenceCheck();
-//		
-//		if (null != inferred) {
-//
-//			do {
-//
-//				// before adding as a candidate check for inferences
-//				// that would eliminate the prime candidate
-//
-//				String primeCandidate = rankings.get(r);
-//
-//				boolean disregard = false;
-//
-//				int colIndex = 0;
-//
-//				for (char ch : inferred) {
-//
-//					if (' ' != ch) {
-//
-//						if (primeCandidate.charAt(colIndex) != ch) {
-//
-//							System.out.println("Disregarding candidate " + primeCandidate + " due to inference");
-//
-//							disregard = true;
-//							break;
-//						}
-//					}
-//
-//					colIndex++;
-//				}
-//
-//				if (!disregard) {
-//
-//					break;
-//				}
-//
-//				r++;
-//
-//			} while (r < rankings.size() - 1);
-//		}
+		if (null != inferred) {
+
+			do {
+
+				// before adding as a candidate check for inferences
+				// that would eliminate the prime candidate
+
+				String primeCandidate = rankings.get(r);
+
+				boolean disregard = false;
+
+				int colIndex = 0;
+
+				for (char ch : inferred) {
+
+					if (' ' != ch) {
+
+						if (primeCandidate.charAt(colIndex) != ch) {
+
+							System.out.println("Disregarding candidate " + primeCandidate + " due to inference");
+
+							disregard = true;
+							break;
+						}
+					}
+
+					colIndex++;
+				}
+
+				if (!disregard) {
+
+					break;
+				}
+
+				r++;
+
+			} while (r < rankings.size() - 1);
+		}
 
 		return rankings.get(r);
 	}
