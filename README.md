@@ -5,8 +5,6 @@ It is also possible to play the variation of wordle called _scholardle_ (current
 
 Just use **scholardle** as the first parameter (to use the recent 6-letter version of scholardle)
 
-Alternatively use **five** as the first parameter (to play a generic game with 5-letters, such as the version of scholardle before 2nd July 2022<sup>*1</sup>) 
-
 # Test my start word
 Ever wondered how good your favourite start words are for wordle or scholardle?  
 This code can indicate how likely you are to solve the game  
@@ -315,7 +313,7 @@ FAIL  (51)    (22)    (14)    (23)   (360)
 ```
 
 
-## Old Scholardle with 5-letters
+## Legacy Scholardle with 5-letters
 
 The list of words in the scholardle dictionary is more than five times larger than wordle's!
 
