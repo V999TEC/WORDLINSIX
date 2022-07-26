@@ -18,8 +18,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.TimeUnit;
 
 public class WordlInSix {
+
+	private static Map<String, Result> results = null;
 
 	private static final String DEFAULT_TXT = "wordle.txt";
 
@@ -30,8 +33,6 @@ public class WordlInSix {
 	private static final String[] SCHOLARDLE_START_WORDS = { "biskup", "lenght", "warmed" };
 
 	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
-
-	private static int wordLength = 0;
 
 	private static enum Action {
 
@@ -44,17 +45,39 @@ public class WordlInSix {
 
 	private static Map<String, String> existingResults = new HashMap<String, String>();
 
+	private static long msMainInstanceStart;
+
+	private static WordlInSix mainInstance = null;
+
+	private static List<WordlInSix> instances = null;
+
+	private static Integer threads = 0;
+
+	private static int debug = 0;
+
+	private static String resourceName;
+
+	private static int[] letterDistributionRanks;
+
+	private static int wordLength = 0;
+
+	private final Thread thread;
+
 	private final List<String> words;
 
-	private final String resourceName;
+	private int higestTries = 0;
 
-	private final int[] letterDistributionRanks;
+	private int highestFailCount = 0;
 
-	int debug = 0;
+	private String bestWordSoFar[] = new String[5];
 
-	boolean ai = false;
+	private boolean terminate = false;
 
-	List<String> guesses = new ArrayList<String>(6);
+	private boolean waiting = false;
+
+	private boolean ai = false;
+
+	private List<String> guesses = new ArrayList<String>(6);
 
 	private PrintStream output = System.err;
 
@@ -101,7 +124,11 @@ public class WordlInSix {
 		this(DEFAULT_TXT);
 	}
 
-	WordlInSix(String name) throws Exception {
+	private WordlInSix(String name) throws Exception {
+
+		msMainInstanceStart = System.currentTimeMillis();
+
+		thread = Thread.currentThread();
 
 		resourceName = name;
 
@@ -116,6 +143,35 @@ public class WordlInSix {
 		String propertyResourceName = name.substring(0, lp) + ".properties";
 
 		letterDistributionRanks = loadLetterDistributionRanks(propertyResourceName);
+	}
+
+	private WordlInSix(int subset, final int threads) {
+
+		thread = Thread.currentThread();
+
+		output = mainInstance.output;
+
+		int mainWordListSize = mainInstance.words.size();
+
+		int subsetSize = mainWordListSize / threads;
+
+		int lo = (subset - 1) * subsetSize;
+
+		int hi = threads == subset ? mainWordListSize : subset * subsetSize;
+
+		System.out.println(thread.getName() + ":" + "\tlo:" + lo + "\thi:" + hi + "\t" + mainInstance.words.get(lo)
+				+ "\t" + mainInstance.words.get(hi - 1));
+
+		words = new ArrayList<String>(hi - lo);
+
+		for (int index = lo; index < hi; index++) {
+
+			words.add(mainInstance.words.get(index));
+		}
+
+		notN = resetStringArray();
+
+		positions = resetCharArray();
 	}
 
 	private int[] loadLetterDistributionRanks(String name) {
@@ -158,12 +214,12 @@ public class WordlInSix {
 
 	public static void main(String[] args) {
 
-		WordlInSix main;
+		// WordlInSix main;
 
 		try {
 			if (0 == args.length) {
 
-				main = new WordlInSix(null); // will use DEFAULT_TXT & DEFAULT_PROPERTIES
+				mainInstance = new WordlInSix(null); // will use DEFAULT_TXT & DEFAULT_PROPERTIES
 
 				action = Action.SHOW_HELP;
 
@@ -175,9 +231,9 @@ public class WordlInSix {
 
 				String game = -1 == args[0].indexOf('=') ? args[0] : null;
 
-				main = null == game ? new WordlInSix() : new WordlInSix(game + ".txt");
+				mainInstance = null == game ? new WordlInSix() : new WordlInSix(game + ".txt");
 
-				if (main.words == null || 0 == main.words.size()) {
+				if (mainInstance.words == null || 0 == mainInstance.words.size()) {
 
 					action = Action.ABORT;
 
@@ -187,12 +243,14 @@ public class WordlInSix {
 
 					for (String arg : args) {
 
-						main.parameter(arg);
+						mainInstance.parameter(arg);
 					}
 
-					if (!main.validatedParameters()) {
+					if (!mainInstance.validatedParameters()) {
 
 						action = Action.ABORT;
+					} else {
+
 					}
 				}
 			}
@@ -201,34 +259,73 @@ public class WordlInSix {
 
 			case DEBUG_1:
 
-				main.debug1(null); // display letter frequency
+				mainInstance.debug1(null); // display letter frequency
 				break;
 
 			case DEBUG_2:
 
-				main.debug2();
+				if (threads > 0) {
+
+					results = new HashMap<String, Result>();
+
+					// launch threads if required
+
+					instances = new ArrayList<WordlInSix>(threads);
+
+					for (int thread = 0; thread < threads; thread++) {
+
+						final int subset = 1 + thread;
+
+						Thread e = new Thread() {
+
+							@Override
+							public void run() {
+
+								try {
+
+									WordlInSix instance = new WordlInSix(subset, threads);
+
+									instances.add(instance);
+
+									instance.debug2();
+
+								} catch (Exception e) {
+
+									e.printStackTrace();
+								}
+							}
+						};
+
+						e.start();
+					}
+
+				} else {
+
+					mainInstance.debug2();
+				}
+
 				break;
 
 			case DEBUG_3:
 
-				main.debug3();
+				mainInstance.debug3();
 				break;
 
 			case GUESS_TO_ANSWER:
 
-				main.guessToAnswer();
+				mainInstance.guessToAnswer();
 				break;
 
 			case ABORT:
 			case SHOW_HELP:
 
-				main.help();
+				mainInstance.help();
 				break;
 
 			case DEFAULT:
 			default:
 
-				Set<String> candidates = main.findCandidates();
+				Set<String> candidates = mainInstance.findCandidates();
 
 				// display the candidate words (if words=true | words=yes )
 
@@ -242,7 +339,7 @@ public class WordlInSix {
 
 				System.err.println("There are " + candidates.size() + " word(s) matching " + sb.toString());
 
-				main.report(candidates);
+				mainInstance.report(candidates);
 
 				break;
 			}
@@ -475,7 +572,11 @@ public class WordlInSix {
 
 		setOutput(null); // default initially
 
-		if (arg.startsWith("output=")) {
+		if (arg.startsWith("threads=")) {
+
+			threads = Integer.parseInt(null == value ? "0" : value);
+
+		} else if (arg.startsWith("output=")) {
 
 			File filePrintStream = new File(value.trim());
 
@@ -760,7 +861,7 @@ public class WordlInSix {
 
 		String not = new String(notChars);
 
-		for (String word : words) {
+		for (String word : mainInstance.words) {
 
 			boolean match;
 
@@ -1285,7 +1386,8 @@ public class WordlInSix {
 
 	void debug2() {
 
-		String bestWordSoFar[] = new String[5]; // no point in having beyond 5 start words, usually 1 is enough
+		// String bestWordSoFar[] = new String[5]; // no point in having beyond 5 start
+		// words, usually 1 is enough
 
 		int beginIndex = 0;
 
@@ -1297,9 +1399,13 @@ public class WordlInSix {
 		}
 
 		int lowestSoFar = 0;
-		int higestTries = 0;
+
 		int failCount = 0;
-		int highestFailCount = 0;
+
+		higestTries = 0;
+		highestFailCount = 0;
+
+		Result bestResult = null;
 
 		for (int index = beginIndex; index < bestWordSoFar.length; index++) {
 
@@ -1350,7 +1456,7 @@ public class WordlInSix {
 
 					} else {
 
-						for (String targetAnswer : words) {
+						for (String targetAnswer : mainInstance.words) {
 
 							answer = targetAnswer;
 
@@ -1378,6 +1484,7 @@ public class WordlInSix {
 					}
 
 					boolean highLight = false;
+					boolean equalMerit = false;
 
 					if (higestTries <= lowestSoFar) {
 
@@ -1392,41 +1499,268 @@ public class WordlInSix {
 							highestFailCount = failCount;
 							bestWordSoFar[index] = word;
 							highLight = true;
+
+						} else if (failCount == highestFailCount) {
+
+							equalMerit = true;
 						}
+
 					}
 
-					output.println(
-							existingKey + "\t" + higestTries + " (" + failCount + ") " + (highLight ? " <----" : ""));
+					output.println(existingKey + "\t" + higestTries + " (" + failCount + ") "
+							+ (highLight ? " <----" + thread.getName()
+									: (equalMerit ? " <-==-" + thread.getName() : "")));
+
+					if (null != results && (highLight || equalMerit)) {
+
+						String key = Result.asKey(higestTries, failCount);
+
+						if (results.containsKey(key)) {
+
+							Result result = results.get(key);
+
+							result.add(word);
+
+						} else {
+
+							Result result = new Result(word, higestTries, failCount);
+
+							results.put(key, result);
+						}
+					}
 				}
 
 				if (0 == highestFailCount) {
+
+					// found a solution :-)
+
+					terminate = true;
+					break;
+				}
+			}
+
+			// wait for concurrent thread(s) to catch up to this point
+
+			// are we the last thread that is not waiting?
+
+			if (null != instances) {
+
+				for (WordlInSix wis : instances) {
+
+					if (wis.thread == thread) {
+
+						continue; // ignore ourself as we implicitly know we are not waiting
+					}
+
+					if (!wis.waiting) { // another thread is still active: we can wait
+
+						waiting = true;
+						break;
+					}
+				}
+
+				if (!waiting) {
+
+					// assume all the other threads are in a waiting state
+					// furthermore assume our Results map is complete at the current index level
+
+					// find the best result so far
+
+					int winnerHighestTries = 99999;
+
+					int winnerHighestFailCount = 99999;
+
+					String winnerKey = null;
+
+					for (String key : results.keySet()) {
+
+						String[] composite = key.split(" ");
+
+						int guessCount = Integer.parseInt(composite[0]);
+
+						int failureCount = Integer.parseInt(composite[1]);
+
+						if (guessCount <= winnerHighestTries) {
+
+							if (guessCount < winnerHighestTries) {
+
+								winnerHighestTries = guessCount;
+
+								winnerHighestFailCount = 99999;
+							}
+
+							if (failureCount < winnerHighestFailCount) {
+
+								winnerHighestFailCount = failureCount;
+
+								winnerKey = key;
+							}
+						}
+					}
+
+					Result winner = results.get(winnerKey);
+
+					// has this improved upon the previous level's best word
+					// (i.e., index-1 where index >0) ?
+
+					if (null == bestResult) {
+
+						bestResult = winner;
+
+					} else {
+
+						terminate = true; // by default assume no improvement in score
+
+						int tempFail = bestResult.failures;
+
+						if (winner.tries <= bestResult.tries) {
+
+							if (winner.tries < bestResult.tries) {
+
+								tempFail = 99999;
+							}
+
+							if (winner.failures < tempFail) {
+
+								bestResult = winner;
+
+								terminate = false; // improvement in score
+							}
+						}
+					}
+
+					if (terminate) {
+
+						System.out.println(thread.getName() + ": at index " + index
+								+ " no further improvement in score better than (" + bestResult.asKey() + ") "
+								+ bestResult.words.get(0));
+
+					} else {
+
+						if (winner.words.size() > 1) {
+
+							System.out.print(thread.getName() + ": at index " + index + " tie (" + winner.asKey()
+									+ ") for optimal word: ");
+
+							bestWordSoFar[index] = null; // hopefully replaced by a valid word
+
+							for (int a = 0; a < winner.words.size(); a++) {
+
+								System.out.print(winner.words.get(a) + ", ");
+
+								boolean matchExistingGuess = false;
+
+								for (int c = 0; c < index; c++) {
+
+									if (bestWordSoFar[c].equals(winner.words.get(a))) {
+
+										// disallow this option- can't choose a word already guessed
+
+										matchExistingGuess = true;
+										break;
+									}
+								}
+
+								if (matchExistingGuess) {
+
+									System.out.print(" (not: " + winner.words.get(a) + "), ");
+
+								} else {
+
+									bestWordSoFar[index] = winner.words.get(a);
+
+									System.out.print(bestWordSoFar[index] + ", ");
+								}
+							}
+
+							System.out.println("");
+
+							if (null == bestWordSoFar[index]) {
+
+								terminate = true;
+							}
+
+						} else {
+
+							System.out.println(thread.getName() + ": at index " + index + " (" + bestResult.asKey()
+									+ ")  optimal word: " + winner.words.get(0));
+
+							bestWordSoFar[index] = winner.words.get(0);
+						}
+
+					}
+
+					// now inject same results so far into all threads
+
+					for (WordlInSix wis : instances) {
+
+						for (int i = 0; i < (index + 1); i++) {
+
+							wis.bestWordSoFar[i] = bestWordSoFar[i];
+
+							if (terminate) {
+
+								wis.bestWordSoFar[index] = null;
+							}
+						}
+					}
+
+					// we are now responsible for interrupting all the other waiting threads
+
+					for (WordlInSix wis : instances) {
+
+						if (wis.thread != thread) {
+
+							if (terminate) {
+
+								wis.terminate = true;
+							}
+
+							wis.thread.interrupt();
+						}
+					}
+
+				} else {
+
+					do {
+
+						// wait indefinitely until interrupt.
+						// last remaining non-waiting thread is responsible for interrupting other
+						// waiting threads
+
+						try {
+
+							System.out.println(thread.getName() + ": waiting to synchronise");
+							Thread.sleep(2000 * threads);
+
+						} catch (InterruptedException e) {
+
+							synchronized (instances) {
+
+								System.out.println(thread.getName() + ": now awake");
+								waiting = false;
+							}
+						}
+
+						if (terminate) {
+
+							System.out.println(thread.getName() + ": about to terminate");
+							break;
+						}
+
+					} while (waiting);
+				}
+
+				if (terminate) {
 
 					break;
 				}
 			}
 		}
 
-		for (int g = 0; g < bestWordSoFar.length; g++) {
+		// only one thread need do the following
 
-			if (null == bestWordSoFar[g]) {
-
-				break;
-			}
-
-			output.println("guess" + (1 + g) + "=" + bestWordSoFar[g]);
-		}
-
-		// verify solution
-
-		int n = 0;
-
-		failCount = 0;
-
-		for (String targetAnswer : words) {
-
-			answer = targetAnswer;
-
-			guesses.clear();
+		if (0 == threads || thread.equals(instances.get(0).thread)) {
 
 			for (int g = 0; g < bestWordSoFar.length; g++) {
 
@@ -1435,21 +1769,53 @@ public class WordlInSix {
 					break;
 				}
 
-				guesses.add(bestWordSoFar[g]);
+				output.println("guess" + (1 + g) + "=" + bestWordSoFar[g]);
 			}
 
-			int tries = howManyGuesses();
+			// verify solution
 
-			n++;
+			int n = 0;
 
-			if (tries > 6) {
+			failCount = 0;
 
-				failCount++;
-				output.println(n + "\t" + answer + "\t" + tries);
+			for (String targetAnswer : mainInstance.words) {
+
+				answer = targetAnswer;
+
+				guesses.clear();
+
+				for (int g = 0; g < bestWordSoFar.length; g++) {
+
+					if (null == bestWordSoFar[g]) {
+
+						break;
+					}
+
+					guesses.add(bestWordSoFar[g]);
+				}
+
+				int tries = howManyGuesses();
+
+				n++;
+
+				if (tries > 6) {
+
+					failCount++;
+					output.println(n + "\t" + answer + "\t" + tries);
+				}
 			}
+
+			output.println("Failures: " + failCount);
+			output.println("dictionary: " + resourceName);
+			output.println("Threads: " + threads);
+
+			long millis = System.currentTimeMillis() - msMainInstanceStart;
+
+			String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
+					TimeUnit.MILLISECONDS.toMinutes(millis) % TimeUnit.HOURS.toMinutes(1),
+					TimeUnit.MILLISECONDS.toSeconds(millis) % TimeUnit.MINUTES.toSeconds(1));
+			output.println("Elapsed: " + hms);
 		}
-
-		output.println("Failures: " + failCount);
 	}
 
 	private void debug3() throws Exception {
@@ -1506,7 +1872,7 @@ public class WordlInSix {
 
 			counts[n - 1] = new int[y];
 
-			for (String targetAnswer : words) {
+			for (String targetAnswer : mainInstance.words) {
 
 				answer = targetAnswer;
 
