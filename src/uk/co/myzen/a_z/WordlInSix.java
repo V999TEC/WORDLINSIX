@@ -1646,8 +1646,6 @@ public class WordlInSix {
 
 							for (int a = 0; a < winner.words.size(); a++) {
 
-								System.out.print(winner.words.get(a) + ", ");
-
 								boolean matchExistingGuess = false;
 
 								for (int c = 0; c < index; c++) {
