@@ -61,6 +61,8 @@ public class WordlInSix {
 
 	private static int wordLength = 0;
 
+	private static Integer bestKey = null;
+
 	private final Thread thread;
 
 	private final List<String> words;
@@ -1400,8 +1402,6 @@ public class WordlInSix {
 
 		int failCount = 0;
 
-		Integer bestResult = null;
-
 		for (int index = beginIndex; index < bestWordSoFar.length; index++) {
 
 			if (null == bestWordSoFar[index]) {
@@ -1565,9 +1565,9 @@ public class WordlInSix {
 				// has this improved upon the previous level's best word
 				// (i.e., index-1 where index >0) ?
 
-				if (null == bestResult || winnerKey < bestResult) {
+				if (null == bestKey || winnerKey < bestKey) {
 
-					bestResult = winnerKey;
+					bestKey = winnerKey;
 
 				} else {
 
@@ -1576,32 +1576,31 @@ public class WordlInSix {
 
 				if (terminate) {
 
-					Result finalResult = results.get(bestResult);
+					Result finalResult = results.get(bestKey);
 
-					System.out.println(
-							thread.getName() + ": at index " + index + " no further improvement in score better than ("
-									+ finalResult.asStringKey() + ") " + finalResult.words.get(0));
+					System.out.println(thread.getName() + ": at index " + index
+							+ " no further improvement in score better than (" + finalResult.asStringKey() + ")");
 
 					bestWordSoFar[index] = null;
 
 				} else {
 
-					Result winningResult = results.get(winnerKey);
+					Result bestResult = results.get(bestKey);
 
-					if (winningResult.words.size() > 1) {
+					if (bestResult.words.size() > 1) {
 
-						System.out.print(thread.getName() + ": at index " + index + " tie ("
-								+ winningResult.asStringKey() + ") for optimal word: ");
+						System.out.print(thread.getName() + ": at index " + index + " tie (" + bestResult.asStringKey()
+								+ ") for optimal word: ");
 
 						bestWordSoFar[index] = null; // hopefully replaced by a valid word
 
-						for (int a = 0; a < winningResult.words.size(); a++) {
+						for (int a = 0; a < bestResult.words.size(); a++) {
 
 							boolean matchExistingGuess = false;
 
 							for (int c = 0; c < index; c++) {
 
-								if (bestWordSoFar[c].equals(winningResult.words.get(a))) {
+								if (bestWordSoFar[c].equals(bestResult.words.get(a))) {
 
 									// disallow this option- can't choose a word already guessed
 
@@ -1612,11 +1611,11 @@ public class WordlInSix {
 
 							if (matchExistingGuess) {
 
-								System.out.print(" (not: " + winningResult.words.get(a) + "), ");
+								System.out.print(" (not: " + bestResult.words.get(a) + "), ");
 
 							} else {
 
-								bestWordSoFar[index] = winningResult.words.get(a);
+								bestWordSoFar[index] = bestResult.words.get(a);
 
 								System.out.print(bestWordSoFar[index] + ", ");
 							}
@@ -1631,10 +1630,10 @@ public class WordlInSix {
 
 					} else {
 
-						System.out.println(thread.getName() + ": at index " + index + " (" + winningResult.asStringKey()
-								+ ")  optimal word: " + winningResult.words.get(0));
+						System.out.println(thread.getName() + ": at index " + index + " (" + bestResult.asStringKey()
+								+ ")  optimal word: " + bestResult.words.get(0));
 
-						bestWordSoFar[index] = winningResult.words.get(0);
+						bestWordSoFar[index] = bestResult.words.get(0);
 					}
 
 				}
@@ -1655,6 +1654,8 @@ public class WordlInSix {
 							}
 						}
 					}
+
+					results.clear(); // start afresh on the next word level
 
 					// we are now responsible for interrupting all the other waiting threads
 
