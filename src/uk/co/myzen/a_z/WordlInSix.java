@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 public class WordlInSix {
 
-	private static Map<String, Result> results = null;
+	private static Map<Integer, Result> results = null;
 
 	private static final String DEFAULT_TXT = "wordle.txt";
 
@@ -264,9 +264,9 @@ public class WordlInSix {
 
 			case DEBUG_2:
 
-				if (threads > 0) {
+				results = new HashMap<Integer, Result>();
 
-					results = new HashMap<String, Result>();
+				if (threads > 0) {
 
 					// launch threads if required
 
@@ -343,13 +343,13 @@ public class WordlInSix {
 
 				break;
 			}
-
 		} catch (Exception e) {
 
 			System.err.println("Exception: " + e.getMessage());
 
 			e.printStackTrace();
 		}
+
 	}
 
 	private char[] inferenceCheck() {
@@ -1398,22 +1398,15 @@ public class WordlInSix {
 			beginIndex++;
 		}
 
-		int lowestSoFar = 0;
-
 		int failCount = 0;
 
-		higestTries = 0;
-		highestFailCount = 0;
-
-		Result bestResult = null;
+		Integer bestResult = null;
 
 		for (int index = beginIndex; index < bestWordSoFar.length; index++) {
 
 			if (null == bestWordSoFar[index]) {
 
-				// needs to be at least as big as the dictionary size
-				lowestSoFar = 99999;
-				highestFailCount = 99999;
+				Integer lowestWordScore = Integer.MAX_VALUE;
 
 				for (String word : words) {
 
@@ -1483,28 +1476,22 @@ public class WordlInSix {
 						}
 					}
 
+					Integer currentWordScore = 1000 * higestTries + failCount; // bug assumption: failcount < 1000
+
 					boolean highLight = false;
 					boolean equalMerit = false;
 
-					if (higestTries <= lowestSoFar) {
+					if (currentWordScore < lowestWordScore) {
 
-						if (higestTries < lowestSoFar) {
+						lowestWordScore = currentWordScore;
 
-							lowestSoFar = higestTries;
-							highestFailCount = 99999;
-						}
+						bestWordSoFar[index] = word;
 
-						if (failCount < highestFailCount) {
+						highLight = true;
 
-							highestFailCount = failCount;
-							bestWordSoFar[index] = word;
-							highLight = true;
+					} else if (currentWordScore == lowestWordScore) {
 
-						} else if (failCount == highestFailCount) {
-
-							equalMerit = true;
-						}
-
+						equalMerit = true;
 					}
 
 					output.println(existingKey + "\t" + higestTries + " (" + failCount + ") "
@@ -1513,11 +1500,9 @@ public class WordlInSix {
 
 					if (null != results && (highLight || equalMerit)) {
 
-						String key = Result.asKey(higestTries, failCount);
+						if (results.containsKey(lowestWordScore)) {
 
-						if (results.containsKey(key)) {
-
-							Result result = results.get(key);
+							Result result = results.get(lowestWordScore);
 
 							result.add(word);
 
@@ -1525,12 +1510,12 @@ public class WordlInSix {
 
 							Result result = new Result(word, higestTries, failCount);
 
-							results.put(key, result);
+							results.put(lowestWordScore, result);
 						}
 					}
 				}
 
-				if (0 == highestFailCount) {
+				if (lowestWordScore < 6001) {
 
 					// found a solution :-)
 
@@ -1558,135 +1543,103 @@ public class WordlInSix {
 						break;
 					}
 				}
+			}
 
-				if (!waiting) {
+			if (!waiting) {
 
-					// assume all the other threads are in a waiting state
-					// furthermore assume our Results map is complete at the current index level
+				// assume all the other threads are in a waiting state
+				// furthermore assume our Results map is complete at the current index level
 
-					// find the best result so far
+				// find the best result so far (the on with the lowest key)
 
-					int winnerHighestTries = 99999;
+				Integer winnerKey = Integer.MAX_VALUE;
 
-					int winnerHighestFailCount = 99999;
+				for (Integer key : results.keySet()) {
 
-					String winnerKey = null;
+					if (key < winnerKey) {
 
-					for (String key : results.keySet()) {
-
-						String[] composite = key.split(" ");
-
-						int guessCount = Integer.parseInt(composite[0]);
-
-						int failureCount = Integer.parseInt(composite[1]);
-
-						if (guessCount <= winnerHighestTries) {
-
-							if (guessCount < winnerHighestTries) {
-
-								winnerHighestTries = guessCount;
-
-								winnerHighestFailCount = 99999;
-							}
-
-							if (failureCount < winnerHighestFailCount) {
-
-								winnerHighestFailCount = failureCount;
-
-								winnerKey = key;
-							}
-						}
+						winnerKey = key;
 					}
+				}
 
-					Result winner = results.get(winnerKey);
+				// has this improved upon the previous level's best word
+				// (i.e., index-1 where index >0) ?
 
-					// has this improved upon the previous level's best word
-					// (i.e., index-1 where index >0) ?
+				if (null == bestResult || winnerKey < bestResult) {
 
-					if (null == bestResult) {
+					bestResult = winnerKey;
 
-						bestResult = winner;
+				} else {
 
-					} else {
+					terminate = true; // by default assume no improvement in score
+				}
 
-						terminate = true; // by default assume no improvement in score
+				if (terminate) {
 
-						int tempFail = bestResult.failures;
+					Result finalResult = results.get(bestResult);
 
-						if (winner.tries <= bestResult.tries) {
+					System.out.println(
+							thread.getName() + ": at index " + index + " no further improvement in score better than ("
+									+ finalResult.asStringKey() + ") " + finalResult.words.get(0));
 
-							if (winner.tries < bestResult.tries) {
+					bestWordSoFar[index] = null;
 
-								tempFail = 99999;
-							}
+				} else {
 
-							if (winner.failures < tempFail) {
+					Result winningResult = results.get(winnerKey);
 
-								bestResult = winner;
+					if (winningResult.words.size() > 1) {
 
-								terminate = false; // improvement in score
-							}
-						}
-					}
+						System.out.print(thread.getName() + ": at index " + index + " tie ("
+								+ winningResult.asStringKey() + ") for optimal word: ");
 
-					if (terminate) {
+						bestWordSoFar[index] = null; // hopefully replaced by a valid word
 
-						System.out.println(thread.getName() + ": at index " + index
-								+ " no further improvement in score better than (" + bestResult.asKey() + ") "
-								+ bestResult.words.get(0));
+						for (int a = 0; a < winningResult.words.size(); a++) {
 
-					} else {
+							boolean matchExistingGuess = false;
 
-						if (winner.words.size() > 1) {
+							for (int c = 0; c < index; c++) {
 
-							System.out.print(thread.getName() + ": at index " + index + " tie (" + winner.asKey()
-									+ ") for optimal word: ");
+								if (bestWordSoFar[c].equals(winningResult.words.get(a))) {
 
-							bestWordSoFar[index] = null; // hopefully replaced by a valid word
+									// disallow this option- can't choose a word already guessed
 
-							for (int a = 0; a < winner.words.size(); a++) {
-
-								boolean matchExistingGuess = false;
-
-								for (int c = 0; c < index; c++) {
-
-									if (bestWordSoFar[c].equals(winner.words.get(a))) {
-
-										// disallow this option- can't choose a word already guessed
-
-										matchExistingGuess = true;
-										break;
-									}
-								}
-
-								if (matchExistingGuess) {
-
-									System.out.print(" (not: " + winner.words.get(a) + "), ");
-
-								} else {
-
-									bestWordSoFar[index] = winner.words.get(a);
-
-									System.out.print(bestWordSoFar[index] + ", ");
+									matchExistingGuess = true;
+									break;
 								}
 							}
 
-							System.out.println("");
+							if (matchExistingGuess) {
 
-							if (null == bestWordSoFar[index]) {
+								System.out.print(" (not: " + winningResult.words.get(a) + "), ");
 
-								terminate = true;
+							} else {
+
+								bestWordSoFar[index] = winningResult.words.get(a);
+
+								System.out.print(bestWordSoFar[index] + ", ");
 							}
-
-						} else {
-
-							System.out.println(thread.getName() + ": at index " + index + " (" + bestResult.asKey()
-									+ ")  optimal word: " + winner.words.get(0));
-
-							bestWordSoFar[index] = winner.words.get(0);
 						}
 
+						System.out.println("");
+
+						if (null == bestWordSoFar[index]) {
+
+							terminate = true;
+						}
+
+					} else {
+
+						System.out.println(thread.getName() + ": at index " + index + " (" + winningResult.asStringKey()
+								+ ")  optimal word: " + winningResult.words.get(0));
+
+						bestWordSoFar[index] = winningResult.words.get(0);
 					}
+
+				}
+
+				if (null != instances) {
 
 					// now inject same results so far into all threads
 
@@ -1718,42 +1671,41 @@ public class WordlInSix {
 						}
 					}
 
-				} else {
-
-					do {
-
-						// wait indefinitely until interrupt.
-						// last remaining non-waiting thread is responsible for interrupting other
-						// waiting threads
-
-						try {
-
-							System.out.println(thread.getName() + ": waiting to synchronise");
-							Thread.sleep(2000 * threads);
-
-						} catch (InterruptedException e) {
-
-							synchronized (instances) {
-
-								System.out.println(thread.getName() + ": now awake");
-								waiting = false;
-							}
-						}
-
-						if (terminate) {
-
-							System.out.println(thread.getName() + ": about to terminate");
-							break;
-						}
-
-					} while (waiting);
 				}
 
-				if (terminate) {
+			} else {
 
-					break;
-				}
+				do {
+
+					// wait indefinitely until interrupt.
+					// last remaining non-waiting thread is responsible for interrupting other
+					// waiting threads
+
+					try {
+
+						System.out.println(thread.getName() + ": waiting to synchronise");
+						Thread.sleep(2000 * threads);
+
+					} catch (InterruptedException e) {
+
+						System.out.println(thread.getName() + ": now awake");
+						waiting = false;
+					}
+
+					if (terminate) {
+
+						System.out.println(thread.getName() + ": about to terminate");
+						break;
+					}
+
+				} while (waiting);
 			}
+
+			if (terminate) {
+
+				break;
+			}
+
 		}
 
 		// only one thread need do the following

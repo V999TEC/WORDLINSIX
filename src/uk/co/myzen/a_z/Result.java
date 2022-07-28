@@ -20,14 +20,24 @@ class Result {
 		words.add(word);
 	}
 
+	Result(String word, Integer key) {
+
+		this(word, key / 1000, key % 1000);
+	}
+
 	void add(String word) {
 
 		words.add(word);
 	}
 
-	String asKey() {
+	String asStringKey() {
 
 		return String.valueOf(tries) + " " + String.valueOf(failures);
+	}
+
+	Integer asIntegerKey() {
+
+		return 1000 * tries + failures;
 	}
 
 	static String asKey(int tries, int failures) {
