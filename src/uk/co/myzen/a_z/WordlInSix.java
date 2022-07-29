@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -66,10 +65,6 @@ public class WordlInSix {
 	private final Thread thread;
 
 	private final List<String> words;
-
-	private int higestTries = 0;
-
-	private int highestFailCount = 0;
 
 	private String bestWordSoFar[] = new String[5];
 
@@ -360,52 +355,63 @@ public class WordlInSix {
 
 		char[] result = resetCharArray();
 
-		BitSet flags = new BitSet(wordLength);
+		// for the columns that are not known (i.,e those where positions[n] == ' ')
+		// go through the contains (ignoring any with an already known position)
+		// see if the unplaced letters can only go in a single column unambiguously
 
-		flags.set(0, wordLength); // all true initially
+		for (char ch : containsChars) {
 
-		for (int colIndex = 0; colIndex < wordLength; colIndex++) {
+			// has this letter already been positioned correctly? i.e., in positions[n]?
 
-			if (' ' != positions[colIndex]) {
+			boolean ignore = false;
 
-				flags.clear(colIndex);
-			}
-		}
+			for (int p = 0; p < positions.length; p++) {
 
-		if (1 == flags.cardinality()) {
+				if (positions[p] == ch) {
 
-			// only 1 column is unknown (the one at flags.nextSetBit(0))
-
-			int emptyIndex = flags.nextSetBit(0);
-
-			// see if there are any columns according to notN[0..wordLength] that only a
-			// certain letter is possible
-			// out of the subset we know in containsChars
-
-			// go through the contains and see which columns each ch can be in
-			// ignore column if already explicitly n=ch
-
-			for (char ch : containsChars) {
-
-				flags.set(0, wordLength); // all set again
-
-				for (int colIndex = 0; colIndex < wordLength; colIndex++) {
-
-					if (-1 != notN[colIndex].indexOf(ch) || (positions[colIndex] != ch && ' ' != positions[colIndex])) {
-						// implies ch cannot be in this column
-
-						flags.clear(colIndex);
-					}
-				}
-
-				if (1 == flags.cardinality() && emptyIndex == flags.nextSetBit(0)) {
-
-					result[emptyIndex] = ch;
-
-					inference = true;
-
+					// we can ignore this ch
+					ignore = true;
 					break;
 				}
+			}
+
+			if (ignore) {
+
+				continue;
+			}
+
+			// the ch is not in positions[] yet
+
+			// for the remaining blank positions see if ch could fit
+
+			int possibilities = 0;
+
+			int infer = -1;
+
+			for (int p = 0; p < positions.length; p++) {
+
+				if (' ' != positions[p] || ' ' != result[p]) {
+
+					continue; // implicitly ignore this column
+				}
+
+				// is the ch in not[p] ?
+
+				if (-1 == notN[p].indexOf(ch)) {
+
+					possibilities++; // not here
+
+					infer = p;
+				}
+			}
+
+			if (1 == possibilities) {
+
+				// ch can go into 1 column alone!
+
+				result[infer] = ch;
+
+				inference = true;
 			}
 		}
 
@@ -1390,6 +1396,8 @@ public class WordlInSix {
 
 		// String bestWordSoFar[] = new String[5]; // no point in having beyond 5 start
 		// words, usually 1 is enough
+
+		int higestTries = 0;
 
 		int beginIndex = 0;
 
