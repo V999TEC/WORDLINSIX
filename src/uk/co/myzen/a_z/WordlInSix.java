@@ -62,6 +62,12 @@ public class WordlInSix {
 
 	private static Integer bestKey = null;
 
+	private static boolean ai = false;
+
+	private static Thread threadFindingSolution = null;
+
+	// end of statics
+
 	private final Thread thread;
 
 	private final List<String> words;
@@ -71,8 +77,6 @@ public class WordlInSix {
 	private boolean terminate = false;
 
 	private boolean waiting = false;
-
-	private boolean ai = false;
 
 	private List<String> guesses = new ArrayList<String>(6);
 
@@ -1523,11 +1527,14 @@ public class WordlInSix {
 					}
 				}
 
-				if (lowestWordScore < 6001) {
+				if (lowestWordScore < 6001 || null != threadFindingSolution) {
 
-					// found a solution :-)
+					if (null == threadFindingSolution) {
 
-					terminate = true;
+						// this thread found a solution :-)
+
+						threadFindingSolution = thread; // cause all other threads to expire in due course
+					}
 					break;
 				}
 			}
@@ -1719,7 +1726,8 @@ public class WordlInSix {
 
 		// only one thread need do the following
 
-		if (0 == threads || thread.equals(instances.get(0).thread)) {
+		if (0 == threads || thread.equals(threadFindingSolution)
+				|| (null == threadFindingSolution && thread.equals(instances.get(0).thread))) {
 
 			for (int g = 0; g < bestWordSoFar.length; g++) {
 
