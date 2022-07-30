@@ -66,11 +66,13 @@ public class WordlInSix {
 
 	private static Thread threadFindingSolution = null;
 
+	private static int nextWordIndex = -1;
+
+	private static List<String> words;
+
 	// end of statics
 
 	private final Thread thread;
-
-	private final List<String> words;
 
 	private String bestWordSoFar[] = new String[5];
 
@@ -152,27 +154,35 @@ public class WordlInSix {
 
 		output = mainInstance.output;
 
-		int mainWordListSize = mainInstance.words.size();
-
-		int subsetSize = mainWordListSize / threads;
-
-		int lo = (subset - 1) * subsetSize;
-
-		int hi = threads == subset ? mainWordListSize : subset * subsetSize;
-
-		System.out.println(thread.getName() + ":" + "\tlo:" + lo + "\thi:" + hi + "\t" + mainInstance.words.get(lo)
-				+ "\t" + mainInstance.words.get(hi - 1));
-
-		words = new ArrayList<String>(hi - lo);
-
-		for (int index = lo; index < hi; index++) {
-
-			words.add(mainInstance.words.get(index));
-		}
-
 		notN = resetStringArray();
 
 		positions = resetCharArray();
+	}
+
+	// Until static nextWordIndex is reset to a positive (typically zero)
+	// this method will return a null instead of words
+	// (indicating no more available / disabled)
+	// Once nextWordIndex set to zero it will return a different word on each call
+	// until the word list is exhausted after which it will disable by setting
+	// nextWordIndex to -1
+
+	private static synchronized String getNextWord() {
+
+		String result = null;
+
+		if (nextWordIndex > -1) {
+
+			result = WordlInSix.words.get(nextWordIndex);
+
+			nextWordIndex++;
+
+			if (nextWordIndex >= WordlInSix.words.size()) {
+
+				nextWordIndex = -1;
+			}
+		}
+
+		return result;
 	}
 
 	private int[] loadLetterDistributionRanks(String name) {
@@ -234,7 +244,7 @@ public class WordlInSix {
 
 				mainInstance = null == game ? new WordlInSix() : new WordlInSix(game + ".txt");
 
-				if (mainInstance.words == null || 0 == mainInstance.words.size()) {
+				if (WordlInSix.words == null || 0 == WordlInSix.words.size()) {
 
 					action = Action.ABORT;
 
@@ -266,6 +276,8 @@ public class WordlInSix {
 			case DEBUG_2:
 
 				results = new HashMap<Integer, Result>();
+
+				nextWordIndex = 0;
 
 				if (threads > 0) {
 
@@ -831,6 +843,11 @@ public class WordlInSix {
 								}
 							}
 
+							if (word.contains(".") || word.contains("-")) {
+
+								continue; // ignore rogue words
+							}
+
 							result.add(word.toLowerCase());
 						}
 					}
@@ -873,7 +890,7 @@ public class WordlInSix {
 
 		String not = new String(notChars);
 
-		for (String word : mainInstance.words) {
+		for (String word : WordlInSix.words) {
 
 			boolean match;
 
@@ -1414,13 +1431,15 @@ public class WordlInSix {
 
 		int failCount = 0;
 
+		Integer lowestWordScore = Integer.MAX_VALUE;
+
 		for (int index = beginIndex; index < bestWordSoFar.length; index++) {
 
 			if (null == bestWordSoFar[index]) {
 
-				Integer lowestWordScore = Integer.MAX_VALUE;
+				String word = null;
 
-				for (String word : words) {
+				while (null != (word = getNextWord())) {
 
 					if (guesses.contains(word)) {
 
@@ -1461,7 +1480,7 @@ public class WordlInSix {
 
 					} else {
 
-						for (String targetAnswer : mainInstance.words) {
+						for (String targetAnswer : WordlInSix.words) {
 
 							answer = targetAnswer;
 
@@ -1561,6 +1580,8 @@ public class WordlInSix {
 			}
 
 			if (!waiting) {
+
+				nextWordIndex = 0; // re-enables getNextWord() ready for next iteration
 
 				// assume all the other threads are in a waiting state
 				// furthermore assume our Results map is complete at the current index level
@@ -1693,7 +1714,7 @@ public class WordlInSix {
 
 				do {
 
-					// wait indefinitely until interrupt.
+					// Wait indefinitely until interrupt.
 					// last remaining non-waiting thread is responsible for interrupting other
 					// waiting threads
 
@@ -1708,7 +1729,7 @@ public class WordlInSix {
 						waiting = false;
 					}
 
-					if (terminate) {
+					if (terminate || null != threadFindingSolution) {
 
 						System.out.println(thread.getName() + ": about to terminate");
 						break;
@@ -1717,7 +1738,7 @@ public class WordlInSix {
 				} while (waiting);
 			}
 
-			if (terminate) {
+			if (terminate || null != threadFindingSolution) {
 
 				break;
 			}
@@ -1728,6 +1749,8 @@ public class WordlInSix {
 
 		if (0 == threads || thread.equals(threadFindingSolution)
 				|| (null == threadFindingSolution && thread.equals(instances.get(0).thread))) {
+
+			System.out.println(thread.getName() + ": has solution.");
 
 			for (int g = 0; g < bestWordSoFar.length; g++) {
 
@@ -1745,7 +1768,7 @@ public class WordlInSix {
 
 			failCount = 0;
 
-			for (String targetAnswer : mainInstance.words) {
+			for (String targetAnswer : WordlInSix.words) {
 
 				answer = targetAnswer;
 
@@ -1839,7 +1862,7 @@ public class WordlInSix {
 
 			counts[n - 1] = new int[y];
 
-			for (String targetAnswer : mainInstance.words) {
+			for (String targetAnswer : WordlInSix.words) {
 
 				answer = targetAnswer;
 

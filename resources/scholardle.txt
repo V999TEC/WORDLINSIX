@@ -1,3 +1,9 @@
+# from https://www.scholardle.com/static/js/main.e5126968.js
+a.a.s.
+a.f.c.
+a.k.a.
+a.m.s.
+a.s.l.
 aachen
 aargau
 aarhus
@@ -19,6 +25,7 @@ abbess
 abbeys
 abbots
 abbott
+abc-tv
 abcdef
 abdias
 abduct
@@ -43,6 +50,8 @@ aboard
 abodes
 aborts
 abound
+about.
+above.
 abrade
 abramo
 abrams
@@ -86,6 +95,8 @@ achter
 acidic
 acidly
 acinar
+acis-i
+acis-s
 ackley
 acland
 acorns
@@ -105,6 +116,8 @@ acuity
 acumen
 acuter
 acutes
+ad-din
+ad-hoc
 adachi
 adages
 adagio
@@ -113,6 +126,7 @@ adapts
 adarsh
 adatom
 adcock
+add-on
 addams
 addend
 adders
@@ -199,6 +213,8 @@ afridi
 afrika
 afshar
 afters
+ag-nps
+again.
 agashe
 agassi
 agates
@@ -269,6 +285,7 @@ akimbo
 akimov
 akshay
 akutsu
+al-din
 aladin
 alamos
 alanis
@@ -292,6 +309,7 @@ albion
 alborg
 alborz
 albrow
+album.
 albums
 albury
 alcaic
@@ -372,6 +390,7 @@ almaty
 almond
 almost
 alohas
+alone.
 alonso
 alonzo
 alpaca
@@ -472,6 +491,7 @@ ancien
 ancker
 ancona
 ancova
+and-or
 andean
 andere
 anders
@@ -515,6 +535,7 @@ angrez
 angsty
 angulo
 anhalt
+ani-sb
 anibal
 anilin
 animal
@@ -559,6 +580,7 @@ answer
 anteed
 anthem
 anther
+anti-k
 antica
 antics
 antler
@@ -602,6 +624,7 @@ apices
 apiece
 aplomb
 apnoea
+apoa-i
 apogee
 apolar
 apollo
@@ -700,6 +723,7 @@ arinen
 arisen
 arises
 arista
+arith.
 arjuna
 arkady
 arkham
@@ -763,6 +787,7 @@ arusha
 arvind
 arxive
 aryans
+as-yet
 asante
 asbury
 ascend
@@ -841,6 +866,7 @@ astrop
 astros
 astute
 asylum
+at-bat
 ataxia
 ataxic
 ateaux
@@ -970,6 +996,8 @@ azores
 azquez
 azteca
 aztecs
+b.i.g.
+b.tech
 baader
 baaing
 baalim
@@ -1208,6 +1236,7 @@ basics
 basile
 basing
 basins
+basis.
 basked
 basket
 baskin
@@ -1264,6 +1293,8 @@ bayous
 bazaar
 bazant
 bazoom
+bcl-xl
+bdi-ii
 beable
 beacom
 beacon
@@ -1364,6 +1395,7 @@ bellot
 bellow
 beloit
 belong
+below.
 belted
 belter
 belton
@@ -1372,6 +1404,7 @@ belzig
 bemire
 bemoan
 bemuse
+ben-or
 benard
 benbow
 bended
@@ -1860,6 +1893,7 @@ boules
 boulez
 bounce
 bouncy
+bound.
 bounds
 bounty
 bouret
@@ -2236,6 +2270,7 @@ buzdin
 buzzed
 buzzer
 buzzes
+by-eye
 byelaw
 bygone
 bylaws
@@ -2249,6 +2284,12 @@ byrnes
 byroad
 byways
 byword
+c.c.c.
+c.c.s.
+c.d.f.
+c.m.s.
+c.o.m.
+c.p.c.
 cabala
 cabals
 cabana
@@ -2309,6 +2350,7 @@ caldas
 calder
 calice
 calico
+calif.
 califa
 califs
 caliph
@@ -2355,6 +2397,7 @@ camped
 camper
 campos
 campus
+can-am
 canaan
 canada
 canale
@@ -2499,6 +2542,7 @@ casals
 casati
 casbah
 casein
+cases.
 cashed
 cashel
 cashes
@@ -2575,6 +2619,7 @@ cayrel
 cayuga
 cayuse
 cazaux
+cd-rom
 ceased
 ceases
 cecile
@@ -2597,6 +2642,7 @@ celles
 cellos
 celtic
 cement
+cemp-s
 cenbol
 censer
 censor
@@ -2641,6 +2687,7 @@ chaffs
 chaffy
 chagas
 chagos
+chah-e
 chahar
 chaine
 chains
@@ -2758,6 +2805,7 @@ chimer
 chimes
 chimie
 chimps
+china.
 chinan
 chinch
 chines
@@ -2818,6 +2866,7 @@ chorus
 chosen
 choses
 chough
+chow-k
 chowed
 chowla
 chrism
@@ -2898,6 +2947,7 @@ claret
 clarke
 clarks
 clasps
+class.
 classe
 classi
 classy
@@ -2914,6 +2964,7 @@ cleave
 cleese
 clefts
 clench
+cleo-c
 clergy
 cleric
 clerks
@@ -2982,9 +3033,11 @@ clumsy
 clunks
 clunky
 clutch
+cma-es
 cmbpol
 cmfgen
 cmodel
+co-add
 coadds
 coaled
 coarea
@@ -3162,6 +3215,7 @@ conrad
 conrey
 conroy
 consid
+const.
 constr
 consul
 conthe
@@ -3336,6 +3390,8 @@ cozied
 cozier
 cozies
 cozily
+cp-abe
+cp-odd
 cphase
 cplear
 crabbe
@@ -3545,6 +3601,7 @@ curtin
 curtis
 curtly
 curtsy
+curve.
 curved
 curves
 curvet
@@ -3570,6 +3627,7 @@ cutset
 cutter
 cutups
 cuvier
+cv-qkd
 cvetic
 cybele
 cyborg
@@ -3594,6 +3652,8 @@ cystic
 czakon
 czechs
 czerny
+d.o.e.
+d.o.f.
 dabbed
 dabber
 dabble
@@ -3771,6 +3831,7 @@ dearer
 dearie
 dearly
 dearth
+death.
 deaths
 debark
 debars
@@ -4010,6 +4071,7 @@ dewitt
 dewlap
 dexter
 dezong
+dg-lie
 dgicyt
 dhamma
 dhania
@@ -4019,6 +4081,7 @@ dhawan
 dhoker
 dhondt
 dhotis
+di-jet
 diablo
 diadem
 dialed
@@ -4401,6 +4464,7 @@ dryden
 dryers
 dryest
 drying
+dsm-iv
 dsouza
 dspace
 dteiot
@@ -4531,6 +4595,9 @@ dynkin
 dynode
 dyonic
 dzurak
+e.coli
+e.o.m.
+e.p.j.
 eadwig
 eagles
 eaglet
@@ -4545,6 +4612,7 @@ earman
 earned
 earner
 earset
+earth.
 earths
 earthy
 earwax
@@ -4589,6 +4657,7 @@ edenic
 edessa
 edgeon
 edgers
+edges.
 edgier
 edgily
 edging
@@ -4773,6 +4842,7 @@ enciso
 encode
 encore
 encyst
+end-on
 endcap
 endear
 enders
@@ -4893,6 +4963,7 @@ errani
 errant
 errata
 erring
+error.
 errors
 errors
 ersatz
@@ -4912,6 +4983,7 @@ escort
 escrow
 escudo
 esdras
+esi-ms
 eskimo
 eskola
 espace
@@ -4937,6 +5009,7 @@ estrin
 estrum
 estrus
 esults
+et.al.
 etabli
 etales
 etalon
@@ -4983,6 +5056,7 @@ evelyn
 evened
 evener
 evenly
+event.
 events
 everly
 evgeni
@@ -5020,6 +5094,7 @@ exhort
 exhume
 exiled
 exiles
+exist.
 existe
 exists
 exited
@@ -5121,6 +5196,7 @@ family
 famine
 famish
 famous
+fan-in
 fanboy
 fandom
 fanged
@@ -5134,6 +5210,8 @@ fanout
 faperj
 fapesp
 faquir
+far-ir
+far-uv
 farads
 farber
 farces
@@ -5199,7 +5277,9 @@ faxing
 fayest
 fazing
 fbsdes
+fcc-ee
 fciqmc
+fe-sem
 fealty
 feared
 fearer
@@ -5316,6 +5396,7 @@ fiddly
 fidget
 fidler
 fiebig
+field.
 fields
 fiends
 fierce
@@ -5376,6 +5457,7 @@ firmed
 firmer
 firmly
 firsov
+first.
 firsts
 firths
 fiscal
@@ -5506,6 +5588,7 @@ fluxed
 fluxes
 fluxon
 fluxus
+fly-by
 flyboy
 flybys
 flyers
@@ -5558,6 +5641,7 @@ forays
 forbad
 forbes
 forbid
+force.
 forced
 forcer
 forces
@@ -5602,6 +5686,7 @@ fouled
 fouler
 foulis
 foully
+found.
 founds
 founts
 fouque
@@ -5617,6 +5702,7 @@ foxtel
 foyers
 fracas
 fraley
+frame.
 framed
 framer
 frames
@@ -5799,6 +5885,7 @@ fuzzed
 fuzzes
 fyodor
 fysica
+g.c.d.
 gabbay
 gabbed
 gabber
@@ -5873,6 +5960,7 @@ gamboa
 gambol
 gamely
 gamers
+games.
 gamest
 gamete
 gamier
@@ -6178,6 +6266,7 @@ giveon
 givers
 giving
 gizmos
+gl.dim
 glabra
 glaces
 glacis
@@ -6244,6 +6333,7 @@ gluten
 glycan
 glycol
 glyphs
+gm-csf
 gminas
 gnaeus
 gnarls
@@ -6394,6 +6484,7 @@ granot
 granth
 grants
 grapes
+graph.
 graphe
 graphs
 grappa
@@ -6424,6 +6515,7 @@ grazer
 grazes
 grazia
 grazie
+grb-sn
 grease
 greasy
 greats
@@ -6500,6 +6592,7 @@ grotto
 grotty
 grouch
 ground
+group.
 groupe
 groupo
 groups
@@ -6531,6 +6624,7 @@ gruppe
 gruppi
 gruppo
 gruppy
+gsh-px
 gtotal
 gtpase
 guards
@@ -6630,6 +6724,7 @@ gypsum
 gyrate
 gyroid
 gyving
+h.o.t.
 haakon
 haardt
 haasan
@@ -6864,6 +6959,7 @@ havlin
 hawaii
 hawick
 hawing
+hawk-i
 hawked
 hawker
 hawkes
@@ -6891,6 +6987,7 @@ hazrat
 hbchpt
 hbkhpt
 hdecay
+he-man
 headed
 header
 healed
@@ -6903,6 +7000,7 @@ hearer
 hearne
 hearse
 hearst
+heart.
 hearth
 hearts
 hearty
@@ -7001,9 +7099,13 @@ hensel
 henson
 henyey
 heorem
+hep-ex
+hep-ph
+hep-th
 hepcat
 heplat
 hepper
+hera-b
 herald
 herbal
 herbie
@@ -7068,6 +7170,7 @@ heyden
 heyman
 hfqpos
 hgcdte
+hi-gal
 hiatal
 hiatus
 hiccup
@@ -7083,6 +7186,18 @@ hiding
 hieing
 hierar
 higdon
+high-a
+high-b
+high-j
+high-k
+high-l
+high-n
+high-p
+high-q
+high-s
+high-t
+high-x
+high-z
 higham
 higher
 highly
@@ -7151,6 +7266,8 @@ hitter
 hiving
 hiwish
 hjorth
+hl-lhc
+hla-dr
 hncoll
 hnpart
 hoagie
@@ -7192,6 +7309,7 @@ holant
 holdem
 holden
 holder
+holds.
 holdup
 holevo
 holger
@@ -7315,12 +7433,14 @@ houmus
 hounds
 houris
 hourly
+house.
 housed
 houser
 houses
 houten
 hovels
 hovers
+how-to
 howard
 howdah
 howden
@@ -7337,6 +7457,7 @@ hoyden
 hpspsi
 hradec
 hradil
+hs-crp
 hsiang
 huawei
 hubble
@@ -7440,6 +7561,7 @@ hyping
 hypoth
 hysics
 hyssop
+i.i.d.
 iambic
 iambus
 ibadan
@@ -7468,6 +7590,7 @@ icilin
 icings
 ickier
 iconic
+icp-ms
 ideals
 ideate
 ideaux
@@ -7491,7 +7614,9 @@ iguacu
 iguana
 iguazu
 iguchi
+ii-iii
 iiaeii
+iii-iv
 iijima
 iitaka
 iizuka
@@ -7504,6 +7629,7 @@ ilocos
 iloilo
 ilsvrc
 ilyich
+image.
 imaged
 imagej
 imagen
@@ -7542,6 +7668,8 @@ improv
 impugn
 impure
 impute
+in-gap
+in-out
 inacio
 inaner
 inborn
@@ -7563,6 +7691,7 @@ indcoh
 indeed
 indels
 indent
+india.
 indian
 indias
 indica
@@ -7739,6 +7868,7 @@ isomap
 isomer
 isomor
 israel
+issue.
 issued
 issuer
 issues
@@ -7759,6 +7889,8 @@ ivezic
 ivison
 izotov
 izzard
+j.math
+j.phys
 jaafar
 jabbed
 jabber
@@ -7988,6 +8120,7 @@ jotter
 joules
 jounce
 jouncy
+journ.
 journo
 jousts
 jovial
@@ -8419,6 +8552,7 @@ knocks
 knolls
 knotty
 knower
+known.
 knurls
 knurly
 koalas
@@ -8542,6 +8676,7 @@ krstic
 kruger
 krusty
 krylov
+ks-dft
 kubiak
 kubica
 kublai
@@ -8596,6 +8731,9 @@ kwanza
 kyrgyz
 kytoon
 kyushu
+l.h.s.
+l.o.s.
+l.s.c.
 laager
 labels
 labial
@@ -8711,6 +8849,7 @@ larbre
 larded
 larder
 laredo
+large.
 larger
 larges
 largos
@@ -8746,9 +8885,11 @@ lassos
 lasted
 lastly
 laszlo
+late-m
 lateen
 lately
 latent
+later.
 latest
 latham
 lathed
@@ -8895,6 +9036,7 @@ leland
 lellis
 lelong
 lemire
+lemma.
 lemmas
 lemmes
 lemmon
@@ -8930,6 +9072,7 @@ leonid
 leonie
 leonor
 leonov
+lep-ii
 lepage
 lepers
 lepine
@@ -8966,6 +9109,7 @@ leumit
 leuven
 levant
 levees
+level.
 levels
 levene
 levers
@@ -8990,6 +9134,9 @@ lezzie
 lgauge
 lhapdf
 lhomme
+li-cor
+li-ion
+li-yau
 liable
 liaise
 libber
@@ -9028,6 +9175,7 @@ ligase
 ligate
 ligeti
 ligger
+light.
 lights
 lignes
 lignin
@@ -9055,6 +9203,7 @@ limeys
 limier
 liminf
 liming
+limit.
 limite
 limits
 limned
@@ -9065,6 +9214,7 @@ limpet
 limpid
 limply
 limsup
+limt-t
 linacs
 linage
 lincei
@@ -9077,6 +9227,7 @@ linear
 lineas
 linens
 liners
+lines.
 lineup
 lingam
 linger
@@ -9116,6 +9267,7 @@ lisped
 lisper
 lisses
 lissom
+list-a
 listed
 listee
 listen
@@ -9137,6 +9289,7 @@ lively
 livens
 livers
 livery
+lives.
 livest
 livine
 living
@@ -9279,6 +9432,8 @@ lovers
 lovett
 loveys
 loving
+low-pt
+low-tc
 lowboy
 lowell
 lowers
@@ -9290,6 +9445,7 @@ loyang
 loyola
 lozano
 lozier
+ls-svm
 ltotal
 luanda
 luanne
@@ -9398,6 +9554,10 @@ lyrics
 lysate
 lysine
 lytton
+m.b.a.
+m.f.a.
+m.i.a.
+m.i.t.
 maasai
 maaten
 macaws
@@ -9753,6 +9913,7 @@ matatu
 mately
 matema
 mateos
+mater.
 matera
 matern
 maters
@@ -9839,6 +10000,7 @@ mazzei
 mazzeo
 mbulge
 mbytes
+mc-kln
 mcadam
 mcafee
 mcavoy
@@ -9898,6 +10060,7 @@ meckel
 medals
 medard
 meddle
+media.
 medial
 median
 medias
@@ -10086,6 +10249,8 @@ mickey
 micmac
 micron
 micros
+mid-ir
+midair
 midday
 midden
 middle
@@ -10283,6 +10448,7 @@ mocker
 mockup
 modals
 modded
+model.
 modele
 modeli
 modell
@@ -10291,6 +10457,7 @@ models
 modems
 modena
 modern
+modes.
 modest
 modica
 modied
@@ -10360,6 +10527,7 @@ monaro
 monash
 mondal
 monday
+money.
 moneys
 monger
 mongol
@@ -10507,6 +10675,7 @@ mouthy
 mouton
 moutou
 movers
+movie.
 movies
 moving
 mowers
@@ -10518,6 +10687,8 @@ mozhno
 mozzie
 mrenna
 mrowka
+ms-dos
+ms.tex
 mstars
 msugra
 mtotal
@@ -10602,6 +10773,7 @@ mushed
 musher
 mushes
 musial
+music.
 musica
 musing
 muskat
@@ -10863,6 +11035,7 @@ nigger
 niggle
 niggly
 nigher
+night.
 nights
 nighty
 nigrum
@@ -10916,6 +11089,7 @@ niyogi
 nizhny
 njsiaa
 nmdars
+no-fly
 nobble
 nobile
 nobili
@@ -10936,6 +11110,7 @@ nogami
 noggin
 nogues
 nohara
+noise.
 noised
 noises
 nojiri
@@ -10945,6 +11120,8 @@ nomial
 nomizu
 nomoto
 nomura
+non-cm
+non-sm
 nonage
 nonaka
 nonces
@@ -11012,6 +11189,8 @@ nowell
 nowise
 noyade
 noyaux
+noz-tu
+nozaki
 nozawa
 nozzle
 nphard
@@ -11219,6 +11398,11 @@ omelet
 omgren
 omnium
 omukai
+on-air
+on-off
+on-set
+on-sky
+on-top
 ondrej
 oneida
 oneill
@@ -11250,6 +11434,7 @@ oology
 oompah
 oozier
 oozing
+op-amp
 opaque
 opcode
 opencl
@@ -11271,8 +11456,10 @@ opital
 oporto
 oppose
 opsgpc
+opt-in
 optica
 optics
+optim.
 optima
 opting
 option
@@ -11290,6 +11477,7 @@ orbits
 orchid
 ordain
 ordeal
+order.
 orders
 ordine
 ording
@@ -11369,6 +11557,7 @@ oswald
 oswalt
 oswego
 otello
+other.
 others
 othman
 otiose
@@ -11383,6 +11572,7 @@ oulton
 ounces
 ousted
 ouster
+out-of
 outage
 outbid
 outbox
@@ -11418,6 +11608,7 @@ owlish
 owners
 owning
 owocki
+ox-ldl
 oxalic
 oxbows
 oxcart
@@ -11432,6 +11623,9 @@ oxygen
 oyster
 ozarks
 ozonic
+p.d.f.
+p.j.e.
+p.m.p.
 pablum
 pacard
 pacers
@@ -11506,6 +11700,7 @@ pandey
 pandit
 pandya
 paneer
+panel.
 panels
 panfry
 panful
@@ -11529,6 +11724,7 @@ papago
 papain
 papaws
 papaya
+paper.
 papers
 papery
 paphos
@@ -11541,6 +11737,7 @@ papuan
 papule
 papyri
 paquet
+para-k
 parada
 parade
 parall
@@ -11597,6 +11794,7 @@ partie
 partir
 partly
 parton
+party.
 parvum
 parzen
 pascal
@@ -11681,6 +11879,7 @@ paypal
 payson
 payton
 pbesol
+peace.
 peaces
 peachy
 peahen
@@ -11771,6 +11970,7 @@ penton
 penury
 people
 peoria
+pep-ii
 pepped
 pepper
 pepsin
@@ -11821,6 +12021,7 @@ pester
 pestis
 pestle
 pestov
+pet-ct
 petain
 petals
 petard
@@ -11853,6 +12054,7 @@ phages
 phalli
 pharma
 pharos
+phase.
 phased
 phaser
 phases
@@ -12054,6 +12256,7 @@ pizazz
 pizzas
 pizzaz
 plabic
+place.
 placed
 placer
 places
@@ -12069,6 +12272,7 @@ plaits
 plamen
 planar
 planck
+plane.
 planed
 planer
 planes
@@ -12151,6 +12355,7 @@ poggio
 pogrom
 pohang
 pohlen
+point.
 pointe
 points
 pointy
@@ -12234,6 +12439,7 @@ pooped
 poorer
 poorly
 pootle
+pop-up
 popery
 popeye
 popgun
@@ -12271,6 +12477,7 @@ posing
 posits
 posner
 posons
+poss-i
 posses
 posset
 possum
@@ -12307,13 +12514,17 @@ pouter
 povich
 powder
 powell
+power.
 powers
 powheg
 powiat
 powwow
 poyang
 poznan
+ppar-a
+ppar-g
 pqkhpt
+pr-box
 prabhu
 prades
 prager
@@ -12337,6 +12548,8 @@ praxes
 praxis
 prayed
 prayer
+pre-ms
+pre-sn
 preach
 preamp
 preble
@@ -12365,6 +12578,7 @@ preppy
 presen
 preset
 presov
+press.
 presse
 presto
 pretax
@@ -12415,6 +12629,7 @@ prissy
 privet
 prized
 prizes
+pro-am
 proach
 probab
 probed
@@ -12435,6 +12650,7 @@ prompt
 proner
 prongs
 pronto
+proof.
 proofs
 propel
 proper
@@ -12467,6 +12683,7 @@ prunus
 prusti
 pryers
 prying
+ps-abc
 psabcd
 psalms
 pseudo
@@ -12694,6 +12911,11 @@ quoter
 quotes
 qutrit
 qwerty
+r.e.m.
+r.h.s.
+r.l.u.
+r.m.s.
+r.o.c.
 rabani
 rabaul
 rabbet
@@ -12813,12 +13035,16 @@ random
 random
 ranees
 rangan
+range.
 ranged
 rangel
 ranger
 ranges
 ranjan
 ranjit
+rank-k
+rank-n
+rank-r
 ranked
 ranker
 rankin
@@ -12909,6 +13135,9 @@ razzed
 razzes
 razzle
 rdrdth
+re-fit
+re-run
+re-use
 reacts
 reader
 reagan
@@ -13318,6 +13547,7 @@ rigaku
 rigaut
 rigged
 rigger
+right.
 righto
 rights
 righty
@@ -13380,6 +13610,7 @@ rivlin
 riyadh
 riyals
 rjmcmc
+rn-ads
 rneasy
 roadie
 roamed
@@ -13549,6 +13780,7 @@ royall
 royals
 royden
 rozzer
+rt-pcr
 rtotal
 rtrans
 ruanda
@@ -13592,6 +13824,7 @@ ruined
 ruiter
 rujula
 rulers
+rules.
 ruling
 rumbas
 rumble
@@ -13604,6 +13837,9 @@ rumple
 rumply
 rumpus
 rumsey
+run-ii
+run-in
+run-up
 rundle
 runkel
 runlet
@@ -13643,6 +13879,9 @@ ryskin
 ryukyu
 ryzhik
 ryzhov
+s.d.m.
+s.e.m.
+s.p.a.
 saarbr
 sabato
 sabbah
@@ -13895,6 +14134,7 @@ scabby
 scaife
 scalar
 scalds
+scale.
 scaled
 scaler
 scales
@@ -13982,6 +14222,7 @@ schuss
 schutz
 schwab
 schwas
+sci-fi
 sciama
 scidac
 scilly
@@ -14058,6 +14299,7 @@ scutum
 scuzzy
 scylla
 scythe
+sd-oct
 sdepth
 seabed
 seager
@@ -14078,6 +14320,9 @@ seater
 seaton
 seaver
 seaway
+sec.ii
+sec.iv
+sec.vi
 secant
 secchi
 secede
@@ -14086,6 +14331,7 @@ second
 secret
 secrit
 sector
+sects.
 secure
 sedaka
 sedans
@@ -14169,6 +14415,7 @@ senior
 seniti
 senora
 senors
+sense.
 sensed
 sensei
 senses
@@ -14223,6 +14470,7 @@ servos
 sesame
 sesana
 sestet
+set-up
 setare
 setend
 sethna
@@ -14454,6 +14702,7 @@ shover
 shoves
 showed
 shower
+shown.
 shrank
 shreds
 shreve
@@ -14631,6 +14880,7 @@ sisson
 sistan
 sistem
 sister
+sit-in
 sitars
 sitcom
 sitges
@@ -14766,6 +15016,7 @@ slushy
 slutty
 slyest
 smacks
+small.
 smalls
 smarmy
 smarts
@@ -14866,6 +15117,7 @@ snowed
 snuffs
 snugly
 snyder
+so-far
 soaked
 soaker
 soaped
@@ -14937,6 +15189,7 @@ sonars
 sonata
 sondhi
 sondra
+songs.
 sonics
 sonine
 sonnet
@@ -14967,6 +15220,7 @@ soudan
 soughs
 sought
 souled
+sound.
 sounds
 souped
 sourav
@@ -14983,6 +15237,7 @@ soweto
 sowing
 spaans
 spacal
+space.
 spaced
 spacer
 spaces
@@ -15017,6 +15272,7 @@ spazas
 spazio
 speaks
 spears
+spec-z
 speccy
 specht
 specic
@@ -15052,6 +15308,8 @@ spigot
 spiked
 spikes
 spills
+spin-j
+spin-s
 spinal
 spinel
 spines
@@ -15123,6 +15381,7 @@ spruit
 sprung
 spryer
 spryly
+spt-cl
 sptpol
 spumed
 spumes
@@ -15170,6 +15429,7 @@ stadel
 stadia
 stadio
 staffs
+stage.
 staged
 stages
 stagey
@@ -15206,10 +15466,12 @@ stares
 starke
 starks
 starry
+stars.
 starts
 starve
 stases
 stasis
+state.
 stated
 staten
 states
@@ -15253,6 +15515,7 @@ stenos
 stents
 stepan
 steppe
+steps.
 stereo
 steric
 sterna
@@ -15321,6 +15584,7 @@ storks
 storms
 stormy
 storrs
+story.
 stosur
 stotal
 stoups
@@ -15397,6 +15661,7 @@ studer
 studia
 studio
 studly
+study.
 stuffs
 stuffy
 stumpf
@@ -15407,6 +15672,7 @@ stupas
 stupid
 stupor
 sturdy
+style.
 styled
 styles
 stylet
@@ -15415,6 +15681,9 @@ stymie
 styria
 suarez
 suaver
+sub-ev
+sub-mm
+sub-pc
 subang
 subarc
 subaru
@@ -15502,6 +15771,7 @@ supers
 supine
 supped
 supper
+suppl.
 supple
 supply
 surace
@@ -15628,6 +15898,7 @@ tabard
 tabata
 tabbed
 tablas
+table.
 tabled
 tables
 tablet
@@ -15830,6 +16101,8 @@ taylor
 tayyip
 tburst
 tcross
+td-dft
+td-lte
 tdecay
 tdelay
 teabag
@@ -15924,6 +16197,8 @@ termen
 termes
 termly
 termos
+terms-
+terms.
 terran
 terras
 terror
@@ -15953,6 +16228,7 @@ texier
 texted
 texter
 tezuka
+tf-idf
 tfinal
 tflops
 thakur
@@ -15968,6 +16244,7 @@ thatch
 thatte
 thawed
 thayer
+thc.m.
 thcrit
 theano
 thebae
@@ -15982,7 +16259,9 @@ themed
 themes
 themis
 thence
+theor.
 theory
+there.
 thermo
 therms
 theron
@@ -16005,6 +16284,7 @@ thiers
 thieve
 thighs
 thimbu
+thing.
 things
 thingy
 thinks
@@ -16080,6 +16360,7 @@ tidier
 tidies
 tidily
 tiding
+tie-in
 tieing
 tiempo
 tienen
@@ -16114,8 +16395,10 @@ tilton
 timaru
 timber
 timbre
+time-t
 timely
 timers
+times.
 timing
 timmer
 timmes
@@ -16197,6 +16480,7 @@ tochke
 tochki
 tochku
 tocsin
+today.
 todays
 toddle
 todger
@@ -16334,6 +16618,7 @@ toyboy
 toying
 toyoda
 toyota
+tp-agb
 tpmlwg
 traced
 tracer
@@ -16356,6 +16641,7 @@ tralee
 tramps
 trance
 tranny
+trans.
 transe
 transf
 transi
@@ -16472,6 +16758,7 @@ truong
 truran
 trusts
 trusty
+truth.
 truths
 trying
 tryout
@@ -16489,6 +16776,7 @@ tsuboi
 tsujii
 tswana
 tsygan
+tt-b-b
 ttotal
 ttrans
 tuanku
@@ -16595,6 +16883,10 @@ twitch
 twofer
 tycoon
 tydfil
+type-a
+type-b
+type-c
+type-i
 typeii
 typhus
 typify
@@ -16609,6 +16901,9 @@ tytler
 tyumen
 tyurin
 tyutin
+u.c.p.
+u.s.a.
+u.s.c.
 ubachs
 ubangi
 ubiety
@@ -16637,6 +16932,7 @@ ujjain
 ukases
 ukidss
 ulcers
+ulf-g.
 ulirgs
 ulithi
 ullage
@@ -16717,6 +17013,8 @@ unitas
 united
 unites
 uniton
+units.
+unity.
 unjust
 unkept
 unkind
@@ -16865,6 +17163,7 @@ userid
 ushers
 uskidi
 usmani
+usno-b
 uspehi
 ussler
 ustase
@@ -16880,11 +17179,13 @@ utters
 uttler
 uttley
 uttner
+uv-vis
 uvarov
 uvulae
 uvular
 uvulas
 uyghur
+v.e.v.
 vacant
 vacate
 vaccum
@@ -16923,6 +17224,7 @@ vallis
 valois
 valori
 valour
+value.
 valued
 valuer
 values
@@ -16978,6 +17280,7 @@ vaults
 vaulty
 vaunts
 vcsels
+vdw-df
 veadar
 veblen
 vecchi
@@ -16988,6 +17291,7 @@ veejay
 veered
 vegans
 vegard
+vegf-a
 vegged
 vegges
 veggie
@@ -17174,12 +17478,14 @@ vizirs
 vizors
 vlachs
 vlasov
+vlow-k
 vmware
 vocals
 vodkas
 vogels
 vogler
 vogues
+voice.
 voiced
 voices
 voided
@@ -17224,6 +17530,8 @@ vulval
 vulvar
 vulvas
 vyborg
+w.h.p.
+w.r.t.
 wabash
 wabble
 wacker
@@ -17332,6 +17640,7 @@ wasted
 waster
 wastes
 wataru
+water.
 waters
 watery
 watkin
@@ -17631,7 +17940,9 @@ wolsey
 wolter
 wolves
 womack
+woman.
 wombat
+women.
 wonder
 wonted
 wonton
@@ -17651,10 +17962,13 @@ woolly
 wooten
 worded
 worden
+words.
 woreda
 worked
 worker
+works.
 workup
+world.
 worlds
 worley
 wormed
@@ -17685,6 +17999,7 @@ writer
 writes
 writhe
 wrobel
+wrong.
 wrongs
 wryest
 wunner
@@ -17773,6 +18088,7 @@ yclept
 yeager
 yearly
 yearns
+years.
 yeasts
 yeasty
 yeates
@@ -17788,6 +18104,7 @@ yeoman
 yeomen
 yeovil
 yerkes
+yes-no
 yessed
 yessir
 yester
@@ -17799,6 +18116,7 @@ yilmaz
 yipped
 yippee
 yippie
+yo-kai
 yobbos
 yoccoz
 yodels
@@ -17850,6 +18168,7 @@ yusuke
 yutaka
 yvette
 yvonne
+z.phys
 zaanen
 zabrze
 zachos
