@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
@@ -35,7 +36,7 @@ public class WordlInSix {
 
 	private static enum Action {
 
-		DEFAULT, ABORT, SHOW_HELP, GUESS_TO_ANSWER, DEBUG_1, DEBUG_2, DEBUG_3
+		DEFAULT, ABORT, SHOW_HELP, GUESS_TO_ANSWER, DEBUG_1, DEBUG_2, DEBUG_3, DEBUG_4
 	};
 
 	private static Action action = Action.SHOW_HELP;
@@ -322,6 +323,11 @@ public class WordlInSix {
 			case DEBUG_3:
 
 				mainInstance.debug3();
+				break;
+
+			case DEBUG_4:
+
+				mainInstance.debug4();
 				break;
 
 			case GUESS_TO_ANSWER:
@@ -667,6 +673,10 @@ public class WordlInSix {
 			} else if (3 == debug) {
 
 				action = Action.DEBUG_3;
+
+			} else if (4 == debug) {
+
+				action = Action.DEBUG_4;
 
 			} else {
 
@@ -1961,6 +1971,18 @@ public class WordlInSix {
 			output.print(String.format("%8s", "(" + failCounts[z] + ")"));
 		}
 		output.print("\n");
+	}
+
+	private void debug4() throws Exception {
+
+		SortedSet<String> alphabeticWords = new TreeSet<String>();
+
+		alphabeticWords.addAll(WordlInSix.words);
+
+		for (String word : alphabeticWords) {
+
+			System.out.println(word);
+		}
 	}
 
 }
