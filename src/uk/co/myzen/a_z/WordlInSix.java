@@ -71,6 +71,8 @@ public class WordlInSix {
 
 	private static List<String> words;
 
+	private static PrintStream output = System.err;
+
 	// end of statics
 
 	private final Thread thread;
@@ -82,8 +84,6 @@ public class WordlInSix {
 	private boolean waiting = false;
 
 	private List<String> guesses = new ArrayList<String>(6);
-
-	private PrintStream output = System.err;
 
 	private boolean showWords = true;
 
@@ -149,15 +149,18 @@ public class WordlInSix {
 		letterDistributionRanks = loadLetterDistributionRanks(propertyResourceName);
 	}
 
-	private WordlInSix(int subset, final int threads) {
+	private WordlInSix(List<String> initialGuesses, final int threads) {
 
 		thread = Thread.currentThread();
-
-		output = mainInstance.output;
 
 		notN = resetStringArray();
 
 		positions = resetCharArray();
+
+		for (int g = 0; g < initialGuesses.size(); g++) {
+
+			guesses.add(initialGuesses.get(g));
+		}
 	}
 
 	// Until static nextWordIndex is reset to a positive (typically zero)
@@ -226,7 +229,7 @@ public class WordlInSix {
 
 	public static void main(String[] args) {
 
-		// WordlInSix main;
+		setOutput(null); // default initially
 
 		try {
 			if (0 == args.length) {
@@ -288,8 +291,6 @@ public class WordlInSix {
 
 					for (int thread = 0; thread < threads; thread++) {
 
-						final int subset = 1 + thread;
-
 						Thread e = new Thread() {
 
 							@Override
@@ -297,7 +298,7 @@ public class WordlInSix {
 
 								try {
 
-									WordlInSix instance = new WordlInSix(subset, threads);
+									WordlInSix instance = new WordlInSix(mainInstance.guesses, threads);
 
 									instances.add(instance);
 
@@ -573,7 +574,7 @@ public class WordlInSix {
 		return count;
 	}
 
-	private void setOutput(File filePrintStream) {
+	private static void setOutput(File filePrintStream) {
 
 		if (null == filePrintStream) {
 
@@ -599,8 +600,6 @@ public class WordlInSix {
 		int indexOfEqualsChar = arg.indexOf('=');
 
 		String value = arg.substring(1 + indexOfEqualsChar);
-
-		setOutput(null); // default initially
 
 		if (arg.startsWith("threads=")) {
 
@@ -633,6 +632,8 @@ public class WordlInSix {
 					BufferedReader br = new BufferedReader(fr);
 					String line;
 
+					int b = 1;
+
 					while (null != (line = br.readLine())) {
 
 						int lastTab = line.lastIndexOf('\t');
@@ -647,6 +648,18 @@ public class WordlInSix {
 						String val = line.substring(1 + lastTab);
 
 						existingResults.put(key, val);
+
+						String[] bests = key.split("\t");
+
+						if (bests.length > b) {
+
+							guesses.add(bests[b - 1]);
+							b++;
+
+						} else {
+
+							output.println(line);
+						}
 					}
 
 					br.close();
