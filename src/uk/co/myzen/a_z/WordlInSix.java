@@ -30,7 +30,7 @@ public class WordlInSix {
 
 	private static final String[] FIVE_START_WORDS = { "frump", "thegn", "sloyd", "wacke" };
 
-	private static final String[] SCHOLARDLE_START_WORDS = { "biskup", "lenght", "warmed" };
+	private static final String[] SCHOLARDLE_START_WORDS = { "humbly", "dwcnts", "karpov" };
 
 	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
@@ -1851,7 +1851,7 @@ public class WordlInSix {
 
 				startWords = SCHOLARDLE_START_WORDS;
 
-				y = 8; // demonstrate only 7 guesses needed for "new" scholardle
+				y = 9; // demonstrate only 8 guesses needed for "new" scholardle
 
 			} else if ("five.txt".equals(resourceName)) {
 
