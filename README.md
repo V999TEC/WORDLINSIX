@@ -8,29 +8,30 @@ Just use **scholardle** as the first parameter (to use the recent 6-letter versi
 # Test my start word
 Ever wondered how good your favourite start words are for wordle or scholardle?  
 This code can indicate how likely you are to solve the game  
-For example, _vallee_ is **NOT** the best start word for scholardle, evidently 248 games are destined to fail (using the algorithm in this code, which is pretty good in itself)
+For example, _sister_ is **NOT** the best start word for scholardle, evidently over 500 games are destined to fail (using the algorithm in this code, which is pretty good in itself) That is a failure rate of 2.8 %
 
-```scholardle debug=3 guess1=vallee```
+```scholardle debug=3 guess1=sister```
 
 ```
-#Tries	vallee
+#Tries	sister
 1	1
-2	149
-3	2882
-4	6138
-5	2758
-6	635
-7	164
-8	57
-9	16
-10	7
-11	2
+2	277
+3	4699
+4	8172
+5	3358
+6	908
+7	337
+8	108
+9	33
+10	15
+11	6
 12	1
 13	1
-14	0
+14	1
+15	1
 ===== ======= 
-%PASS 99.9806
-FAIL   (248)
+%PASS 97.1928
+FAIL   (503)
 ```
 
 ## N.B.
@@ -246,7 +247,7 @@ Best start words for **wordle**
 
 ```wordle debug=3```
 or
-```wordle debug=3 guess1=admin guess2=blown guess3=dirge```
+```wordle debug=3 guess1=thump guess2=blown guess3=dirge```
 
 ```
 #Tries	thump	blown	dirge
@@ -257,65 +258,53 @@ or
 5	407	509	603
 6	91	58	70
 7	8	2	0
+8	0	0	0
 ===== ======= ======= ======= 
-%PASS  99.997  99.999  100.000
+%PASS 99.6544 99.9136 100.0000
 FAIL     (8)     (2)     (0)
 ```
 
+## debug=4
+
+Use this debug mode to provide an alphabetic list of words in the specified dictionary
+
+```scholardle debug=4```
+
+
 ## New Scholardle with 6-letters
-Using the new scholardle dictionary, all games can theoretically be solved in 7 or fewer tries
+
+There are 17,918 words in the current scholardle.txt dictionary 
+
+Using the scholardle dictionary, all games can theoretically be solved in 8 or fewer tries
 
 The list of words in the scholardle dictionary are _not_ common 6-letter words. 
 Some are nonsense words, misspellings, abbreviations and proper nouns.
 
 ```scholardle debug=3```
 or
-```scholardle debug=3 guess1=biskup guess2=lenght guess3=warmed```
+```scholardle debug=3 guess1=humbly guess2=dwcnts guess3=karpov```
 
 ```
-#Tries	biskup	lenght	warmed
+#Tries	humbly	dwcnts	karpov
 1	1	0	0
-2	222	1	0
-3	3750	3277	1
-4	6419	7120	9814
-5	2064	2173	2759
-6	304	218	223
-7	43	19	14
-8	8	3	0
+2	267	1	0
+3	4250	2980	1
+4	9012	9632	11735
+5	3466	4545	5557
+6	703	673	583
+7	175	75	40
+8	36	10	2
+9	8	2	0
+10	0	0	0
 ===== ======= ======= ======= 
-%PASS 99.9960 99.9983 99.9989
-FAIL  (51)    (22)    (14)
-```
-
-Using the first two start words with dictionary scholardle shows that **22** games will fail to be completed in the required 6 or fewer tries
-
-However, using the three start words all the games will be completed in 7 or fewer tries and just **14** games will fail (<0.001%)
-
-Just FYI
-```scholardle debug=3 guess1=biskup guess2=lenght guess3=warmed guess4=convoy guess5=sforza```
-
-There is no advantage to having a 4th or 5th start word as the %PASS degrades after the 3rd 
-
-```
-#Tries	biskup	lenght	warmed	convoy	sforza
-1	1	0	0	0	0
-2	222	1	0	0	0
-3	3750	3277	1	0	0
-4	6419	7120	9814	1	0
-5	2064	2173	2759	11949	1
-6	304	218	223	838	12450
-7	43	19	14	23	357
-8	8	3	0	0	3
-9	0	0	0	0	0
-===== ======= ======= ======= ======= ======= 
-%PASS 99.9960 99.9983 99.9989 99.9982 99.9719
-FAIL  (51)    (22)    (14)    (23)   (360) 
+%PASS 98.7778 99.5145 99.7656
+FAIL   (219)    (87)    (42)
 ```
 
 
 ## Legacy Scholardle with 5-letters
 
-The list of words in the scholardle dictionary is more than five times larger than wordle's!
+There are 12,973 5-letter words in the five dictionary - more than five times larger than wordle's dictionary!
 
 This means the game cannot always be solved in six tries, but theoretically it can be solved in 9.
 
