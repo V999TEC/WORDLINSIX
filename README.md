@@ -30,7 +30,7 @@ For example, _sister_ is **NOT** the best start word for scholardle, evidently o
 14	1
 15	1
 ===== ======= 
-%PASS 99.9719
+%PASS 97.1928
 FAIL   (503)
 ```
 
@@ -294,8 +294,9 @@ or
 7	175	75	40
 8	36	10	2
 9	8	2	0
+10	0	0	0
 ===== ======= ======= ======= 
-%PASS 99.9878 99.9951 99.9977
+%PASS 98.7778 99.5145 99.7656
 FAIL   (219)    (87)    (42)
 ```
 
