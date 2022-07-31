@@ -8,29 +8,30 @@ Just use **scholardle** as the first parameter (to use the recent 6-letter versi
 # Test my start word
 Ever wondered how good your favourite start words are for wordle or scholardle?  
 This code can indicate how likely you are to solve the game  
-For example, _vallee_ is **NOT** the best start word for scholardle, evidently 248 games are destined to fail (using the algorithm in this code, which is pretty good in itself)
+For example, _sister_ is **NOT** the best start word for scholardle, evidently over 500 games are destined to fail (using the algorithm in this code, which is pretty good in itself) That is a failure rate of 2.8 %
 
-```scholardle debug=3 guess1=vallee```
+```scholardle debug=3 guess1=sister```
 
 ```
-#Tries	vallee
+#Tries	sister
 1	1
-2	149
-3	2882
-4	6138
-5	2758
-6	635
-7	164
-8	57
-9	16
-10	7
-11	2
+2	277
+3	4699
+4	8172
+5	3358
+6	908
+7	337
+8	108
+9	33
+10	15
+11	6
 12	1
 13	1
-14	0
+14	1
+15	1
 ===== ======= 
-%PASS 99.9806
-FAIL   (248)
+%PASS 99.9719
+FAIL   (503)
 ```
 
 ## N.B.
