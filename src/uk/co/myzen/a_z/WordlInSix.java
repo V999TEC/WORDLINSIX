@@ -1971,7 +1971,9 @@ public class WordlInSix {
 
 		for (int z = 0; z < x; z++) {
 
-			float f = 100 - ((float) failCounts[z] / s);
+			float percent = 100 * (float) failCounts[z] / s;
+
+			float f = (float) 100 - percent;
 
 			output.print(String.format(" %3.4f", f));
 		}
