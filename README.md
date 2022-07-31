@@ -247,7 +247,7 @@ Best start words for **wordle**
 
 ```wordle debug=3```
 or
-```wordle debug=3 guess1=admin guess2=blown guess3=dirge```
+```wordle debug=3 guess1=thump guess2=blown guess3=dirge```
 
 ```
 #Tries	thump	blown	dirge
@@ -258,8 +258,9 @@ or
 5	407	509	603
 6	91	58	70
 7	8	2	0
+8	0	0	0
 ===== ======= ======= ======= 
-%PASS  99.997  99.999  100.000
+%PASS 99.6544 99.9136 100.0000
 FAIL     (8)     (2)     (0)
 ```
 
