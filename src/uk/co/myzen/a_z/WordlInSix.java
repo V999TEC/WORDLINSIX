@@ -1686,10 +1686,7 @@ public class WordlInSix {
 
 				if (terminate) {
 
-					Result finalResult = results.get(bestKey);
-
-					System.out.println(thread.getName() + ": at index " + index
-							+ " no further improvement in score better than (" + finalResult.asStringKey() + ")");
+					System.out.println(thread.getName() + ": at index " + index + " no further improvement in score");
 
 					bestWordSoFar[index] = null;
 
@@ -1767,21 +1764,21 @@ public class WordlInSix {
 
 					results.clear(); // start afresh on the next word level
 
-					// we are now responsible for interrupting all the other waiting threads
+					// we are now responsible for awakening all the other waiting threads
 
 					for (WordlInSix wis : instances) {
 
-						if (wis.thread != thread) {
+						if (wis.thread != thread) { // not ourself
 
 							if (terminate) {
 
 								wis.terminate = true;
 							}
 
+							wis.waiting = false;
 							wis.thread.interrupt();
 						}
 					}
-
 				}
 
 			} else {
@@ -1824,7 +1821,9 @@ public class WordlInSix {
 		if (0 == threads || thread.equals(threadFindingSolution)
 				|| (null == threadFindingSolution && thread.equals(instances.get(0).thread))) {
 
-			System.out.println(thread.getName() + ": has solution.");
+			System.out.println(thread.getName() + ": conclusion");
+
+			threadFindingSolution = thread; // forces any waiting thread to terminate expeditiously
 
 			for (int g = 0; g < bestWordSoFar.length; g++) {
 
