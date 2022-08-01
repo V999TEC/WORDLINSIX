@@ -363,3 +363,14 @@ logA.txt will contain partial data only, but the program can be resumed using th
 ```java -jar  wordlinsix.jar wordle|scholardle|xxxxx debug=2-logA.txt 1>logB.txt 2>>&1```
 
 Ensure that the stdout & stderr are piped to a different file to the one used as input!
+
+Parameter **output=**logC.txt an be used to output to a file, as alternative to piping streams in the shell
+
+Since **debug=2** is very CPU-intensive there is an option of using **threads=N** because the solution can be arrived at quicker with some parallel processing
+
+Note if *N* is set too high (possibly 2 x number of cores) the performance may actually degrade.
+One can experiment with N using a very small test dictionary called **three**. For example:
+
+```java -jar  wordlinsix.jar three debug=2 threads=4 output=test4.txt```
+
+Using **threads=1** is not quite the same as _not_ specifying the threads parameter.  The code takes a different path when threading is enabled.
