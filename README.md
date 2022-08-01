@@ -1,7 +1,7 @@
 # WORDLINSIX
 Java CLI to solve any WORDLE-style puzzles in a maximum of six tries (typically 4) when the optimum start word(s) are used
 
-It is also possible to play the variation of wordle called _scholardle_ (currently with a 99.999% success rate, however the dictionary can change from time to time, last change was around July 2nd, 2022).
+It is also possible to play the variation of wordle called _scholardle_ (currently with a 99.8% success rate, however the dictionary can change from time to time, last change was around July, 2022).
 
 Just use **scholardle** as the first parameter (to use the recent 6-letter version of scholardle)
 
@@ -43,7 +43,7 @@ The supplied 6-letter scholardle list resource is a somewhat bizarre subset of _
 
 resources/scholardle.txt in the jar can be edited as required if it does not prove reliable. See **debug=1** below
 
-An experimental parameter **ai=true** is under development and is showing some improvements, but should not be trusted (yet!)
+Some experimental parameters **ai=true** and **threads=N** are under development, but should not be trusted (yet!)
 
 # Debug Features
 The code can be used to determine the letter distribution of the specified dictionary (use parameter debug=1)
@@ -282,23 +282,23 @@ Some are nonsense words, misspellings, abbreviations and proper nouns.
 
 ```scholardle debug=3```
 or
-```scholardle debug=3 guess1=humbly guess2=dwcnts guess3=karpov```
+```scholardle debug=3 guess1=humbly guess2=dwcnts guess3=karpov guess4=finger```
 
 ```
-#Tries	humbly	dwcnts	karpov
-1	1	0	0
-2	267	1	0
-3	4250	2980	1
-4	9012	9632	11735
-5	3466	4545	5557
-6	703	673	583
-7	175	75	40
-8	36	10	2
-9	8	2	0
-10	0	0	0
-===== ======= ======= ======= 
-%PASS 98.7778 99.5145 99.7656
-FAIL   (219)    (87)    (42)
+#Tries	humbly	dwcnts	karpov	finger
+1	1	0	0	0
+2	267	1	0	0
+3	4250	2980	1	0
+4	9012	9632	11735	1
+5	3466	4545	5557	16750
+6	703	673	583	1133
+7	175	75	40	33
+8	36	10	2	1
+9	8	2	0	0
+10	0	0	0	0
+===== ======= ======= ======= ======= 
+%PASS 98.7778 99.5145 99.7656 99.8102
+FAIL   (219)    (87)    (42)    (34)
 ```
 
 
