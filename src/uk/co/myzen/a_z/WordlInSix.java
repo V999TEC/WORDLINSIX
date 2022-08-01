@@ -30,7 +30,7 @@ public class WordlInSix {
 
 	private static final String[] FIVE_START_WORDS = { "frump", "thegn", "sloyd", "wacke" };
 
-	private static final String[] SCHOLARDLE_START_WORDS = { "humbly", "dwcnts", "karpov" };
+	private static final String[] SCHOLARDLE_START_WORDS = { "humbly", "dwcnts", "karpov", "finger" };
 
 	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
@@ -1190,7 +1190,7 @@ public class WordlInSix {
 					containsChars = contains.toCharArray();
 				}
 
-				if (c == answer.charAt(index)) { // green
+				if (c == answer.charAt(index)) {
 
 					positions[index] = c;
 
