@@ -73,6 +73,8 @@ public class WordlInSix {
 
 	private static PrintStream output = System.err;
 
+	private static File debugInputFile = null;
+
 	// end of statics
 
 	private final Thread thread;
@@ -278,6 +280,55 @@ public class WordlInSix {
 				break;
 
 			case DEBUG_2:
+
+				if (null != debugInputFile) {
+					try {
+
+						FileReader fr = new FileReader(debugInputFile);
+
+						BufferedReader br = new BufferedReader(fr);
+						String line;
+
+						int b = 1;
+
+						while (null != (line = br.readLine())) {
+
+							int lastTab = line.lastIndexOf('\t');
+
+							if (lastTab < 0) {
+
+								continue;
+							}
+
+							String key = line.substring(0, lastTab);
+
+							String val = line.substring(1 + lastTab);
+
+							existingResults.put(key, val);
+
+							String[] bests = key.split("\t");
+
+							if (bests.length > b) {
+
+								mainInstance.guesses.add(bests[b - 1]);
+								b++;
+
+							} else {
+
+								output.println(line);
+							}
+						}
+
+						br.close();
+
+						fr.close();
+
+					} catch (FileNotFoundException e) {
+
+					} catch (IOException e) {
+
+					}
+				}
 
 				results = new HashMap<Integer, Result>();
 
@@ -623,54 +674,54 @@ public class WordlInSix {
 
 			if (delimiter > -1) {
 
-				File debugExtraA = new File(value.substring(1 + delimiter));
+				debugInputFile = new File(value.substring(1 + delimiter));
 
-				try {
-
-					FileReader fr = new FileReader(debugExtraA);
-
-					BufferedReader br = new BufferedReader(fr);
-					String line;
-
-					int b = 1;
-
-					while (null != (line = br.readLine())) {
-
-						int lastTab = line.lastIndexOf('\t');
-
-						if (lastTab < 0) {
-
-							continue;
-						}
-
-						String key = line.substring(0, lastTab);
-
-						String val = line.substring(1 + lastTab);
-
-						existingResults.put(key, val);
-
-						String[] bests = key.split("\t");
-
-						if (bests.length > b) {
-
-							guesses.add(bests[b - 1]);
-							b++;
-
-						} else {
-
-							output.println(line);
-						}
-					}
-
-					br.close();
-
-					fr.close();
-
-				} catch (FileNotFoundException e) {
-
-				} catch (IOException e) {
-
-				}
+//				try {
+//
+//					FileReader fr = new FileReader(debugInputFile);
+//
+//					BufferedReader br = new BufferedReader(fr);
+//					String line;
+//
+//					int b = 1;
+//
+//					while (null != (line = br.readLine())) {
+//
+//						int lastTab = line.lastIndexOf('\t');
+//
+//						if (lastTab < 0) {
+//
+//							continue;
+//						}
+//
+//						String key = line.substring(0, lastTab);
+//
+//						String val = line.substring(1 + lastTab);
+//
+//						existingResults.put(key, val);
+//
+//						String[] bests = key.split("\t");
+//
+//						if (bests.length > b) {
+//
+//							guesses.add(bests[b - 1]);
+//							b++;
+//
+//						} else {
+//
+//							output.println(line);
+//						}
+//					}
+//
+//					br.close();
+//
+//					fr.close();
+//
+//				} catch (FileNotFoundException e) {
+//
+//				} catch (IOException e) {
+//
+//				}
 			}
 
 			if (1 == debug) {
