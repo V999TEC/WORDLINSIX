@@ -364,11 +364,11 @@ logA.txt will contain partial data only, but the program can be resumed using th
 
 Ensure that the stdout & stderr are piped to a different file to the one used as input!
 
-Parameter **output=**logC.txt an be used to output to a file, as alternative to piping streams in the shell
+Parameter **output** can an be used to send results to a file, as an alternative to piping streams in the shell
 
-Since **debug=2** is very CPU-intensive there is an option of using **threads=N** because the solution can be arrived at quicker with some parallel processing
+Since **debug=2** is very CPU-intensive there is an option of using **threads=N** because the solution can be arrived at quicker with some parallel processing compared to the main thread doing everything.
 
-Note if **N** is set too high (possibly limit to 3 x number of cores) the performance may actually degrade.
+Note if **N** is set too high (possibly limit 3 x number of cores) the performance may actually degrade.
 One can experiment with N using a very small test dictionary called **three**. For example:
 
 ```java -jar  wordlinsix.jar three debug=2 threads=4 output=test4.txt```
