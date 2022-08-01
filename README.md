@@ -5,6 +5,10 @@ It is also possible to play the variation of wordle called _scholardle_ (current
 
 Just use **scholardle** as the first parameter (to use the recent 6-letter version of scholardle)
 
+# download
+
+See the download folder for a pre built jar of the latest version of the code
+
 # Test my start word
 Ever wondered how good your favourite start words are for wordle or scholardle?  
 This code can indicate how likely you are to solve the game  
