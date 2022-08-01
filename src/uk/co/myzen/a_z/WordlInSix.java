@@ -282,6 +282,7 @@ public class WordlInSix {
 			case DEBUG_2:
 
 				if (null != debugInputFile) {
+
 					try {
 
 						FileReader fr = new FileReader(debugInputFile);
@@ -310,7 +311,33 @@ public class WordlInSix {
 
 							if (bests.length > b) {
 
-								mainInstance.guesses.add(bests[b - 1]);
+								// when we are inputting previous results we must initialise bestKey
+
+								String best = bests[b - 1];
+
+								StringBuffer sb = new StringBuffer();
+
+								for (int a = 0; a < b; a++) {
+
+									sb.append('\t');
+									sb.append(bests[a]);
+								}
+
+								sb.deleteCharAt(0);
+
+								String result = existingResults.get(sb.toString());
+
+								int p = result.indexOf('(');
+
+								int q = result.indexOf(')', p);
+
+								int tries = Integer.parseInt(result.substring(0, p - 1));
+								int fails = Integer.parseInt(result.substring(1 + p, q));
+
+								bestKey = Integer.valueOf(1000 * tries + fails);
+
+								mainInstance.guesses.add(best);
+
 								b++;
 
 							} else {
