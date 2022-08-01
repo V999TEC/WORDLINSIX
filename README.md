@@ -364,7 +364,7 @@ logA.txt will contain partial data only, but the program can be resumed using th
 
 Ensure that the stdout & stderr are piped to a different file to the one used as input!
 
-Parameter **output=**logC.txt an be used to output to a file, as alternative to piping streams in the shell
+Parameter **output** can an be used to send results to a file, as an alternative to piping streams in the shell
 
 Since **debug=2** is very CPU-intensive there is an option of using **threads=N** because the solution can be arrived at quicker with some parallel processing compared to the main thread doing everything.
 
