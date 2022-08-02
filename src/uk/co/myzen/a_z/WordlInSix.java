@@ -28,9 +28,9 @@ public class WordlInSix {
 
 	private static final String[] WORDLE_START_WORDS = { "thump", "blown", "dirge" };
 
-	private static final String[] FIVE_START_WORDS = { "frump", "thegn", "sloyd", "wacke" };
-
 	private static final String[] SCHOLARDLE_START_WORDS = { "humbly", "dwcnts", "karpov", "finger" };
+
+	private static final String[] FIVE_START_WORDS = { "frump", "thegn", "sloyd", "wacke" };
 
 	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
@@ -75,6 +75,10 @@ public class WordlInSix {
 
 	private static File debugInputFile = null;
 
+	private static boolean showWords = true;
+
+	private static boolean showRank = true;
+
 	// end of statics
 
 	private final Thread thread;
@@ -87,10 +91,6 @@ public class WordlInSix {
 
 	private List<String> guesses = new ArrayList<String>(6);
 
-	private boolean showWords = true;
-
-	private boolean showRank = true;
-
 	private char[] containsChars = {};
 
 	private char[] notChars = {};
@@ -100,6 +100,26 @@ public class WordlInSix {
 	private char positions[];
 
 	private String answer = "";
+
+	// static methods follow
+
+	private static void help() {
+
+		System.out.println("Help with parameters:");
+		System.out.println("\tMake the first parameter wordle or scholardle to play different variations of the game");
+		System.out.println(
+				"\tThe columns are implicitly numbered left to right 1 through 5: thus 1 is first and 5 is last");
+		System.out.println("\tUse 1=b to indicate first letter is definitely 'b'");
+		System.out.println("\tEliminate letters by using not=abcdefg etc.");
+		System.out.println("\tUse 1=a to indicate first letter is definitely 'a'");
+		System.out.println("\tUse 5=z to indicate last letter is definitely 'z'");
+		System.out.println("\tUse 2=j 3=k 4=l to indicate letter 'j' is in column 2 and 'k' in column 3 and 'l' in 4");
+		System.out.println("\tUse contains=iou to indicate letters 'i' and 'o' and 'u' *must* appear in the word");
+		System.out.println("\tUse not2=ab to indicate second letter cannot be 'a' or 'b'");
+		System.out.println("\tUse not5=y to indicate last letter cannot be 'y'");
+		System.out.println("\tUse words=no if you don't want to see possible words");
+		System.out.println("\tUse rank=no if you don't want a clue to the likelihood of word possibilities");
+	}
 
 	private static String[] resetStringArray() {
 
@@ -125,43 +145,26 @@ public class WordlInSix {
 		return result;
 	}
 
-	private WordlInSix() throws Exception {
+	// Instead of using System.err the output can be piped to a file
 
-		this(DEFAULT_TXT);
-	}
+	private static void setOutput(File filePrintStream) {
 
-	private WordlInSix(String name) throws Exception {
+		if (null == filePrintStream) {
 
-		msMainInstanceStart = System.currentTimeMillis();
+			output = System.err;
 
-		thread = Thread.currentThread();
+		} else {
 
-		resourceName = name;
+			try {
 
-		words = loadWords(name);
+				output = new PrintStream(filePrintStream);
 
-		notN = resetStringArray();
+			} catch (FileNotFoundException e) {
 
-		positions = resetCharArray();
+				e.printStackTrace();
 
-		int lp = name.lastIndexOf('.');
-
-		String propertyResourceName = name.substring(0, lp) + ".properties";
-
-		letterDistributionRanks = loadLetterDistributionRanks(propertyResourceName);
-	}
-
-	private WordlInSix(List<String> initialGuesses, final int threads) {
-
-		thread = Thread.currentThread();
-
-		notN = resetStringArray();
-
-		positions = resetCharArray();
-
-		for (int g = 0; g < initialGuesses.size(); g++) {
-
-			guesses.add(initialGuesses.get(g));
+				output = System.err;
+			}
 		}
 	}
 
@@ -191,43 +194,111 @@ public class WordlInSix {
 		return result;
 	}
 
-	private int[] loadLetterDistributionRanks(String name) {
+	// Create a list of words from the given dictionary
+	// verifies that word length is consistent and rogue entries are disregarded
+	// Does NOT sort the list alphabetically
+	// hint: use debug=4 to do that and store result under resources
 
-		int[] frequencies = new int[26];
+	private static List<String> loadWords(String name) throws Exception {
 
-		Properties properties = new Properties();
+		List<String> result;
 
-		ClassLoader cl = Thread.currentThread().getContextClassLoader();
+		if (wordsMap.containsKey(name)) {
 
-		InputStream is = cl.getResourceAsStream(name);
+			result = wordsMap.get(name);
 
-		try {
+		} else {
+
+			result = new ArrayList<String>(2315);
+
+			ClassLoader cl = Thread.currentThread().getContextClassLoader();
+
+			InputStream is = cl.getResourceAsStream(name);
 
 			if (null == is) {
 
-				debug1(properties);
+				System.err.println("Cannot locate resource '" + name
+						+ "' Did you perhaps mean to use wordle or scholardle for the first parameter?");
 
 			} else {
 
-				properties.load(is);
+				InputStreamReader isr = null;
+
+				BufferedReader br = null;
+
+				try {
+
+					isr = new InputStreamReader(is);
+
+					br = new BufferedReader(isr);
+
+					String ln;
+
+					while (null != (ln = br.readLine())) {
+
+						if (ln.startsWith("#")) {
+
+							continue; // ignore comments in property file
+						}
+
+						String words[] = ln.split("\\s+");
+
+						for (String word : words) {
+
+							if (word.length() != wordLength) {
+
+								if (0 == wordLength) {
+
+									wordLength = word.length();
+								} else {
+
+									throw new Exception("Inconsistent resource file of words");
+								}
+							}
+
+							if (word.contains(".") || word.contains("-")) {
+
+								continue; // ignore rogue words
+							}
+
+							result.add(word.toLowerCase());
+						}
+					}
+
+					// all good
+
+					wordsMap.put(name, result);
+
+				} catch (IOException e) {
+
+				} finally {
+
+					try {
+						if (null != br) {
+
+							br.close();
+						}
+
+						if (null != isr) {
+
+							isr.close();
+						}
+
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+				}
 			}
-
-			for (int index = 0; index < 26; index++) {
-
-				String key = alphabet.substring(index, 1 + index);
-
-				String value = properties.getProperty(key, "0").trim();
-
-				frequencies[index] = Integer.parseInt(value);
-			}
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
 		}
 
-		return frequencies;
+		return result;
 	}
+
+	// the starting point for the program
+	// See help method for parameters passed to main
+	// parameters debug and threads are for advanced usage
+	// see README.md on github
 
 	public static void main(String[] args) {
 
@@ -417,7 +488,7 @@ public class WordlInSix {
 			case ABORT:
 			case SHOW_HELP:
 
-				mainInstance.help();
+				WordlInSix.help();
 				break;
 
 			case DEFAULT:
@@ -425,7 +496,7 @@ public class WordlInSix {
 
 				Set<String> candidates = mainInstance.findCandidates();
 
-				// display the candidate words (if words=true | words=yes )
+				// display the candidate words (unless words=false )
 
 				StringBuffer sb = new StringBuffer();
 
@@ -449,6 +520,92 @@ public class WordlInSix {
 		}
 
 	}
+
+	// end of static methods
+
+	private WordlInSix() throws Exception {
+
+		this(DEFAULT_TXT);
+	}
+
+	private WordlInSix(String name) throws Exception {
+
+		msMainInstanceStart = System.currentTimeMillis();
+
+		thread = Thread.currentThread();
+
+		resourceName = name;
+
+		words = loadWords(name);
+
+		notN = resetStringArray();
+
+		positions = resetCharArray();
+
+		int lp = name.lastIndexOf('.');
+
+		String propertyResourceName = name.substring(0, lp) + ".properties";
+
+		letterDistributionRanks = loadLetterDistributionRanks(propertyResourceName);
+	}
+
+	private WordlInSix(List<String> initialGuesses, final int threads) {
+
+		thread = Thread.currentThread();
+
+		notN = resetStringArray();
+
+		positions = resetCharArray();
+
+		for (int g = 0; g < initialGuesses.size(); g++) {
+
+			guesses.add(initialGuesses.get(g));
+		}
+	}
+
+	// read the properties files associated with the dictionary
+	// gives the distribution of letter frequency in an array
+
+	private int[] loadLetterDistributionRanks(String name) {
+
+		int[] frequencies = new int[26];
+
+		Properties properties = new Properties();
+
+		ClassLoader cl = Thread.currentThread().getContextClassLoader();
+
+		InputStream is = cl.getResourceAsStream(name);
+
+		try {
+
+			if (null == is) {
+
+				debug1(properties);
+
+			} else {
+
+				properties.load(is);
+			}
+
+			for (int index = 0; index < 26; index++) {
+
+				String key = alphabet.substring(index, 1 + index);
+
+				String value = properties.getProperty(key, "0").trim();
+
+				frequencies[index] = Integer.parseInt(value);
+			}
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+		return frequencies;
+	}
+
+	// Experimental.
+	// When ai=true the program will try to deduce further letter positions
 
 	private char[] inferenceCheck() {
 
@@ -519,23 +676,7 @@ public class WordlInSix {
 		return inference ? result : null;
 	}
 
-	private void help() {
-
-		System.out.println("Help with parameters:");
-		System.out.println("\tMake the first parameter wordle or scholardle to play different variations of the game");
-		System.out.println(
-				"\tThe columns are implicitly numbered left to right 1 through 5: thus 1 is first and 5 is last");
-		System.out.println("\tUse 1=b to indicate first letter is definitely 'b'");
-		System.out.println("\tEliminate letters by using not=abcdefg etc.");
-		System.out.println("\tUse 1=a to indicate first letter is definitely 'a'");
-		System.out.println("\tUse 5=z to indicate last letter is definitely 'z'");
-		System.out.println("\tUse 2=j 3=k 4=l to indicate letter 'j' is in column 2 and 'k' in column 3 and 'l' in 4");
-		System.out.println("\tUse contains=iou to indicate letters 'i' and 'o' and 'u' *must* appear in the word");
-		System.out.println("\tUse not2=ab to indicate second letter cannot be 'a' or 'b'");
-		System.out.println("\tUse not5=y to indicate last letter cannot be 'y'");
-		System.out.println("\tUse words=no if you don't want to see possible words");
-		System.out.println("\tUse rank=no if you don't want a clue to the likelihood of word possibilities");
-	}
+	// display the list of candidate words in order of likelihood
 
 	private void report(Set<String> candidates) {
 
@@ -593,6 +734,9 @@ public class WordlInSix {
 
 	}
 
+	// Experimental.
+	// determine if a candidate word can be eliminated
+
 	private boolean rejectDueToInference(String candidate, char[] inferred) {
 
 		boolean disregard = false;
@@ -621,6 +765,9 @@ public class WordlInSix {
 		return disregard;
 	}
 
+	// word will return zero unless it has repeated letters
+	// knowing the number of repeated letters is essential for selection
+
 	private int countDuplicateLetters(String word) {
 
 		char[] chrs = word.toCharArray();
@@ -634,6 +781,9 @@ public class WordlInSix {
 
 		return chrs.length - unique.size();
 	}
+
+	// word will return zero unless it has vowels (1 or more is typical)
+	// knowing the number of vowels is essential for selection
 
 	private int countVowels(String word) {
 
@@ -652,26 +802,8 @@ public class WordlInSix {
 		return count;
 	}
 
-	private static void setOutput(File filePrintStream) {
-
-		if (null == filePrintStream) {
-
-			output = System.err;
-
-		} else {
-
-			try {
-
-				output = new PrintStream(filePrintStream);
-
-			} catch (FileNotFoundException e) {
-
-				e.printStackTrace();
-
-				output = System.err;
-			}
-		}
-	}
+	// handle the parameters.
+	// this method will be called for each parameter passed to main
 
 	private void parameter(String arg) {
 
@@ -702,53 +834,6 @@ public class WordlInSix {
 			if (delimiter > -1) {
 
 				debugInputFile = new File(value.substring(1 + delimiter));
-
-//				try {
-//
-//					FileReader fr = new FileReader(debugInputFile);
-//
-//					BufferedReader br = new BufferedReader(fr);
-//					String line;
-//
-//					int b = 1;
-//
-//					while (null != (line = br.readLine())) {
-//
-//						int lastTab = line.lastIndexOf('\t');
-//
-//						if (lastTab < 0) {
-//
-//							continue;
-//						}
-//
-//						String key = line.substring(0, lastTab);
-//
-//						String val = line.substring(1 + lastTab);
-//
-//						existingResults.put(key, val);
-//
-//						String[] bests = key.split("\t");
-//
-//						if (bests.length > b) {
-//
-//							guesses.add(bests[b - 1]);
-//							b++;
-//
-//						} else {
-//
-//							output.println(line);
-//						}
-//					}
-//
-//					br.close();
-//
-//					fr.close();
-//
-//				} catch (FileNotFoundException e) {
-//
-//				} catch (IOException e) {
-//
-//				}
 			}
 
 			if (1 == debug) {
@@ -830,6 +915,8 @@ public class WordlInSix {
 		}
 	}
 
+	// Verify the parameters are consistent
+
 	private boolean validatedParameters() {
 
 		String contains = null == containsChars ? "" : new String(containsChars);
@@ -887,101 +974,8 @@ public class WordlInSix {
 		return true;
 	}
 
-	private static List<String> loadWords(String name) throws Exception {
-
-		List<String> result;
-
-		if (wordsMap.containsKey(name)) {
-
-			result = wordsMap.get(name);
-
-		} else {
-
-			result = new ArrayList<String>(2315);
-
-			ClassLoader cl = Thread.currentThread().getContextClassLoader();
-
-			InputStream is = cl.getResourceAsStream(name);
-
-			if (null == is) {
-
-				System.err.println("Cannot locate resource '" + name
-						+ "' Did you perhaps mean to use wordle or scholardle for the first parameter?");
-
-			} else {
-
-				InputStreamReader isr = null;
-
-				BufferedReader br = null;
-
-				try {
-
-					isr = new InputStreamReader(is);
-
-					br = new BufferedReader(isr);
-
-					String ln;
-
-					while (null != (ln = br.readLine())) {
-
-						if (ln.startsWith("#")) {
-
-							continue; // ignore comments in property file
-						}
-
-						String words[] = ln.split("\\s+");
-
-						for (String word : words) {
-
-							if (word.length() != wordLength) {
-
-								if (0 == wordLength) {
-
-									wordLength = word.length();
-								} else {
-
-									throw new Exception("Inconsistent resource file of words");
-								}
-							}
-
-							if (word.contains(".") || word.contains("-")) {
-
-								continue; // ignore rogue words
-							}
-
-							result.add(word.toLowerCase());
-						}
-					}
-
-					// all good
-
-					wordsMap.put(name, result);
-
-				} catch (IOException e) {
-
-				} finally {
-
-					try {
-						if (null != br) {
-
-							br.close();
-						}
-
-						if (null != isr) {
-
-							isr.close();
-						}
-
-					} catch (IOException e) {
-
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-
-		return result;
-	}
+	// match the dictionary against the constraints applied so far
+	// find possible words without any priority or likelihood
 
 	private Set<String> findCandidates() {
 
@@ -1097,6 +1091,8 @@ public class WordlInSix {
 		return candidates;
 	}
 
+	// Utility method
+
 	private int charToIndex(char c) {
 
 		int n = c;
@@ -1105,6 +1101,10 @@ public class WordlInSix {
 
 		return n;
 	}
+
+	// calculate a rank value for the word
+	// based on letter distribution.
+	// Common words will return higher score
 
 	private int calculateLetterDistributionRank(String word) {
 
@@ -1117,6 +1117,8 @@ public class WordlInSix {
 
 		return accumulator;
 	}
+
+	// Create an ordered list based on vowel count, repeated letter count & rank
 
 	private List<String> rankCandidatesByLetterDistribution(Set<String> candidates) {
 
@@ -1228,6 +1230,8 @@ public class WordlInSix {
 		return hybridList;
 	}
 
+	// Updates notChars, containsChars, positions & notN
+
 	private void scoreAgainstKnownAnswer(String word) {
 
 		// append to parameters accordingly
@@ -1288,12 +1292,17 @@ public class WordlInSix {
 
 	}
 
+	// report the game result
+
 	private void guessToAnswer() {
 
 		int count = howManyGuesses();
 
 		System.err.println("Algorithm needed " + count + " guesses");
 	}
+
+	// Automatically plays the game assuming the answer is known and at least guess1
+	// specified
 
 	private int howManyGuesses() {
 
@@ -1438,6 +1447,8 @@ public class WordlInSix {
 		return howMany;
 	}
 
+	// select the first candidate word unless inferred clues suggest otherwise
+
 	private String selectCandidate(char[] inferred) {
 
 		Set<String> candidates = findCandidates();
@@ -1493,6 +1504,10 @@ public class WordlInSix {
 		return rankings.get(r);
 	}
 
+	// method is used once only, to find number of times each letter is used in the
+	// dictionary.
+	// The output would normally replace the dictionary properties file
+
 	private void debug1(Properties optional) {
 
 		for (char ch : alphabet.toCharArray()) {
@@ -1513,6 +1528,8 @@ public class WordlInSix {
 			}
 		}
 	}
+
+	// method is used once only, to find the optimum start words for the dictionary
 
 	void debug2() {
 
@@ -1908,6 +1925,9 @@ public class WordlInSix {
 		}
 	}
 
+	// method can be used to report the performance of different start words
+	// in the likelihood of solving the challenge within 6 tries.
+
 	private void debug3() throws Exception {
 
 		String[] startWords = new String[0];
@@ -2064,6 +2084,9 @@ public class WordlInSix {
 		}
 		output.print("\n");
 	}
+
+	// method is used once only, to provide a sorted dictionary listing
+	// The output would normally replace the dictionary txt file
 
 	private void debug4() throws Exception {
 
