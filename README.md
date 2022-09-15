@@ -277,7 +277,7 @@ Use this debug mode to provide an alphabetic list of words in the specified dict
 
 ## New Scholardle with 6-letters
 
-There are 17,918 words in the current scholardle.txt dictionary 
+There are currently 17,922 words in the current scholardle.txt dictionary 
 
 Using the scholardle dictionary, all games can theoretically be solved in 8 or fewer tries
 
