@@ -1,4 +1,4 @@
-# Derived from https://www.scholardle.com/static/js/main.e5126968.js
+# derived from https://www.scholardle.com/static/js/main.23296151.js
 aachen
 aargau
 aarhus
@@ -61,6 +61,7 @@ abuser
 abuses
 abwehr
 abydos
+abzyme
 acacia
 acadia
 accede
@@ -5048,6 +5049,7 @@ facies
 facile
 facing
 factor
+facula
 fading
 faecal
 faeces
@@ -8559,7 +8561,6 @@ kwacha
 kwaito
 kwanza
 kyrgyz
-kytoon
 kyushu
 laager
 labels
@@ -16836,6 +16837,7 @@ vachon
 vaclav
 vacuum
 vadhan
+vadose
 vagary
 vagina
 vaguer
@@ -17083,6 +17085,7 @@ virgos
 virial
 virile
 virion
+viroid
 virtua
 virtue
 virtus
