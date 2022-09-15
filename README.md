@@ -1,7 +1,7 @@
 # WORDLINSIX
 Java CLI to solve any WORDLE-style puzzles in a maximum of six tries (typically 4) when the optimum start word(s) are used
 
-It is also possible to play the variation of wordle called _scholardle_ (currently with a 99.8% success rate, however the dictionary can change from time to time, last change was around July, 2022).
+It is also possible to play the variation of wordle called _scholardle_ (currently with a 99.8% success rate, however the dictionary can change from time to time; the author will endeavour to update this project when the list requires change).
 
 Just use **scholardle** as the first parameter (to use the recent 6-letter version of scholardle)
 
@@ -277,7 +277,7 @@ Use this debug mode to provide an alphabetic list of words in the specified dict
 
 ## New Scholardle with 6-letters
 
-There are 17,918 words in the current scholardle.txt dictionary 
+There are currently 17,922 words in the current scholardle.txt dictionary 
 
 Using the scholardle dictionary, all games can theoretically be solved in 8 or fewer tries
 
