@@ -47,7 +47,7 @@ The supplied 6-letter scholardle list resource is a somewhat bizarre subset of _
 
 resources/scholardle.txt in the jar can be edited as required if it does not prove reliable. See **debug=1** below
 
-Some experimental parameters **ai=true** and **threads=N** are under development, but should not be trusted (yet!)
+Some experimental parameters such as **threads=N** are under development, use with caution.
 
 # Debug Features
 The code can be used to determine the letter distribution of the specified dictionary (use parameter debug=1)
