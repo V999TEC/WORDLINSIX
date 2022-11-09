@@ -1018,10 +1018,22 @@ public class WordlInSix {
 
 				for (int n = 0; n < notChars.length; n++) {
 
-					if (-1 != word.indexOf(notChars[n])) {
+					char ch = notChars[n];
 
-						match = true;
-						break;
+					if (-1 != word.indexOf(ch)) {
+
+						/*
+						 * Before we eliminate the word, it could be that a char added to the notChars[]
+						 * is a char that is already definitely in the word (so it implies the same
+						 * letter is used more than once). So match against contains before eliminating
+						 * the candidate
+						 */
+
+						if (-1 == contains.indexOf(ch)) {
+
+							match = true;
+							break;
+						}
 					}
 				}
 
