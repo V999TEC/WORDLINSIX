@@ -47,7 +47,7 @@ The supplied 6-letter scholardle list resource is a somewhat bizarre subset of _
 
 resources/scholardle.txt in the jar can be edited as required if it does not prove reliable. See **debug=1** below
 
-Some experimental parameters **ai=true** and **threads=N** are under development, but should not be trusted (yet!)
+Some experimental parameters such as **threads=N** are under development, use with caution.
 
 # Debug Features
 The code can be used to determine the letter distribution of the specified dictionary (use parameter debug=1)
@@ -59,7 +59,7 @@ The code can be used to check the performance of different starting words (use p
 # Start Word(s)
 As determined by using the debug features, each variation of the game wordle / scholardle / xxxxx will have different chances of success dependent on the first word chosen. 
 
-The suggested approach for success is to always use the right start word. For wordle use **_thump_**, for scholardle use **_biskup_**
+The suggested approach for success is to always use the right start word. For wordle use **_thump_**, for scholardle use **_humbly_**
 
 Other generic games with different dictionaries (which, by the way, can always be added to the WORDLINSIX jar file without the need to re-compile, just use 7-zip or similar) may benefit by a second or third start word.  
 The static anlysis using debug=2 will be required to find the best start word(s).
