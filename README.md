@@ -75,7 +75,7 @@ In the unlucky event all three starting words give no clue, do not dispair: you 
 ### >java -jar wordlinsix.jar (parameters)
 
 ## Parameter Help:
-        Make the first parameter wordle or scholardle or five to play different variations of the game
+        Make the first parameter wordle or scholardle or xxxxx to play different variations of the game
         The columns are implicitly numbered left to right 1 through N: thus 1 is first and N is last
         Use 1=b to indicate first letter is definitely 'b'
         Eliminate letters by using not=abcdefg etc.
@@ -275,9 +275,9 @@ Use this debug mode to provide an alphabetic list of words in the specified dict
 ```scholardle debug=4```
 
 
-## New Scholardle with 6-letters
+## Scholardle with 6-letters
 
-There are currently 17,922 words in the current scholardle.txt dictionary 
+There are currently 17,925 words in the current scholardle.txt dictionary 
 
 Using the scholardle dictionary, all games can theoretically be solved in 8 or fewer tries
 
@@ -304,46 +304,6 @@ or
 %PASS 98.7778 99.5145 99.7656 99.8102
 FAIL   (219)    (87)    (42)    (34)
 ```
-
-
-## Legacy Scholardle with 5-letters
-
-There are 12,973 5-letter words in the five dictionary - more than five times larger than wordle's dictionary!
-
-This means the game cannot always be solved in six tries, but theoretically it can be solved in 9.
-
-Obviously this means that there will be games that will be lost, but by choosing the optimum starting word(s) the chances of a solution are drastically improved.
-```five debug=3```
-or
-```five debug=3 guess1=frump guess2=thegn guess3=sloyd guess4=wacke```
-
-```
-#Tries	frump	thegn	sloyd	wacke
-1	1	0	0	0
-2	97	1	0	0
-3	1506	1064	1	0
-4	4493	4856	5191	1
-5	3927	4553	5608	9729
-6	1734	1691	1667	2842
-7	685	521	348	342
-8	309	185	109	48
-9	135	66	43	11
-10	54	26	6	0
-11	23	10	0	0
-12	9	0	0	0
-13	0	0	0	0
-===== ======= ======= ======= ======= 
-%PASS 90.6344 93.7717 96.0996 96.9090
-FAIL  (1215)   (808)   (506)   (401)
-```
-
-Using the selected start words with dictionary five shows that **401** games will fail to be completed in the required 6 or fewer tries
-
-The preferred words may seem obscure, but can be used, in the specified order, to improve the chance of finding a solution.
-
-These optimum words have been deduced using parameter **debug=2** with _**five**_ as the first parameter.
-
-The output that is produced is this: [java -jar wordlinsix.jar five debug=2](/assets/five-debug=2.txt?raw=true "debug=2")
 
 ## Technical Note
 
