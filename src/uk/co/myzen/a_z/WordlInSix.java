@@ -30,8 +30,6 @@ public class WordlInSix {
 
 	private static final String[] SCHOLARDLE_START_WORDS = { "humbly", "dwcnts", "karpov", "finger" };
 
-	private static final String[] FIVE_START_WORDS = { "frump", "thegn", "sloyd", "wacke" };
-
 	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
 	private static enum Action {
@@ -106,7 +104,8 @@ public class WordlInSix {
 	private static void help() {
 
 		System.out.println("Help with parameters:");
-		System.out.println("\tMake the first parameter wordle or scholardle to play different variations of the game");
+		System.out.println(
+				"\tMake the first parameter wordle or scholardle or xxxxx to play different variations of the game");
 		System.out.println(
 				"\tThe columns are implicitly numbered left to right 1 through 5: thus 1 is first and 5 is last");
 		System.out.println("\tUse 1=b to indicate first letter is definitely 'b'");
@@ -582,6 +581,8 @@ public class WordlInSix {
 
 				debug1(properties);
 
+				containsChars = new char[] {};
+
 			} else {
 
 				properties.load(is);
@@ -921,7 +922,7 @@ public class WordlInSix {
 
 		String contains = null == containsChars ? "" : new String(containsChars);
 
-		if (contains.length() > 5) {
+		if (contains.length() > wordLength) {
 
 			System.err
 					.println("Error:  parameter contains=" + contains + " looks wrong. Try again with 1 to 5 letters");
@@ -1961,12 +1962,6 @@ public class WordlInSix {
 				startWords = SCHOLARDLE_START_WORDS;
 
 				y = 9; // demonstrate only 8 guesses needed for "new" scholardle
-
-			} else if ("five.txt".equals(resourceName)) {
-
-				startWords = FIVE_START_WORDS;
-
-				y = 10; // demonstrate only 9 guesses needed for "old" scholardle
 			}
 		}
 
