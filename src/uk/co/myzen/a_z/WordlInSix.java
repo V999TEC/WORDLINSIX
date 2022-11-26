@@ -306,7 +306,7 @@ public class WordlInSix {
 		try {
 			if (0 == args.length) {
 
-				mainInstance = new WordlInSix(null); // will use DEFAULT_TXT & DEFAULT_PROPERTIES
+				mainInstance = new WordlInSix(); // will use DEFAULT_TXT & DEFAULT_PROPERTIES
 
 				action = Action.SHOW_HELP;
 
