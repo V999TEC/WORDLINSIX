@@ -75,7 +75,7 @@ In the unlucky event all three starting words give no clue, do not dispair: you 
 ### >java -jar wordlinsix.jar (parameters)
 
 ## Parameter Help:
-        Make the first parameter wordle or scholardle or five to play different variations of the game
+        Make the first parameter wordle or scholardle or xxxxx to play different variations of the game
         The columns are implicitly numbered left to right 1 through N: thus 1 is first and N is last
         Use 1=b to indicate first letter is definitely 'b'
         Eliminate letters by using not=abcdefg etc.
