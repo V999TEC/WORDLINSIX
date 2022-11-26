@@ -1,4 +1,4 @@
-# derived from https://www.scholardle.com/static/js/main.23296151.js
+# derived from https://www.scholardle.com/static/js/main.7c1e8b12.js
 aachen
 aargau
 aarhus
@@ -61,7 +61,6 @@ abuser
 abuses
 abwehr
 abydos
-abzyme
 acacia
 acadia
 accede
@@ -4936,6 +4935,7 @@ ettori
 etudes
 etudie
 etwork
+etymon
 etzion
 eubank
 euchre
@@ -5049,7 +5049,6 @@ facies
 facile
 facing
 factor
-facula
 fading
 faecal
 faeces
@@ -12688,6 +12687,7 @@ radium
 radius
 radley
 radnor
+radome
 raeder
 rafael
 raffia
@@ -13210,6 +13210,7 @@ rheims
 rhessi
 rhesus
 rheumy
+rhinal
 rhinos
 rhoads
 rhodes
@@ -15417,6 +15418,7 @@ sulcus
 sulfur
 sulked
 sullen
+sulpha
 sultan
 sultry
 sumach
@@ -15814,6 +15816,7 @@ tejada
 tejano
 tekken
 telfer
+telium
 teller
 telles
 tellus
@@ -16169,6 +16172,7 @@ tolman
 tololo
 toltec
 toluca
+toluic
 tomasi
 tomaso
 tomasz
@@ -16350,6 +16354,7 @@ tricot
 triers
 trifle
 triggs
+trigon
 trikes
 trilby
 trillo
@@ -16837,7 +16842,6 @@ vachon
 vaclav
 vacuum
 vadhan
-vadose
 vagary
 vagina
 vaguer
@@ -17085,7 +17089,6 @@ virgos
 virial
 virile
 virion
-viroid
 virtua
 virtue
 virtus
@@ -17920,3 +17923,4 @@ zwicky
 zwolle
 zydeco
 zygote
+zymase
