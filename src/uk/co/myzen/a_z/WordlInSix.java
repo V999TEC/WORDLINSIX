@@ -106,16 +106,15 @@ public class WordlInSix {
 		System.out.println("Help with parameters:");
 		System.out.println(
 				"\tMake the first parameter wordle or scholardle or xxxxx to play different variations of the game");
-		System.out.println(
-				"\tThe columns are implicitly numbered left to right 1 through 5: thus 1 is first and 5 is last");
+		System.out.println("\tThe columns are implicitly numbered left to right starting at 1");
 		System.out.println("\tUse 1=b to indicate first letter is definitely 'b'");
 		System.out.println("\tEliminate letters by using not=abcdefg etc.");
 		System.out.println("\tUse 1=a to indicate first letter is definitely 'a'");
-		System.out.println("\tUse 5=z to indicate last letter is definitely 'z'");
+		System.out.println("\tUse 5=z to indicate 5th letter is definitely 'z'");
 		System.out.println("\tUse 2=j 3=k 4=l to indicate letter 'j' is in column 2 and 'k' in column 3 and 'l' in 4");
 		System.out.println("\tUse contains=iou to indicate letters 'i' and 'o' and 'u' *must* appear in the word");
 		System.out.println("\tUse not2=ab to indicate second letter cannot be 'a' or 'b'");
-		System.out.println("\tUse not5=y to indicate last letter cannot be 'y'");
+		System.out.println("\tUse not5=y to indicate 5th letter cannot be 'y'");
 		System.out.println("\tUse words=no if you don't want to see possible words");
 		System.out.println("\tUse rank=no if you don't want a clue to the likelihood of word possibilities");
 	}

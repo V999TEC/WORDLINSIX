@@ -76,15 +76,15 @@ In the unlucky event all three starting words give no clue, do not dispair: you 
 
 ## Parameter Help:
         Make the first parameter wordle or scholardle or xxxxx to play different variations of the game
-        The columns are implicitly numbered left to right 1 through N: thus 1 is first and N is last
+        The columns are implicitly numbered left to right starting at 1
         Use 1=b to indicate first letter is definitely 'b'
         Eliminate letters by using not=abcdefg etc.
         Use 1=a to indicate first letter is definitely 'a'
-        Use 5=z to indicate last letter is definitely 'z'
+        Use 5=z to indicate 5th letter is definitely 'z'
         Use 2=j 3=k 4=l to indicate letter 'j' is in column 2 and 'k' in column 3 and 'l' in 4
         Use contains=iou to indicate letters 'i' and 'o' and 'u' *must* appear in the word
         Use not2=ab to indicate second letter cannot be 'a' or 'b'
-        Use not5=y to indicate last letter cannot be 'y'
+        Use not5=y to indicate 5th letter cannot be 'y'
         Use words=no if you don't want to see possible words
         Use rank=no if you don't want a clue to the likelihood of word possibilities
 
