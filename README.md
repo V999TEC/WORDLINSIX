@@ -244,6 +244,13 @@ Corresponding data generated for the new scholardle wordlist
 
 The output that is produced is this: [java -jar wordlinsix.jar scholardle debug=2](/assets/scholardle-debug=2.txt?raw=true "debug=2")
 
+Another comprehensive 5-letter word dictionary has been tested with debug=2 (five.txt contains 14,855 words)
+
+The output that is produced is this: [java -jar wordlinsix.jar five debug=2](/assets/five-debug=2.txt?raw=true "debug=2")
+
+This analysis shows that 551 words could not be solved within six tries using the program's algorithm - see debug=3 below
+
+However that is still a 96.2908% success rate.
 
 ## debug=3
 
@@ -267,6 +274,31 @@ or
 %PASS 99.6544 99.9136 100.0000
 FAIL     (8)     (2)     (0)
 ```
+
+Best start words for **five**
+
+```five debug=3 guess1=morph guess2=blanc guess3=kydst guess4=swive```
+
+```
+#Tries	morph	blanc	kydst	swive
+1	1	0	0	0
+2	131	1	0	0
+3	1847	1347	1	0
+4	5115	5563	5536	1
+5	4212	4979	6586	10843
+6	2014	1959	2143	3460
+7	883	665	441	471
+8	377	222	117	74
+9	163	85	27	6
+10	70	25	4	0
+11	32	9	0	0
+12	10	0	0	0
+13	0	0	0	0
+===== ======= ======= ======= ======= 
+%PASS 89.6668 93.2279 96.0350 96.2908
+FAIL  (1535)  (1006)   (589)   (551)
+```
+
 
 ## debug=4
 
