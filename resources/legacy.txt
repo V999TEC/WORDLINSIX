@@ -1,3 +1,4 @@
+# derived from https://www.scholardle.com/static/js/main.2b8463e0.js
 aachen
 aargau
 aarhus
@@ -102,7 +103,6 @@ actors
 actpol
 actual
 acuity
-aculei
 acumen
 acuter
 acutes
@@ -287,7 +287,6 @@ albeit
 albers
 albert
 albini
-albino
 albino
 albion
 alborg
@@ -599,8 +598,6 @@ apiary
 apical
 apices
 apiece
-aplite
-aplite
 aplomb
 apnoea
 apogee
@@ -2020,7 +2017,6 @@ broken
 broker
 brolin
 brolly
-bromic
 bronco
 broncs
 bronte
@@ -2240,7 +2236,6 @@ byrnes
 byroad
 byways
 byword
-byzant
 cabala
 cabals
 cabana
@@ -2529,7 +2524,6 @@ cathay
 cather
 cathie
 cation
-cation
 catkin
 catlin
 catnap
@@ -2608,7 +2602,6 @@ cervix
 cesare
 cesaro
 cesena
-cesium
 cesium
 cesses
 cessna
@@ -3317,7 +3310,6 @@ cowpea
 cowper
 cowpox
 cowrie
-cowrie
 coxing
 coyest
 coyote
@@ -3383,7 +3375,6 @@ creole
 crepes
 crepey
 cresci
-cresol
 crespi
 crespo
 cresst
@@ -3540,7 +3531,6 @@ curtsy
 curved
 curves
 curvet
-curvet
 curzon
 cusack
 cusped
@@ -3576,7 +3566,6 @@ cyders
 cygnet
 cygnus
 cymbal
-cymose
 cymric
 cynics
 cypher
@@ -3598,7 +3587,6 @@ dachun
 dacian
 dacoit
 dacron
-dactyl
 dactyl
 dadina
 dadoes
@@ -4020,7 +4008,6 @@ dianne
 diaper
 diario
 diatom
-diatom
 dibble
 dicier
 dicing
@@ -4167,7 +4154,6 @@ docile
 docked
 docker
 docket
-docket
 docomo
 doctor
 dodder
@@ -4253,7 +4239,6 @@ doring
 dorman
 dormer
 dorner
-dorsal
 dorsal
 dorsay
 dorset
@@ -4764,7 +4749,6 @@ enciso
 encode
 encore
 encyst
-encyst
 endcap
 endear
 enders
@@ -4793,7 +4777,6 @@ enjoin
 enjoys
 enlist
 enmesh
-enmity
 enmity
 ennead
 ennius
@@ -4842,7 +4825,6 @@ epilog
 epirus
 epochs
 eponym
-eponym
 epoque
 epping
 eprint
@@ -4885,7 +4867,6 @@ errant
 errata
 erring
 errors
-ersatz
 ersatz
 ershov
 ersten
@@ -5252,7 +5233,6 @@ ferenc
 ferent
 fergie
 fergus
-ferial
 ferlet
 fermat
 fermee
@@ -5297,7 +5277,6 @@ fibred
 fibres
 fibril
 fibrin
-fibula
 fibula
 fiches
 fichte
@@ -5428,7 +5407,6 @@ flavor
 flavus
 flawed
 flaxen
-flaxen
 flayed
 flayer
 fleche
@@ -5471,9 +5449,7 @@ floras
 florea
 flores
 floret
-floret
 floria
-florid
 florid
 florin
 florio
@@ -5511,7 +5487,6 @@ foamed
 fobbed
 fodder
 foeman
-foetal
 foetal
 foetid
 foetus
@@ -5714,7 +5689,6 @@ fubini
 fuchou
 fucked
 fucker
-fucoid
 fuddle
 fudged
 fudges
@@ -5734,13 +5708,11 @@ fukaya
 fukuda
 fulani
 fulcra
-fulcra
 fulfil
 fulham
 fulled
 fuller
 fulman
-fulmar
 fulmar
 fulton
 fulvic
@@ -5749,6 +5721,7 @@ fumble
 fumier
 fuming
 funaki
+fundal
 funded
 funder
 fundus
@@ -5806,7 +5779,6 @@ gables
 gaboon
 gadded
 gadder
-gadfly
 gadfly
 gadget
 gaelic
@@ -6279,7 +6251,6 @@ goggly
 goings
 goiter
 goitre
-goitre
 golden
 goldie
 goldin
@@ -6501,7 +6472,6 @@ groupe
 groupo
 groups
 grouse
-grouse
 grouts
 grovel
 grover
@@ -6688,7 +6658,6 @@ halevi
 halevy
 halide
 haling
-halite
 halite
 hallam
 haller
@@ -6964,7 +6933,6 @@ helena
 helene
 helens
 helfer
-heliac
 helier
 helios
 helium
@@ -7024,7 +6992,6 @@ hermes
 hermit
 hermon
 hernan
-hernia
 hernia
 heroes
 heroic
@@ -9024,7 +8991,6 @@ lifter
 ligand
 ligase
 ligate
-ligate
 ligeti
 ligger
 lights
@@ -9234,7 +9200,6 @@ looter
 lopera
 loping
 lopped
-loquat
 loquat
 lorain
 lorded
@@ -10025,7 +9990,6 @@ mervyn
 merwin
 merwyn
 mescal
-mescal
 meshed
 meshes
 mesial
@@ -10194,6 +10158,7 @@ minuit
 minute
 minxes
 minyan
+miosis
 miquel
 mirach
 mirage
@@ -10357,6 +10322,7 @@ monaro
 monash
 mondal
 monday
+monera
 moneys
 monger
 mongol
@@ -10919,6 +10885,7 @@ nobler
 nobles
 nobody
 noboru
+nocebo
 nocera
 nodded
 noddle
@@ -11268,7 +11235,6 @@ opsgpc
 optica
 optics
 optima
-optima
 opting
 option
 opuses
@@ -11497,7 +11463,6 @@ pandas
 pander
 pandey
 pandit
-pandit
 pandya
 paneer
 panels
@@ -11549,7 +11514,6 @@ parent
 parers
 pareto
 pareve
-parget
 parham
 pariah
 parian
@@ -11872,7 +11836,6 @@ phipps
 phisms
 phlegm
 phloem
-phloem
 phobia
 phobic
 phobos
@@ -12110,7 +12073,6 @@ ploidy
 plonge
 plonks
 plough
-plover
 plover
 plowed
 plower
@@ -12518,7 +12480,6 @@ pulsed
 pulser
 pulses
 pumice
-pumice
 pumila
 pummel
 pumped
@@ -12627,7 +12588,6 @@ quanti
 quanto
 quarks
 quarry
-quarto
 quarto
 quarts
 quartz
@@ -12831,7 +12791,6 @@ rapgap
 rapide
 rapids
 rapier
-rapine
 rapine
 raping
 rapist
@@ -13450,7 +13409,6 @@ romper
 romulo
 ronald
 rondel
-rondel
 rondos
 ronnie
 ronnow
@@ -13743,7 +13701,6 @@ salzer
 samadi
 samara
 sambas
-sambur
 sameer
 samian
 samiti
@@ -14459,7 +14416,6 @@ shrews
 shreya
 shriek
 shrift
-shrike
 shrike
 shrill
 shrimp
@@ -15409,7 +15365,6 @@ styles
 stylet
 stylus
 stymie
-styrax
 styria
 suarez
 suaver
@@ -15586,7 +15541,6 @@ swords
 sydney
 sylhet
 sylphs
-sylvan
 sylvan
 sylvia
 sylvie
@@ -16244,7 +16198,6 @@ tonini
 tonkin
 tonnes
 tonsil
-tonsil
 tooled
 toomey
 toomre
@@ -16668,7 +16621,6 @@ uncaps
 uncert
 unchen
 uncial
-uncial
 unclad
 uncles
 unclog
@@ -16781,7 +16733,6 @@ unworn
 unwove
 unwrap
 unyoke
-unyoke
 unzips
 upbeat
 update
@@ -16825,7 +16776,6 @@ uracil
 uralic
 uranga
 urania
-uranic
 uranus
 uranyl
 urbach
@@ -16844,7 +16794,6 @@ urging
 urinal
 urmann
 ursell
-ursine
 ursine
 urster
 ursula
@@ -17046,7 +16995,6 @@ verlag
 verlet
 vermin
 vernal
-vernal
 verner
 vernet
 verney
@@ -17064,7 +17012,6 @@ vesper
 vessel
 vestal
 vested
-vestry
 vestry
 vetoed
 vetoer
@@ -17248,7 +17195,6 @@ waging
 wagner
 wagons
 waheed
-wahine
 wahine
 wailed
 wailer
@@ -17906,7 +17852,6 @@ zenger
 zenith
 zensus
 zephyr
-zephyr
 zeroed
 zeroes
 zeroth
@@ -17928,7 +17873,6 @@ zillah
 ziller
 zimmer
 zinced
-zincky
 zinged
 zinger
 zinner
