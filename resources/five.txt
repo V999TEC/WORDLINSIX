@@ -1,4 +1,4 @@
-# Derived from https://www.nytimes.com/games-assets/v2/wordle.4cc90a0f28c99db14e1c.js
+# Derived from https://www.nytimes.com/games-assets/v2/4635.674a32ed7f7c22147e8f.js
 aahed
 aalii
 aapas
